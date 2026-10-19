@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Relaciones en GoogleSQL: JOIN, INNER JOIN, LEFT JOIN, llaves, cardinalidad, grano y control de duplicaciones." name="description"/>
+<title>GoogleSQL — relaciones y JOIN · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#googlesql">GoogleSQL</a> › Relaciones y JOIN</div>
+<div class="article-layout">
+<aside aria-label="Contenido de relaciones y JOIN" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#por-que">Por qué relacionar tablas</a>
+<a href="#llave">Llave de unión</a>
+<a href="#join">JOIN / INNER JOIN</a>
+<a href="#left">LEFT JOIN</a>
+<a href="#on">ON</a>
+<a href="#cardinalidad">Cardinalidad</a>
+<a href="#grano">Grano después del JOIN</a>
+<a href="#duplicacion">Duplicación inesperada</a>
+<a href="#controles">Controles antes y después</a>
+<a href="#prueba">JOIN de la Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">GoogleSQL</span>
+<h1>GoogleSQL — relaciones y JOIN</h1>
+<p class="lead">Un JOIN permite combinar información que está repartida entre tablas. La sintaxis es relativamente corta; lo importante es comprender qué relaciona las tablas, cuántas filas puede producir la unión y qué representa una fila después de ejecutarla.</p>
+<section id="por-que">
+<h2>1. ¿Por qué relacionar tablas?</h2>
+<p>Una tabla no siempre contiene todos los atributos que necesitamos. Por ejemplo, un movimiento puede contener el <span class="codeish">cuenta_id</span>, monto y canal, mientras que el tipo de producto asociado a esa cuenta vive en <span class="codeish">cuentas_productos</span>.</p>
+<div class="flow">
+<div class="flow-step"><span class="codeish">movimientos_diarios</span><br/>movimiento + cuenta + monto + canal</div>
+<div class="flow-arrow">+</div>
+<div class="flow-step"><span class="codeish">cuentas_productos</span><br/>cuenta + cliente + producto</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Resultado enriquecido<br/>movimiento + producto</div>
+</div>
+<div class="callout">
+<strong>Idea clave</strong>
+          El JOIN no “fusiona archivos” de forma abstracta. Empareja filas de dos fuentes según una condición explícita.
+        </div>
+</section>
+<section id="llave">
+<h2>2. La llave de unión</h2>
+<p>Antes de escribir un JOIN debes identificar qué campo permite relacionar las tablas y qué significa ese campo en cada lado.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Relación del curso</th><th>Llave</th><th>Lectura</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="codeish">clientes</span> ↔ <span class="codeish">cuentas_productos</span></td>
+<td><span class="codeish">cliente_id</span></td>
+<td>Una cuenta pertenece a un cliente.</td>
+</tr>
+<tr>
+<td><span class="codeish">cuentas_productos</span> ↔ <span class="codeish">movimientos_diarios</span></td>
+<td><span class="codeish">cuenta_id</span></td>
+<td>Un movimiento corresponde a una cuenta.</td>
+</tr>
+<tr>
+<td><span class="codeish">clientes</span> ↔ <span class="codeish">exposicion_crediticia</span></td>
+<td><span class="codeish">cliente_id</span></td>
+<td>Una exposición está asociada a un cliente.</td>
+</tr>
+<tr>
+<td><span class="codeish">instrumentos</span> ↔ <span class="codeish">valorizaciones_instrumentos</span></td>
+<td><span class="codeish">instrumento_id</span></td>
+<td>Una valorización corresponde a un instrumento.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="callout warning">
+<strong>Mismo nombre no garantiza una relación válida</strong>
+          No basta con encontrar columnas que se llamen igual. Revisa el significado del campo, el grano de cada tabla y si la relación esperada tiene sentido.
+        </div>
+</section>
+<section id="join">
+<h2>3. JOIN / INNER JOIN</h2>
+<p>En GoogleSQL, <span class="codeish">JOIN</span> sin calificativo se utiliza como <span class="codeish">INNER JOIN</span>. Conserva las combinaciones de filas que cumplen la condición de unión.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  c.cliente_id,
+  c.segmento,
+  cp.cuenta_id,
+  cp.producto,
+  cp.saldo_actual
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes` AS c
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS cp
+  ON c.cliente_id = cp.cliente_id
+LIMIT 20;</code></pre>
+<p>Lectura natural:</p>
+<div class="callout success">
+<strong>“Toma clientes y cuentas_productos, conserva las parejas donde cliente_id coincide y devuelve información de ambos lados.”</strong>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Consulta de la Prueba Tipo en BigQuery mostrando JOIN por cuenta_id y cinco filas de resultado" class="course-shot-link" href="../assets/screenshots/bq-query-results.png" rel="noopener" target="_blank"><img alt="Consulta de la Prueba Tipo en BigQuery mostrando JOIN por cuenta_id y cinco filas de resultado" loading="lazy" src="../assets/screenshots/bq-query-results.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span><span> Aquí se observa el JOIN entre movimientos_diarios y cuentas_productos y el resultado final de cinco operaciones.</span></figcaption></figure>
+</section>
+<section id="left">
+<h2>4. LEFT JOIN</h2>
+<p><span class="codeish">LEFT JOIN</span> conserva todas las filas de la tabla izquierda. Cuando una fila izquierda no encuentra coincidencia a la derecha, las columnas exclusivas de la derecha aparecen como <span class="codeish">NULL</span>.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  c.cliente_id,
+  c.segmento,
+  cp.cuenta_id,
+  cp.producto
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes` AS c
+LEFT JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS cp
+  ON c.cliente_id = cp.cliente_id;</code></pre>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>INNER JOIN</h3>
+<p>Conserva coincidencias entre ambos lados.</p>
+</div>
+<div class="concept-card">
+<h3>LEFT JOIN</h3>
+<p>Conserva todas las filas de la izquierda, tengan o no coincidencia.</p>
+</div>
+</div>
+<div class="callout">
+<strong>Uso frecuente de control</strong>
+          Un LEFT JOIN combinado con <span class="codeish">IS NULL</span> puede ayudar a identificar registros del lado izquierdo que no tienen correspondencia en la tabla derecha.
+        </div>
+</section>
+<section id="on">
+<h2>5. ON: la condición que relaciona las filas</h2>
+<p>La cláusula <span class="codeish">ON</span> expresa la condición booleana utilizada para emparejar filas.</p>
+<p>Ejemplo:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>ON m.cuenta_id = cp.cuenta_id</code></pre>
+<p>Aquí <span class="codeish">m</span> y <span class="codeish">cp</span> son alias de tablas. Los alias evitan ambigüedades cuando ambas tablas tienen columnas con el mismo nombre.</p>
+<div class="callout warning">
+<strong>No confundas ON con WHERE</strong>
+<span class="codeish">ON</span> define cómo se relacionan las tablas. <span class="codeish">WHERE</span> filtra el conjunto de filas resultante según condiciones analíticas.
+        </div>
+</section>
+<section id="cardinalidad">
+<h2>6. Cardinalidad: uno a uno, uno a muchos y muchos a muchos</h2>
+<p>La cardinalidad describe cuántas filas de un lado pueden relacionarse con filas del otro. Esta idea explica por qué un JOIN puede aumentar la cantidad de filas.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Uno a uno</h3>
+<p>Una fila de A se relaciona como máximo con una fila de B.</p>
+</div>
+<div class="concept-card">
+<h3>Uno a muchos</h3>
+<p>Una fila de A puede relacionarse con varias filas de B. Ejemplo: un cliente puede tener varias cuentas.</p>
+</div>
+<div class="concept-card">
+<h3>Muchos a muchos</h3>
+<p>Varias filas de A pueden coincidir con varias filas de B. Si no es deliberado, puede multiplicar el resultado de forma inesperada.</p>
+</div>
+</div>
+<div class="callout">
+<strong>Ejemplo del curso</strong>
+          Cliente → cuenta es una relación potencialmente uno-a-muchos; cuenta → movimiento también. Por eso, al llegar hasta movimientos, un mismo cliente puede aparecer muchas veces.
+        </div>
+</section>
+<section id="grano">
+<h2>7. El grano después del JOIN</h2>
+<p>Después de unir <span class="codeish">clientes</span> con <span class="codeish">cuentas_productos</span>, una fila ya no representa un cliente único. Representa una cuenta enriquecida con atributos del cliente.</p>
+<div class="flow">
+<div class="flow-step"><span class="codeish">clientes</span><br/>1 fila = 1 cliente</div>
+<div class="flow-arrow">+</div>
+<div class="flow-step"><span class="codeish">cuentas_productos</span><br/>1 fila = 1 cuenta/producto</div>
+<div class="flow-arrow">↓ JOIN</div>
+<div class="flow-step">Resultado<br/>1 fila = 1 cuenta/producto con datos del cliente</div>
+</div>
+<div class="callout success">
+<strong>Regla práctica</strong>
+          Describe el grano del resultado en palabras antes de calcular un COUNT, SUM o AVG después de un JOIN.
+        </div>
+</section>
+<section id="duplicacion">
+<h2>8. Duplicación inesperada</h2>
+<p>Un JOIN no “duplica” filas arbitrariamente: produce una fila por cada combinación que cumple la condición. Si una llave aparece varias veces en ambos lados, el número de combinaciones puede crecer.</p>
+<p>Ejemplo conceptual:</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Tabla A</th><th>Tabla B</th><th>Resultado</th></tr>
+</thead>
+<tbody>
+<tr><td>2 filas con clave X</td><td>3 filas con clave X</td><td>6 combinaciones para X</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout warning">
+<strong>Señal de alerta</strong>
+          Si esperabas una fila por movimiento y después del JOIN tienes varias filas para el mismo <span class="codeish">movimiento_id</span>, revisa si la tabla derecha tiene más de una coincidencia para <span class="codeish">cuenta_id</span>.
+        </div>
+</section>
+<section id="controles">
+<h2>9. Controles antes y después de un JOIN</h2>
+<p>No necesitas ejecutar todos estos controles en cada consulta, pero debes conocer las preguntas que resuelven.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Control</th><th>Pregunta</th></tr>
+</thead>
+<tbody>
+<tr><td>Revisar grano</td><td>¿Qué representa una fila en cada tabla?</td></tr>
+<tr><td>Revisar llave</td><td>¿Qué campo conecta realmente las tablas?</td></tr>
+<tr><td>Comprobar unicidad</td><td>¿La llave que considero única está repetida?</td></tr>
+<tr><td>Comparar conteos</td><td>¿La cantidad de filas cambió como esperaba?</td></tr>
+<tr><td>Buscar NULL tras LEFT JOIN</td><td>¿Qué registros no encontraron correspondencia?</td></tr>
+<tr><td>Revisar identificador final</td><td>¿Sigue siendo único el identificador que esperaba conservar?</td></tr>
+</tbody>
+</table>
+</div>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  COUNT(*) AS veces
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+GROUP BY cliente_id
+HAVING COUNT(*) &gt; 1;</code></pre>
+<p>Si una columna debe actuar como identificador único y esta consulta devuelve filas, la supuesta unicidad debe revisarse.</p>
+</section>
+<section id="prueba">
+<h2>10. El JOIN de la Prueba Tipo</h2>
+<p>La evaluación necesita combinar dos fuentes porque ninguna contiene por sí sola todas las condiciones del criterio.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Condición</th><th>Tabla</th></tr>
+</thead>
+<tbody>
+<tr><td>Canal APP o WEB</td><td><span class="codeish">movimientos_diarios</span></td></tr>
+<tr><td>Operación internacional</td><td><span class="codeish">movimientos_diarios</span></td></tr>
+<tr><td>Monto mayor a 2.000.000</td><td><span class="codeish">movimientos_diarios</span></td></tr>
+<tr><td>Producto = Tarjeta de Crédito</td><td><span class="codeish">cuentas_productos</span></td></tr>
+</tbody>
+</table>
+</div>
+<p>La llave común es <span class="codeish">cuenta_id</span>:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  m.movimiento_id,
+  m.cuenta_id,
+  m.fecha_movimiento,
+  m.canal,
+  m.monto,
+  cp.cliente_id,
+  cp.producto,
+  cp.estado
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios` AS m
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS cp
+  ON m.cuenta_id = cp.cuenta_id
+ORDER BY
+  m.fecha_movimiento,
+  m.movimiento_id;</code></pre>
+<p>Después, las cuatro condiciones se aplican en <span class="codeish">WHERE</span>. El resultado debe conservar el detalle de cada movimiento seleccionado.</p>
+<div class="callout success">
+<strong>Lectura del grano esperado</strong>
+          Una fila del resultado debe representar una operación/movimiento que cumple el criterio, enriquecida con información de su cuenta/producto.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Bloque FROM JOIN ON de la consulta de la Prueba Tipo" class="course-shot-link" href="../assets/screenshots/bq-query.png" rel="noopener" target="_blank"><img alt="Bloque FROM JOIN ON de la consulta de la Prueba Tipo" loading="lazy" src="../assets/screenshots/bq-query.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>La llave cuenta_id es la condición explícita que relaciona movimientos_diarios con cuentas_productos.</span></figcaption></figure>
+<div class="related-links">
+<a href="prueba-tipo.html">Ir a la solución guiada de la Prueba Tipo →</a>
+<a href="fundamentos.html#grano">Volver a Fundamentos: grano y llaves →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas para esta página</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax" rel="noopener" target="_blank">Google Cloud — GoogleSQL query syntax: JOIN operations</a></li>
+</ul>
+<p>La secuencia pedagógica se mantiene alineada con la Clase 3: primer JOIN → cambio de grano → INNER vs LEFT JOIN → controles de calidad → uso de JOIN en una pregunta analítica.</p>
+</section>
+<div class="page-nav">
+<a href="googlesql-agregaciones.html">← GoogleSQL — agregaciones</a>
+<a href="gemini-prompting.html">Gemini y prompting →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

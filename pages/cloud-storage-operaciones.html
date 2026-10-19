@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Operaciones básicas en Cloud Storage: crear bucket y carpetas, subir, descargar, localizar, copiar, mover, renombrar y eliminar objetos de forma segura." name="description"/>
+<title>Cloud Storage — operaciones · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#cloud-storage">Cloud Storage</a> › Operaciones</div>
+<div class="article-layout">
+<aside aria-label="Operaciones de Cloud Storage" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#antes">Antes de modificar</a>
+<a href="#crear-bucket">Crear un bucket</a>
+<a href="#crear-carpeta">Crear carpeta</a>
+<a href="#subir">Subir archivos</a>
+<a href="#localizar">Localizar e inspeccionar</a>
+<a href="#descargar">Descargar</a>
+<a href="#copiar">Copiar</a>
+<a href="#mover">Mover / renombrar</a>
+<a href="#eliminar">Eliminar</a>
+<a href="#prueba">Uso en la Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Cloud Storage</span>
+<h1>Cloud Storage — operaciones</h1>
+<p class="lead">Ahora pasamos de reconocer buckets y objetos a trabajar con ellos. La regla general es simple: antes de crear, mover o eliminar algo, confirma qué recurso estás modificando y si realmente tienes autorización para hacerlo.</p>
+<section id="antes">
+<h2>1. Antes de modificar un recurso</h2>
+<p>En un entorno compartido, una acción correcta técnicamente puede ser incorrecta si se realiza sobre el recurso equivocado. Antes de modificar algo, revisa:</p>
+<ol>
+<li>¿Estoy en el proyecto correcto?</li>
+<li>¿Estoy dentro del bucket correcto?</li>
+<li>¿El objeto es mío, de práctica o compartido?</li>
+<li>¿La actividad realmente requiere modificarlo?</li>
+<li>¿Tengo permiso para realizar la acción?</li>
+</ol>
+<div class="callout warning">
+<strong>Regla del curso</strong>
+          No elimines ni alteres recursos compartidos del curso. Si necesitas practicar copiar, renombrar, mover o eliminar, utiliza una copia descartable o un espacio de trabajo indicado para ese propósito.
+        </div>
+<div class="callout"><strong>Si aparece un aviso de permisos</strong> La interfaz puede mostrar avisos de permisos o disponibilidad aunque el recurso del curso siga funcionando. Si el relator indicó continuar y la acción se ejecuta, sigue adelante. Si la operación realmente queda bloqueada, no cambies IAM ni permisos: consulta al relator.</div>
+</section>
+<section id="crear-bucket">
+<h2>2. Crear un bucket</h2>
+<p>Crear un bucket es una operación administrativa que no siempre estará habilitada para todas las cuentas de alumno. Cuando la práctica lo permita, el flujo general en la consola es:</p>
+<ol>
+<li>Abre <strong>Cloud Storage → Buckets</strong>.</li>
+<li>Selecciona <strong>Crear / Create</strong>.</li>
+<li>Escribe un nombre globalmente único.</li>
+<li>Revisa el tipo de ubicación y la región.</li>
+<li>Revisa la clase de almacenamiento y opciones de protección.</li>
+<li>Antes de confirmar, vuelve a comprobar nombre y ubicación.</li>
+<li>Crea el bucket y abre sus detalles.</li>
+</ol>
+<div class="callout">
+<strong>En la práctica del curso</strong>
+          Cuando el relator indique crear un bucket temporal, se utilizará un nombre de práctica y la ubicación indicada para mantener compatibilidad con los demás recursos.
+        </div>
+<div class="callout warning">
+<strong>No crees buckets por tu cuenta durante la Prueba Tipo</strong>
+          La evaluación utiliza un bucket ya preparado. Este procedimiento es materia de apoyo, no un paso obligatorio de la Prueba Tipo.
+        </div>
+</section>
+<section id="crear-carpeta">
+<h2>3. Crear una carpeta</h2>
+<p>En la consola de Cloud Storage puedes crear una carpeta vacía o subir una carpeta existente. En buckets con namespace plano, esa estructura visual normalmente se representa mediante prefijos en los nombres de los objetos.</p>
+<ol>
+<li>Abre el bucket.</li>
+<li>Selecciona <strong>Crear carpeta / Create folder</strong>.</li>
+<li>Escribe el nombre.</li>
+<li>Entra en la carpeta antes de subir los objetos que quieras organizar allí.</li>
+</ol>
+<div class="callout success">
+<strong>Ejemplo del curso</strong>
+          Una estructura como <span class="codeish">datos/analitica/</span> ayuda a organizar objetos, pero debes seguir entendiendo cuál es la URI completa de cada archivo.
+        </div>
+</section>
+<section id="subir">
+<h2>4. Subir archivos</h2>
+<p>Subir un archivo crea un objeto dentro del bucket. La consola permite hacerlo arrastrando archivos al panel principal o mediante <strong>Upload → Upload files</strong>.</p>
+<ol>
+<li>Abre el bucket y entra a la carpeta/prefijo de destino.</li>
+<li>Selecciona <strong>Subir archivos / Upload files</strong>.</li>
+<li>Elige el archivo local.</li>
+<li>Espera a que termine la carga.</li>
+<li>Comprueba que el objeto aparece en la ruta esperada.</li>
+</ol>
+<div class="callout warning">
+<strong>Atención con los nombres</strong>
+          Subir un archivo con el mismo nombre de un objeto existente puede reemplazar una versión, dependiendo de permisos y configuración. No uses archivos maestros para practicar sobrescrituras.
+        </div>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: Selector local de archivos con criterio_revision listo para abrirse" class="course-shot-link" href="../assets/screenshots/gemini-upload-file-dialog.png" rel="noopener" target="_blank"><img alt="Selector local de archivos con criterio_revision listo para abrirse" loading="lazy" src="../assets/screenshots/gemini-upload-file-dialog.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Al subir un archivo, confirma el nombre antes de aceptar. En la Prueba Tipo el archivo debe quedar como criterio_revision.txt.</span></figcaption></figure>
+</section>
+<section id="localizar">
+<h2>5. Localizar e inspeccionar un objeto</h2>
+<p>Encontrar un archivo no es lo mismo que analizar su contenido. Esta operación sirve para responder “¿dónde está?” y “¿qué objeto es?”.</p>
+<ol>
+<li>Abre el bucket.</li>
+<li>Navega por la estructura visible o usa el filtro/buscador disponible.</li>
+<li>Selecciona el objeto.</li>
+<li>Revisa nombre, ruta, tamaño, tipo de contenido, clase de almacenamiento y fechas disponibles.</li>
+<li>Identifica su URI <span class="codeish">gs://</span>.</li>
+</ol>
+<div class="callout">
+<strong>Importante</strong>
+          Ver que un objeto existe no demuestra que su contenido haya sido leído o interpretado correctamente. Esta diferencia será central cuando trabajemos con agentes.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Navegador de carpetas dentro del bucket del curso" class="course-shot-link" href="../assets/screenshots/storage-bucket-details.png" rel="noopener" target="_blank"><img alt="Navegador de carpetas dentro del bucket del curso" loading="lazy" src="../assets/screenshots/storage-bucket-details.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Usa el navegador de carpetas para localizar la ruta antes de abrir o subir un objeto.</span></figcaption></figure>
+</section>
+<section id="descargar">
+<h2>6. Descargar un archivo</h2>
+<p>Descargar recupera una copia del objeto desde Cloud Storage hacia tu computador. El objeto original permanece en el bucket.</p>
+<ol>
+<li>Abre el bucket.</li>
+<li>Navega hasta el objeto.</li>
+<li>Usa el icono o acción <strong>Download / Descargar</strong>.</li>
+<li>Comprueba que el archivo quedó disponible localmente.</li>
+</ol>
+<div class="callout">
+<strong>En la Prueba Tipo</strong>
+          Puede existir un paso donde necesites obtener un documento desde Storage. Sin embargo, si la interfaz de Gemini permite importarlo directamente desde Cloud Storage, no es necesario descargarlo localmente solo para volver a subirlo.
+        </div>
+</section>
+<section id="copiar">
+<h2>7. Copiar un objeto</h2>
+<p>Copiar crea un nuevo objeto a partir de uno existente. Es una forma segura de preparar una copia descartable antes de practicar cambios.</p>
+<ol>
+<li>Localiza el objeto.</li>
+<li>Abre el menú de acciones del objeto.</li>
+<li>Selecciona <strong>Copy / Copiar</strong>.</li>
+<li>Indica destino y nombre de la copia.</li>
+<li>Confirma y verifica que ambos objetos existan.</li>
+</ol>
+<div class="callout success">
+<strong>Buena práctica didáctica</strong>
+          Antes de probar renombrados, movimientos o eliminaciones, crea una copia con un nombre que indique claramente que es descartable.
+        </div>
+</section>
+<section id="mover">
+<h2>8. Mover o renombrar un objeto</h2>
+<p>Cloud Storage permite mover o renombrar objetos desde la consola. Según la operación y el tipo de namespace, una herramienta puede implementar el movimiento como una copia seguida de la eliminación del original, o utilizar una operación atómica disponible para determinados casos.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Renombrar</h3>
+<p>Cambia el nombre con el que se identifica el objeto dentro de su ubicación.</p>
+</div>
+<div class="concept-card">
+<h3>Mover</h3>
+<p>Cambia la ubicación lógica o el bucket de destino, según la operación disponible y tus permisos.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>Trabaja solo con copias</strong>
+          Mover o renombrar cambia cómo se encuentra el objeto. Si otro proceso depende de la URI anterior, podría dejar de encontrarlo.
+        </div>
+</section>
+<section id="eliminar">
+<h2>9. Eliminar un objeto</h2>
+<p>Eliminar retira un objeto del bucket. Cloud Storage puede disponer de mecanismos de protección como soft delete, pero eso no convierte la eliminación en una operación sin consecuencias.</p>
+<ol>
+<li>Confirma que el objeto es descartable.</li>
+<li>Selecciona únicamente el objeto que quieres eliminar.</li>
+<li>Usa <strong>Delete / Eliminar</strong>.</li>
+<li>Lee el diálogo de confirmación antes de aceptar.</li>
+<li>Comprueba que los archivos maestros permanecen intactos.</li>
+</ol>
+<div class="callout warning">
+<strong>Nunca uses el bucket compartido para practicar limpieza</strong>
+          En el curso, cualquier ejercicio de eliminación debe hacerse únicamente sobre objetos o buckets temporales expresamente autorizados.
+        </div>
+</section>
+<section id="prueba">
+<h2>10. Lo que sí necesitas para la Prueba Tipo</h2>
+<p>No todas las operaciones anteriores serán necesarias en la evaluación. Para resolver la Prueba Tipo, las acciones de Storage realmente importantes son:</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Localizar el PDF común</h3>
+<p>Ubicar <span class="codeish">criterio_revision_operaciones_digitales.pdf</span> dentro de <span class="codeish">prueba-tipo/fuentes/</span>.</p>
+</div>
+<div class="concept-card">
+<h3>Trabajar en tu carpeta</h3>
+<p>Utilizar únicamente <span class="codeish">prueba-tipo/alumnos/alumno-XX/</span> para tus propios archivos.</p>
+</div>
+<div class="concept-card">
+<h3>Subir el TXT</h3>
+<p>Guardar y subir <span class="codeish">criterio_revision.txt</span> dentro de <span class="codeish">insumos/</span>.</p>
+</div>
+<div class="concept-card">
+<h3>Revisar resultados</h3>
+<p>Comprobar que el agente creó <span class="codeish">consulta.sql</span>, <span class="codeish">resultado.csv</span> e <span class="codeish">informe_final.md</span>.</p>
+</div>
+</div>
+<div class="related-links">
+<a href="prueba-tipo.html">Ir a la solución guiada de la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas para esta página</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/storage/docs/creating-buckets" rel="noopener" target="_blank">Google Cloud — Create a bucket</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/objects" rel="noopener" target="_blank">Google Cloud — About Cloud Storage objects and simulated folders</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/uploading-objects" rel="noopener" target="_blank">Google Cloud — Upload objects</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/downloading-objects" rel="noopener" target="_blank">Google Cloud — Download objects</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/copying-renaming-moving-objects" rel="noopener" target="_blank">Google Cloud — Copy, rename, and move objects</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/deleting-objects" rel="noopener" target="_blank">Google Cloud — Delete objects</a></li>
+</ul>
+<p>La secuencia de práctica se mantiene alineada con la Clase 2: crear, localizar, ajustar y eliminar recursos, trabajando con copias descartables y evitando modificar recursos compartidos.</p>
+</section>
+<div class="page-nav">
+<a href="cloud-storage-conceptos.html">← Cloud Storage — conceptos</a>
+<a href="bigquery.html">BigQuery — entorno →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

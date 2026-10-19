@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Solución guiada de la Prueba Tipo FT-00080: Storage, Gemini, Agent Studio, BigQuery, verificación y entrega." name="description"/>
+<title>Prueba Tipo · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a aria-current="page" href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › Prueba Tipo</div>
+<article class="article">
+<span class="eyebrow">Solución guiada</span>
+<h1>Prueba Tipo</h1>
+<p class="lead">Esta ruta reproduce el flujo validado de la evaluación: preparar el criterio documental, ejecutar el agente, recuperar la ejecución si fuera necesario, verificar los resultados en BigQuery, revisar el informe final y entregarlo en la plataforma del curso.</p>
+<div class="callout success"><strong>Ruta completa</strong> Cloud Storage → Gemini → TXT → Agent Studio → BigQuery → verificación → informe_final.md → entrega.</div><section id="acceso-curso">
+<h2>Acceso a Google Cloud</h2>
+<p>Antes de comenzar, inicia sesión con la cuenta de alumno asignada para el curso.</p>
+<div class="callout success" id="gcp-link-directo">
+<strong>Empieza aquí</strong>
+<p>Abre <a href="https://cloud.google.com/" rel="noopener" target="_blank"><strong>https://cloud.google.com/</strong></a> y selecciona <strong>Sign in</strong> / <strong>Iniciar sesión</strong> en la esquina superior derecha. No uses <strong>Start free</strong> / <strong>Comenzar gratis</strong>.</p>
+<p><a class="btn-site primary" href="https://cloud.google.com/" rel="noopener" target="_blank">Abrir Google Cloud</a></p>
+</div>
+<div class="credential-grid">
+<div class="credential-card"><span>Cuenta</span><strong class="codeish">alumno_XX@itacademy.cl</strong><small>Reemplaza <strong>XX</strong> por tu número de alumno. Ejemplo: alumno 24 → <span class="codeish">alumno_24@itacademy.cl</span>.</small></div>
+<div class="credential-card"><span>Contraseña</span><strong class="codeish">Academy.2026</strong><small>Escribe la contraseña tal como aparece, respetando mayúsculas, punto y números.</small></div>
+</div>
+<ol><li>Abre <a href="https://cloud.google.com/" rel="noopener" target="_blank">cloud.google.com</a>.</li><li>Haz clic en <strong>Sign in</strong> / <strong>Iniciar sesión</strong>, arriba a la derecha. No selecciones <strong>Start free</strong> / <strong>Comenzar gratis</strong>.</li><li>Si Google muestra una cuenta distinta, elige <strong>Usar otra cuenta</strong>.</li><li>Escribe <span class="codeish">alumno_XX@itacademy.cl</span> con tu número asignado y pulsa <strong>Siguiente</strong>.</li><li>Escribe <span class="codeish">Academy.2026</span> y pulsa <strong>Siguiente</strong>.</li><li>Si vuelves a la página pública de Google Cloud después de iniciar sesión, haz clic en <strong>Consola</strong> / <strong>Console</strong>, arriba a la derecha.</li><li>Si aparece el aviso de Chrome o de verificación en dos pasos, usa la opción para posponerlo y continúa.</li><li>Ya dentro de la consola, confirma que estás en el proyecto del curso antes de seguir.</li></ol>
+<div class="login-sequence">
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: página de Google Cloud con Sign in resaltado" class="course-shot-link" href="../assets/screenshots/gcp-home-signin.png" rel="noopener" target="_blank">
+<img alt="Página principal de Google Cloud con Sign in resaltado en la esquina superior derecha" loading="lazy" src="../assets/screenshots/gcp-home-signin.png"/>
+</a>
+<figcaption><span class="shot-label">1 · Entrar</span><span> Desde <span class="codeish">cloud.google.com</span>, selecciona <strong>Sign in</strong>. No uses <strong>Start free</strong>.</span></figcaption>
+</figure>
+<figure class="course-shot compact-xs">
+<a aria-label="Abrir captura completa: opción Use another account" class="course-shot-link" href="../assets/screenshots/login-use-another-account.png" rel="noopener" target="_blank">
+<img alt="Opción Use another account en la pantalla de acceso de Google" loading="lazy" src="../assets/screenshots/login-use-another-account.png"/>
+</a>
+<figcaption><span class="shot-label">2 · Cuenta correcta</span><span> Si aparece otra cuenta, usa <strong>Usar otra cuenta</strong>.</span></figcaption>
+</figure>
+<div class="shot-grid">
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: cuenta de alumno" class="course-shot-link" href="../assets/screenshots/login-student-email.png" rel="noopener" target="_blank">
+<img alt="Pantalla de inicio de sesión con una cuenta alumno_XX de ejemplo" loading="lazy" src="../assets/screenshots/login-student-email.png"/>
+</a>
+<figcaption><span class="shot-label">3 · Usuario</span><span> Ingresa <span class="codeish">alumno_XX@itacademy.cl</span>.</span></figcaption>
+</figure>
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: contraseña del curso" class="course-shot-link" href="../assets/screenshots/login-student-password.png" rel="noopener" target="_blank">
+<img alt="Pantalla de contraseña del curso" loading="lazy" src="../assets/screenshots/login-student-password.png"/>
+</a>
+<figcaption><span class="shot-label">4 · Contraseña</span><span> Ingresa <span class="codeish">Academy.2026</span>.</span></figcaption>
+</figure>
+</div>
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: botón Consola en Google Cloud" class="course-shot-link" href="../assets/screenshots/gcp-home-console.png" rel="noopener" target="_blank">
+<img alt="Página principal de Google Cloud con el botón Consola resaltado" loading="lazy" src="../assets/screenshots/gcp-home-console.png"/>
+</a>
+<figcaption><span class="shot-label">5 · Abrir la consola</span><span> Después del login, si quedas en la página pública, entra por <strong>Consola</strong> / <strong>Console</strong>.</span></figcaption>
+</figure>
+</div>
+<div class="callout warning"><strong>No confundas la cuenta con la carpeta</strong> La cuenta usa guion bajo: <span class="codeish">alumno_XX@itacademy.cl</span>. La carpeta de trabajo usa guion: <span class="codeish">alumno-XX</span>.</div>
+<div class="callout microstep-note">
+<strong>Detalle de navegación</strong>
+  Si el login termina y sigues viendo la página pública de Google Cloud, no necesitas iniciar sesión otra vez: entra por <strong>Consola</strong> / <strong>Console</strong>.
+</div>
+<div class="callout warning platform-advice">
+<strong>Avisos de permisos o APIs</strong>
+<p>En algunas pantallas Google Cloud puede mostrar avisos diciendo que faltan permisos, que una API no está habilitada o que una función no está disponible. En el entorno del curso esos mensajes pueden aparecer aunque la acción que necesitas sí funcione.</p>
+<p>Si el relator indicó continuar y el recurso abre o la acción se ejecuta, sigue el procedimiento y no cambies IAM, permisos ni APIs por tu cuenta. Si la acción realmente falla y no te deja avanzar, detente en ese punto y consulta al relator.</p>
+</div>
+</section><div class="callout warning important-student-id"><strong>Antes de comenzar: identifica tu carpeta</strong><p>Las capturas del sitio utilizan <span class="codeish">alumno-00</span> como ejemplo visual. En la evaluación debes trabajar únicamente en la carpeta <span class="codeish">alumno-XX</span> que te haya sido asignada y reemplazar <span class="codeish">XX</span> en todas las rutas y prompts.</p></div><section id="avisos-plataforma">
+<h2>Antes de la prueba: avisos y errores frecuentes de la plataforma</h2>
+<p>Durante el trabajo pueden aparecer avisos de Chrome, verificación en dos pasos o errores temporales de capacidad. Normalmente basta con posponerlos, cerrarlos o volver a intentar.</p>
+<div class="callout">
+<strong>Regla rápida</strong>
+<ul>
+<li>Chrome o verificación en dos pasos: usa <strong>“Usar Chrome sin una cuenta”</strong> o <strong>“Recordármelo más tarde”</strong> y continúa.</li>
+<li><span class="codeish">429 / Resource exhausted</span> antes de que el agente ejecute herramientas: vuelve a intentar. Si se repite, refresca la página y prueba nuevamente; si persiste, espera unos minutos y reintenta.</li>
+<li>El agente ejecutó herramientas pero quedó sin respuesta final: no repitas todo. Revisa el paso 07 y continúa desde lo que ya terminó.</li>
+</ul>
+</div>
+<div class="shot-grid platform-shot-grid">
+<figure class="course-shot"><a aria-label="Abrir captura completa: Aviso de Chrome que ofrece continuar sin asociar la cuenta al navegador" class="course-shot-link" href="../assets/screenshots/platform-chrome-signin.png" rel="noopener" target="_blank"><img alt="Aviso de Chrome que ofrece continuar sin asociar la cuenta al navegador" loading="lazy" src="../assets/screenshots/platform-chrome-signin.png"/></a><figcaption><span class="shot-label">Aviso de Chrome</span><span> Selecciona “Usar Chrome sin una cuenta” y continúa.</span></figcaption></figure>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: Aviso de Google Cloud para activar la verificación en dos pasos con opción Recordármelo más tarde" class="course-shot-link" href="../assets/screenshots/platform-2sv.png" rel="noopener" target="_blank"><img alt="Aviso de Google Cloud para activar la verificación en dos pasos con opción Recordármelo más tarde" loading="lazy" src="../assets/screenshots/platform-2sv.png"/></a><figcaption><span class="shot-label">Verificación en dos pasos</span><span> Selecciona “Recordármelo más tarde” y continúa.</span></figcaption></figure>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Agent Studio mostrando una ejecución interrumpida por Resource exhausted" class="course-shot-link" href="../assets/screenshots/agent-interrupted.png" rel="noopener" target="_blank"><img alt="Agent Studio mostrando una ejecución interrumpida por Resource exhausted" loading="lazy" src="../assets/screenshots/agent-interrupted.png"/></a><figcaption><span class="shot-label">Resource exhausted</span><span> Puede aparecer de forma temporal. Si no alcanzó a ejecutar herramientas, reintenta; si ya hubo tool calls, revisa qué terminó antes de continuar.</span></figcaption></figure>
+</section>
+<section>
+<h2>Los 11 pasos</h2>
+<div class="concept-grid">
+<div class="concept-card"><h3>01 · Preparar Storage</h3><p>Entrar a tu espacio y comprobar <span class="codeish">insumos/</span>, <span class="codeish">resultados/</span> e <span class="codeish">informe/</span>.</p><p><a href="prueba-tipo-preparacion.html#paso-01">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>02 · Localizar documento</h3><p>Identificar el PDF oficial en <span class="codeish">fuentes/</span>.</p><p><a href="prueba-tipo-preparacion.html#paso-02">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>03 · Importar PDF</h3><p>Importar el documento desde Cloud Storage en Gemini.</p><p><a href="prueba-tipo-preparacion.html#paso-03">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>04 · PDF → TXT</h3><p>Ejecutar el prompt validado de conversión fiel.</p><p><a href="prueba-tipo-preparacion.html#paso-04">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>05 · Subir TXT</h3><p>Guardar <span class="codeish">criterio_revision.txt</span> en <span class="codeish">insumos/</span>.</p><p><a href="prueba-tipo-preparacion.html#paso-05">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>06 · Ejecutar agente</h3><p>Abrir el Analista de Validación Integrada, ejecutar el prompt principal y generar los tres entregables. Los dos prompts de rescate están disponibles inmediatamente debajo del prompt principal.</p><p><a href="prueba-tipo-ejecucion.html">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>07 · Recuperar si hace falta</h3><p>Diagnosticar una interrupción y elegir entre los mismos dos rescates mostrados en el paso 06, sin repetir operaciones ya completadas.</p><p><a href="prueba-tipo-recuperacion.html#paso-07">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>08 · Revisar archivos</h3><p>Comprobar SQL, CSV e informe en Cloud Storage.</p><p><a href="prueba-tipo-recuperacion.html#paso-08">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>09 · Verificar en BigQuery</h3><p>Ejecutar la consulta guardada y comparar resultados.</p><p><a href="prueba-tipo-recuperacion.html#paso-09">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>10 · Gemini en BigQuery</h3><p>Generar una segunda consulta independiente y contrastarla.</p><p><a href="prueba-tipo-recuperacion.html#paso-10">Abrir paso →</a></p></div>
+<div class="concept-card"><h3>11 · Entrega final</h3><p>Revisar los archivos, descargar <span class="codeish">informe_final.md</span> y subir ese informe a la plataforma de evaluación.</p><p><a href="prueba-tipo-entrega.html">Abrir paso →</a></p></div>
+</div>
+</section><div class="page-nav">
+<a href="../index.html">← Volver al inicio</a>
+<a href="prueba-tipo-preparacion.html">Comenzar la Prueba Tipo →</a>
+</div>
+</article>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

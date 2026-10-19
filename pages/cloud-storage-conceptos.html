@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Conceptos básicos de Cloud Storage: buckets, objetos, carpetas y prefijos, namespaces, metadatos y rutas gs://." name="description"/>
+<title>Cloud Storage — conceptos · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#cloud-storage">Cloud Storage</a> › Conceptos</div>
+<div class="article-layout">
+<aside aria-label="Contenido de Cloud Storage" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#que-es">Qué es Cloud Storage</a>
+<a href="#bucket">Bucket</a>
+<a href="#objeto">Objeto</a>
+<a href="#carpetas">Carpetas y prefijos</a>
+<a href="#namespace">Namespaces</a>
+<a href="#metadata">Metadatos</a>
+<a href="#uri">Rutas gs://</a>
+<a href="#modelo-mental">Modelo mental</a>
+<a href="#prueba">Uso en la Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Cloud Storage</span>
+<h1>Cloud Storage — conceptos</h1>
+<p class="lead">Cloud Storage es el servicio de almacenamiento de objetos de Google Cloud. En este curso lo utilizaremos para guardar y organizar archivos que después serán utilizados por personas, BigQuery, Gemini o agentes.</p>
+<section id="que-es">
+<h2>1. ¿Qué es Cloud Storage?</h2>
+<p>Cloud Storage almacena datos como <strong>objetos</strong> dentro de <strong>buckets</strong>. Un objeto puede corresponder, por ejemplo, a un CSV, un PDF, un archivo de texto, una imagen u otro contenido que necesitemos conservar y recuperar.</p>
+<div aria-label="Modelo básico de Cloud Storage" class="flow">
+<div class="flow-step">Proyecto de Google Cloud</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Bucket</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Objeto</div>
+</div>
+<div class="callout">
+<strong>Idea clave</strong>
+          Cloud Storage no es una base de datos relacional. Su función principal es conservar objetos. Cuando necesitemos consultar información tabular de forma analítica, utilizaremos BigQuery.
+        </div>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: Vista de Cloud Storage con el bucket banco-curso-vertex-datos resaltado" class="course-shot-link" href="../assets/screenshots/storage-buckets.png" rel="noopener" target="_blank"><img alt="Vista de Cloud Storage con el bucket banco-curso-vertex-datos resaltado" loading="lazy" src="../assets/screenshots/storage-buckets.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Cloud Storage organiza los objetos dentro de buckets. En el curso se trabaja sobre banco-curso-vertex-datos.</span></figcaption></figure>
+</section>
+<section id="bucket">
+<h2>2. ¿Qué es un bucket?</h2>
+<p>Un <strong>bucket</strong> es el contenedor básico donde se almacenan los objetos. Todo objeto guardado en Cloud Storage debe pertenecer a un bucket.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Contenedor principal</h3>
+<p>Un bucket contiene objetos y permite organizarlos y administrar su acceso.</p>
+</div>
+<div class="concept-card">
+<h3>No se anidan</h3>
+<p>Un bucket no puede estar dentro de otro bucket. La organización interna ocurre mediante nombres de objeto, prefijos o carpetas según el tipo de namespace.</p>
+</div>
+<div class="concept-card">
+<h3>Nombre global</h3>
+<p>El nombre de un bucket debe ser único a nivel global, no solo dentro de tu proyecto.</p>
+</div>
+<div class="concept-card">
+<h3>Ubicación</h3>
+<p>Al crear un bucket se define una ubicación para el recurso y sus datos. La ubicación es una decisión que conviene revisar antes de crearlo.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>El nombre del bucket es visible públicamente</strong>
+          Google recomienda no incluir información sensible o personalmente identificable en nombres de buckets. Además, un bucket existente no se “renombra” de forma simple: cambiar el nombre implica trabajar con otro bucket y mover contenido.
+        </div>
+<p>En el curso utilizamos, entre otros recursos, el bucket compartido:</p>
+<p><span class="codeish">banco-curso-vertex-datos</span></p>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Detalles del bucket banco-curso-vertex-datos y navegador de carpetas" class="course-shot-link" href="../assets/screenshots/storage-bucket-details.png" rel="noopener" target="_blank"><img alt="Detalles del bucket banco-curso-vertex-datos y navegador de carpetas" loading="lazy" src="../assets/screenshots/storage-bucket-details.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Dentro del bucket, la consola muestra ubicación, clase de almacenamiento y el navegador de carpetas.</span></figcaption></figure>
+</section>
+<section id="objeto">
+<h2>3. ¿Qué es un objeto?</h2>
+<p>Un <strong>objeto</strong> es el contenido almacenado dentro de un bucket. Para trabajar con un objeto necesitamos, como mínimo, distinguir el bucket que lo contiene y el nombre del objeto.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Elemento</th><th>Ejemplo</th></tr>
+</thead>
+<tbody>
+<tr><td>Bucket</td><td><span class="codeish">banco-curso-vertex-datos</span></td></tr>
+<tr><td>Nombre del objeto</td><td><span class="codeish">alumnos/prueba-tipo/fuentes/criterio_revision_operaciones_digitales.pdf</span></td></tr>
+<tr><td>URI completa</td><td><span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/fuentes/criterio_revision_operaciones_digitales.pdf</span></td></tr>
+</tbody>
+</table>
+</div>
+<p>El nombre del objeto puede contener barras <span class="codeish">/</span>. En la consola esas barras pueden hacer que la información se vea organizada como una estructura de carpetas.</p>
+</section>
+<section id="carpetas">
+<h2>4. Carpetas y prefijos</h2>
+<p>Es importante no asumir que Cloud Storage funciona exactamente igual que el sistema de archivos de un computador. En muchos buckets, las “carpetas” que ves en la consola son una representación conveniente basada en el nombre del objeto.</p>
+<p>Por ejemplo, este nombre:</p>
+<p><span class="codeish">alumnos/prueba-tipo/fuentes/documento.pdf</span></p>
+<p>puede mostrarse visualmente como:</p>
+<div class="flow">
+<div class="flow-step">alumnos/</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">prueba-tipo/</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">fuentes/</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">documento.pdf</div>
+</div>
+<div class="callout">
+<strong>Prefijo</strong>
+          En un namespace plano, una cadena como <span class="codeish">alumnos/prueba-tipo/</span> forma parte del nombre de los objetos y puede utilizarse como prefijo para agruparlos o localizarlos.
+        </div>
+</section>
+<section id="namespace">
+<h2>5. Namespace plano y namespace jerárquico</h2>
+<p>Actualmente Cloud Storage puede trabajar con <strong>namespace plano</strong> o con <strong>namespace jerárquico</strong>. La diferencia importa porque cambia la naturaleza de las carpetas.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Namespace plano</h3>
+<p>Los objetos se almacenan directamente bajo el bucket. La consola puede simular carpetas interpretando las barras <span class="codeish">/</span> del nombre como delimitadores.</p>
+</div>
+<div class="concept-card">
+<h3>Namespace jerárquico</h3>
+<p>Las carpetas forman parte real de una estructura jerárquica del bucket y tienen semántica propia de directorio.</p>
+</div>
+</div>
+<div class="callout success">
+<strong>Para este curso</strong>
+          Trabajaremos principalmente con una organización simple y con rutas visibles como carpetas. No necesitas dominar las características avanzadas del namespace jerárquico para resolver la Prueba Tipo.
+        </div>
+</section>
+<section id="metadata">
+<h2>6. Metadatos</h2>
+<p>Los objetos y buckets tienen <strong>metadatos</strong>: información que describe propiedades del recurso. Los metadatos se almacenan como pares clave-valor y ayudan a identificar o controlar cómo debe manejarse un objeto.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Ejemplo de metadato</th><th>Qué indica</th></tr>
+</thead>
+<tbody>
+<tr><td>Nombre</td><td>Cómo se identifica el objeto dentro del bucket.</td></tr>
+<tr><td>Tamaño</td><td>Cuántos bytes ocupa el contenido.</td></tr>
+<tr><td>Tipo de contenido</td><td>Cómo se describe el formato del contenido, por ejemplo PDF o texto.</td></tr>
+<tr><td>Storage class</td><td>Clase de almacenamiento asociada al objeto.</td></tr>
+<tr><td>Fecha de creación / actualización</td><td>Información temporal sobre el objeto y sus cambios.</td></tr>
+<tr><td>Generation</td><td>Identificador de una versión concreta del objeto.</td></tr>
+</tbody>
+</table>
+</div>
+<p>No todos los metadatos se pueden modificar de la misma forma: algunos son editables, otros se definen al crear o reescribir el objeto y otros son solo de lectura.</p>
+</section>
+<section id="uri">
+<h2>7. Rutas <span class="codeish">gs://</span></h2>
+<p>Una forma habitual de identificar recursos de Cloud Storage es mediante una URI que comienza con <span class="codeish">gs://</span>.</p>
+<div class="callout">
+<strong>Forma general</strong>
+<span class="codeish">gs://NOMBRE_BUCKET/NOMBRE_OBJETO</span>
+</div>
+<p>Ejemplo de la Prueba Tipo:</p>
+<p><span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/fuentes/criterio_revision_operaciones_digitales.pdf</span></p>
+<p>Esta URI nos permite expresar de forma inequívoca <strong>qué bucket</strong> y <strong>qué objeto</strong> queremos utilizar. Más adelante la usaremos para entregar al agente la ubicación exacta de un archivo.</p>
+</section>
+<section id="modelo-mental">
+<h2>8. Modelo mental mínimo</h2>
+<p>Si recuerdas esta estructura, ya tienes lo esencial para continuar:</p>
+<div class="flow">
+<div class="flow-step">Cloud Storage · servicio</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Bucket · contenedor</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Objeto · contenido almacenado</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Nombre / prefijo · organización</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">gs://...</span> · referencia completa</div>
+</div>
+</section>
+<section id="prueba">
+<h2>9. ¿Dónde aparece esto en la Prueba Tipo?</h2>
+<p>Cloud Storage cumple dos funciones distintas dentro de la evaluación:</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Fuente común</h3>
+<p>El PDF original se encuentra dentro de la zona común <span class="codeish">prueba-tipo/fuentes/</span>.</p>
+</div>
+<div class="concept-card">
+<h3>Espacio del alumno</h3>
+<p>Cada alumno trabaja dentro de <span class="codeish">prueba-tipo/alumnos/alumno-XX/</span>, donde guarda insumos, resultados e informe.</p>
+</div>
+</div>
+<div class="callout">
+<strong>Ejemplo</strong>
+          El agente necesitará recibir una ruta exacta como <span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt</span>.
+        </div>
+<div class="related-links">
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas para esta página</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/storage/docs/buckets" rel="noopener" target="_blank">Google Cloud — About Cloud Storage buckets</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/objects" rel="noopener" target="_blank">Google Cloud — About Cloud Storage objects</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/folder-types" rel="noopener" target="_blank">Google Cloud — Folder types in Cloud Storage</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/metadata" rel="noopener" target="_blank">Google Cloud — Object metadata</a></li>
+<li><a href="https://docs.cloud.google.com/storage/docs/gsutil" rel="noopener" target="_blank">Google Cloud — Syntax for Cloud Storage resource URIs</a></li>
+</ul>
+<p>La guía de Clase 2 se utiliza como referencia pedagógica para el nivel del curso y para mantener la secuencia bucket → objeto → carpeta/prefijo → URI.</p>
+</section>
+<div class="page-nav">
+<a href="navegacion-gcp.html">← Navegación básica en GCP</a>
+<a href="cloud-storage-operaciones.html">Cloud Storage — operaciones →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Fundamentos de datos: analítica, estructura de la información, grano, llaves, relaciones y separación entre dato e interpretación." name="description"/>
+<title>Fundamentos de datos · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › Fundamentos de datos</div>
+<div class="article-layout">
+<aside aria-label="Contenido de Fundamentos" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#analitica">Analítica y datos</a>
+<a href="#dikw">Datos → decisión</a>
+<a href="#estructura">Tipos de información</a>
+<a href="#grano">Grano</a>
+<a href="#llaves">Llaves</a>
+<a href="#relaciones">Relaciones</a>
+<a href="#interpretacion">Dato, cálculo e interpretación</a>
+<a href="#checklist">Antes de analizar</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Fundamentos</span>
+<h1>Fundamentos de datos</h1>
+<p class="lead">Antes de abrir Storage, escribir SQL o pedirle una conclusión a una IA, conviene comprender qué información tenemos, qué representa cada registro y qué puede demostrarse realmente con los datos.</p>
+<section id="analitica">
+<h2>1. Datos y analítica</h2>
+<p>La analítica busca transformar fuentes dispersas en información reproducible para comprender situaciones, comparar resultados, observar patrones y apoyar decisiones. El valor no está en “tener datos”, sino en poder utilizarlos de manera consistente y trazable.</p>
+<div class="callout">
+<strong>Idea clave</strong>
+          Un dato aislado todavía no es un hallazgo. El contexto, el nivel de detalle y la pregunta que queremos responder determinan cómo debe interpretarse.
+        </div>
+</section>
+<section id="dikw">
+<h2>2. De los datos a la decisión</h2>
+<p>Una forma útil de ordenar el trabajo es distinguir cuatro niveles. Cada paso agrega contexto, síntesis o interpretación, pero no debe inventar evidencia que no existe.</p>
+<div aria-label="Flujo desde datos hasta decisión" class="flow">
+<div class="flow-step">Datos · ¿Qué ocurrió?</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Información · ¿Cómo se resume o compara?</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Conocimiento · ¿Qué relación o significado aparece?</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Decisión · ¿Qué acción o revisión corresponde?</div>
+</div>
+</section>
+<section id="estructura">
+<h2>3. Datos estructurados, semiestructurados y no estructurados</h2>
+<p>La estructura describe cuánto del contenido viene organizado de una forma predecible y directamente interpretable por herramientas analíticas.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Estructurados</h3>
+<p>Información organizada en filas, columnas y campos con un esquema claro. Ejemplos: tablas de BigQuery, CSV limpio o una hoja tabular bien formada.</p>
+</div>
+<div class="concept-card">
+<h3>Semiestructurados</h3>
+<p>Información que posee etiquetas, claves o una organización interna, pero no necesariamente una estructura tabular rígida. Ejemplos: JSON, XML y algunos logs.</p>
+</div>
+<div class="concept-card">
+<h3>No estructurados</h3>
+<p>Contenido cuyo significado no viene expresado como filas y columnas. Ejemplos: PDF, Word, correos, imágenes o texto libre.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>Formato no es lo mismo que estructura</strong>
+          Un archivo Excel puede contener una tabla muy limpia o una hoja con títulos, celdas combinadas y subtotales. La extensión del archivo no garantiza que el contenido sea analíticamente estructurado.
+        </div>
+</section>
+<section id="grano">
+<h2>4. Grano: ¿qué representa una fila?</h2>
+<p>El <strong>grano</strong> es el nivel de detalle de una tabla o resultado. Antes de sumar, contar o relacionar información, necesitamos saber qué representa exactamente cada fila.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Tabla del curso</th><th>Una fila representa</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="codeish">clientes</span></td><td>Un cliente sintético.</td></tr>
+<tr><td><span class="codeish">cuentas_productos</span></td><td>Una cuenta o producto asociado a un cliente.</td></tr>
+<tr><td><span class="codeish">movimientos_diarios</span></td><td>Un movimiento de una cuenta.</td></tr>
+<tr><td><span class="codeish">exposicion_crediticia</span></td><td>Una observación de exposición en una fecha de corte.</td></tr>
+<tr><td><span class="codeish">valorizaciones_instrumentos</span></td><td>La valorización de un instrumento en una fecha.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Dos consultas pueden ser sintácticamente correctas y, aun así, responder preguntas diferentes si cambia el grano del resultado.</p>
+</section>
+<section id="llaves">
+<h2>5. Llaves e identificadores</h2>
+<p>Una llave permite identificar una entidad, evento o registro y también puede actuar como punto de unión entre tablas. Antes de usar una columna como llave conviene verificar qué identifica y si puede repetirse.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3><span class="codeish">cliente_id</span></h3>
+<p>Identifica al cliente y permite conectar <span class="codeish">clientes</span> con <span class="codeish">cuentas_productos</span> o <span class="codeish">exposicion_crediticia</span>.</p>
+</div>
+<div class="concept-card">
+<h3><span class="codeish">cuenta_id</span></h3>
+<p>Identifica una cuenta/producto y conecta <span class="codeish">cuentas_productos</span> con <span class="codeish">movimientos_diarios</span>.</p>
+</div>
+</div>
+</section>
+<section id="relaciones">
+<h2>6. Relaciones entre tablas</h2>
+<p>Una pregunta puede necesitar información que vive en más de una tabla. En ese caso se utiliza una llave común para relacionarlas. La relación no significa que una tabla “esté dentro” de otra: significa que ciertos registros pueden conectarse mediante campos compatibles.</p>
+<div class="flow">
+<div class="flow-step"><span class="codeish">clientes.cliente_id</span></div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">cuentas_productos.cliente_id</span> · <span class="codeish">cuenta_id</span></div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">movimientos_diarios.cuenta_id</span></div>
+</div>
+<div class="callout">
+<strong>Antes de hacer un JOIN</strong>
+          Identifica la llave de unión, el grano de cada tabla y el grano que esperas obtener después de relacionarlas.
+        </div>
+</section>
+<section id="interpretacion">
+<h2>7. Dato observado, cálculo e interpretación</h2>
+<p>Una práctica central del curso es no mezclar estos tres niveles. Esto será especialmente importante cuando trabajemos con BigQuery, Gemini y el agente de la Prueba Tipo.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Dato observado</h3>
+<p>Valor o condición que aparece directamente en una fuente. Ejemplo: un movimiento tiene un monto determinado y un canal registrado.</p>
+</div>
+<div class="concept-card">
+<h3>Cálculo derivado</h3>
+<p>Resultado obtenido aplicando una operación reproducible. Ejemplo: contar movimientos que cumplen determinadas condiciones.</p>
+</div>
+<div class="concept-card">
+<h3>Interpretación</h3>
+<p>Lectura que hacemos a partir del dato o cálculo. Debe respetar el alcance de la evidencia disponible.</p>
+</div>
+</div>
+<div class="callout success">
+<strong>Regla de prudencia</strong>
+          Una diferencia, una selección o una asociación no demuestra por sí sola una causa, fraude, error o incumplimiento.
+        </div>
+</section>
+<section id="checklist">
+<h2>8. Antes de analizar</h2>
+<ol>
+<li>¿Qué pregunta quiero responder?</li>
+<li>¿Qué representa una fila de la tabla o fuente?</li>
+<li>¿Qué campos son identificadores, dimensiones, medidas o fechas?</li>
+<li>¿Qué periodo y nivel de detalle necesito?</li>
+<li>¿Necesito una sola fuente o debo relacionar varias?</li>
+<li>¿Qué conclusión no puedo obtener con la evidencia disponible?</li>
+</ol>
+</section>
+<section class="related">
+<h2>Cómo se conecta con el resto del sitio</h2>
+<div class="related-links">
+<a href="navegacion-gcp.html">Siguiente materia: Navegación básica en Google Cloud →</a>
+<a href="bigquery.html">Aplicación futura: comprender tablas y esquemas en BigQuery →</a>
+<a href="googlesql-relaciones.html">Aplicación futura: JOIN, llaves y grano →</a>
+<a href="validacion-integrada.html">Aplicación futura: criterio, evidencia e interpretación →</a>
+</div>
+</section>
+<div class="page-nav">
+<a href="../index.html">← Inicio</a>
+<a href="navegacion-gcp.html">Navegación básica en GCP →</a>
+</div>
+<p class="source-note">Base pedagógica de esta página: contenidos de la Guía de Clase 1 del curso FT-00080. Los módulos técnicos posteriores se contrastarán con documentación oficial vigente de Google antes de publicarse.</p>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

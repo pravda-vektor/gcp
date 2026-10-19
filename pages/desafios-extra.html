@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Desafíos extra opcionales para practicar el mismo flujo de Agent Studio y BigQuery con nuevas consultas y tablas del curso." name="description"/>
+<title>Desafíos Extra · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a aria-current="page" href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a aria-current="page" href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › Desafíos Extra</div>
+<article class="article">
+<span class="eyebrow">Contenido opcional</span>
+<h1>Desafíos Extra</h1>
+<p class="lead">Cinco ejercicios para practicar con el mismo agente, el mismo proyecto y las tablas que ya existen. No necesitas crear documentos ni datasets nuevos.</p>
+<div class="callout success">
+<strong>Mismo entorno, más profundidad</strong>
+<p>Los desafíos 1–3 reutilizan <span class="codeish">criterio_revision.txt</span>. Los desafíos 4–5 usan criterios definidos directamente en el prompt para poder trabajar con <span class="codeish">instrumentos</span> y <span class="codeish">valorizaciones_instrumentos</span>.</p>
+</div>
+<div class="callout">
+<strong>Los prompts y el SQL están incluidos</strong>
+<p>Puedes ejecutar directamente el prompt del desafío. El SQL de referencia está disponible debajo de cada ejercicio y viene explicado. Si quieres mayor dificultad, intenta primero y luego compara.</p>
+</div>
+<nav aria-label="Desafíos" class="resource-jumps">
+<a href="#desafio-01">1 · Clientes</a>
+<a href="#desafio-02">2 · Exposición</a>
+<a href="#desafio-03">3 · Segmento y riesgo</a>
+<a href="#desafio-04">4 · Instrumentos</a>
+<a href="#desafio-05">5 · Cartera</a>
+<a href="#recuperacion">Recuperación</a>
+</nav>
+<section class="resource-block challenge-section" id="desafio-01">
+<span class="eyebrow">Intermedio · 3 tablas</span>
+<h2>Desafío 1 · Perfil de clientes</h2>
+<p>Reutiliza el criterio oficial de operaciones digitales y agrega información del cliente sin cambiar el conjunto seleccionado.</p>
+<div class="prompt-block">
+<div class="prompt-head">
+<span>💬 PROMPT DEL DESAFÍO</span>
+<button data-copy="#prompt-desafio-01" type="button">Copiar</button>
+</div>
+<pre id="prompt-desafio-01">Trabaja con el alumno-XX. Reemplaza XX por mi número de alumno.
+
+Objetivo:
+Aplicar exactamente el criterio contenido en
+gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt
+y enriquecer cada operación seleccionada con información del cliente.
+
+Fuentes de datos:
+- `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+
+Instrucciones:
+1. Lee primero criterio_revision.txt y explica brevemente qué criterio aplicarás.
+2. Revisa el esquema de las tres tablas antes de consultar.
+3. Usa `cuenta_id` para relacionar movimientos con cuentas y `cliente_id` para relacionar cuentas con clientes.
+4. Aplica únicamente las condiciones del criterio documental. No agregues filtros.
+5. Incluye los campos de la operación y, además: segmento, región, nivel_riesgo y canal_preferente.
+6. Realiza como máximo una única ejecución analítica mediante execute_sql_readonly.
+7. Guarda la consulta ejecutada en:
+   gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/resultados/extra_01_consulta.sql
+8. Guarda el resultado en CSV en:
+   gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/resultados/extra_01_resultado.csv
+9. Genera un informe breve en:
+   gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/informe/extra_01_informe.md
+10. El informe debe distinguir fuentes, criterio, resultado e interpretación. No describas una operación seleccionada como fraude, error o incumplimiento solo por cumplir el criterio.
+11. Cuando terminen las herramientas, entrega siempre una respuesta textual final indicando qué hiciste, qué archivos generaste y cualquier limitación.</pre>
+</div><section class="inline-rescue" id="extra1-rescate-inmediato"><h3>Si Preview se interrumpe: rescate inmediato</h3><p>Antes de pegar un rescate, revisa los <span class="codeish">tool calls</span> y <span class="codeish">tool results</span>. Usa solo el caso que corresponda.</p><div class="rescue-case"><h4>Caso A · Las herramientas ya terminaron y solo falta la respuesta humana</h4><p>Úsalo únicamente cuando las operaciones solicitadas ya tienen resultado y no quedan lecturas, consultas ni escrituras pendientes.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · solo respuesta final</span><button class="prompt-copy" data-copy="#extra1-rescate-final" type="button">Copiar</button></div><pre class="prompt-text" id="extra1-rescate-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre></div></div><div class="rescue-case"><h4>Caso B · Algunas operaciones terminaron, pero todavía quedan pasos pendientes</h4><p>Úsalo cuando ya existe trabajo correcto que no debe repetirse, pero aún falta completar una lectura, escritura u otro paso solicitado.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · completar solo lo pendiente</span><button class="prompt-copy" data-copy="#extra1-rescate-pendiente" type="button">Copiar</button></div><pre class="prompt-text" id="extra1-rescate-pendiente">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre></div></div><div class="callout warning"><strong>No intercambies los dos rescates</strong> Si todo terminó, el rescate A evita volver a usar herramientas. Si todavía faltan operaciones, el rescate B conserva lo ya completado y termina solo lo pendiente.</div></section>
+<details class="solution-block">
+<summary>Ver SQL de referencia y explicación</summary>
+<div class="callout">
+<strong>Úsalo como solución de referencia</strong>
+<p>Si quieres más dificultad, intenta primero con el prompt y compara después tu consulta con esta versión.</p>
+</div>
+<pre id="sql-desafio-01"><code>SELECT
+  m.movimiento_id,
+  m.cuenta_id,
+  m.fecha_movimiento,
+  m.hora,
+  m.tipo_movimiento,
+  m.canal,
+  m.monto,
+  m.moneda,
+  m.es_internacional,
+  m.categoria_contraparte,
+  c.cliente_id,
+  c.producto,
+  c.estado,
+  cl.segmento,
+  cl.region,
+  cl.nivel_riesgo,
+  cl.canal_preferente
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios` AS m
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS c
+  ON m.cuenta_id = c.cuenta_id
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.clientes` AS cl
+  ON c.cliente_id = cl.cliente_id
+WHERE m.canal IN ('APP', 'WEB')
+  AND m.es_internacional = 1
+  AND m.monto &gt; 2000000
+  AND c.producto = 'Tarjeta de Crédito'
+ORDER BY m.fecha_movimiento, m.hora, m.movimiento_id;</code></pre>
+<div class="sql-explanation"><h4>Qué enseña esta consulta</h4>
+<ul>
+<li>El criterio sigue aplicándose en <span class="codeish">movimientos_diarios</span> + <span class="codeish">cuentas_productos</span>.</li>
+<li>El segundo JOIN no decide qué operaciones cumplen: solo las enriquece con atributos del cliente.</li>
+<li>Como <span class="codeish">clientes</span> tiene un registro por cliente, el grano esperado sigue siendo una fila por movimiento seleccionado.</li>
+</ul></div>
+</details>
+</section>
+<section class="resource-block challenge-section" id="desafio-02">
+<span class="eyebrow">Intermedio/avanzado · 4 tablas</span>
+<h2>Desafío 2 · Exposición de los clientes seleccionados</h2>
+<p>Parte de los clientes asociados a las operaciones del criterio y construye una foto crediticia usando la fecha de corte más reciente de cada cliente.</p>
+<div class="prompt-block">
+<div class="prompt-head">
+<span>💬 PROMPT DEL DESAFÍO</span>
+<button data-copy="#prompt-desafio-02" type="button">Copiar</button>
+</div>
+<pre id="prompt-desafio-02">Trabaja con el alumno-XX. Reemplaza XX por mi número de alumno.
+
+Objetivo:
+Partir de las operaciones que cumplen el criterio de
+gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt
+y revisar la exposición crediticia más reciente de los clientes asociados.
+
+Fuentes de datos:
+- `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia`
+
+Regla adicional de este desafío:
+- Identifica primero los clientes distintos asociados a las operaciones seleccionadas.
+- Para cada cliente utiliza únicamente su fecha_corte más reciente disponible en exposicion_crediticia.
+- En esa fecha, suma la exposición, límite y garantía de todos sus productos crediticios.
+- Informa también el máximo dias_mora y la cantidad de productos crediticios presentes en esa fecha.
+
+Instrucciones:
+1. Lee criterio_revision.txt y revisa los esquemas necesarios antes de consultar.
+2. Evita multiplicar filas por unir directamente cada movimiento con todas las exposiciones del cliente.
+3. Realiza como máximo una única ejecución analítica mediante execute_sql_readonly.
+4. Guarda la consulta en:
+   gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/resultados/extra_02_consulta.sql
+5. Guarda el CSV en:
+   gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/resultados/extra_02_resultado.csv
+6. Guarda el informe en:
+   gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/informe/extra_02_informe.md
+7. En el informe diferencia claramente el criterio documental de la regla adicional de este desafío.
+8. No concluyas fraude, incumplimiento o riesgo indebido por el solo hecho de que un cliente aparezca en el resultado.
+9. Al terminar las herramientas, entrega siempre una respuesta textual final con los archivos generados y las limitaciones.</pre>
+</div><section class="inline-rescue" id="extra2-rescate-inmediato"><h3>Si Preview se interrumpe: rescate inmediato</h3><p>Antes de pegar un rescate, revisa los <span class="codeish">tool calls</span> y <span class="codeish">tool results</span>. Usa solo el caso que corresponda.</p><div class="rescue-case"><h4>Caso A · Las herramientas ya terminaron y solo falta la respuesta humana</h4><p>Úsalo únicamente cuando las operaciones solicitadas ya tienen resultado y no quedan lecturas, consultas ni escrituras pendientes.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · solo respuesta final</span><button class="prompt-copy" data-copy="#extra2-rescate-final" type="button">Copiar</button></div><pre class="prompt-text" id="extra2-rescate-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre></div></div><div class="rescue-case"><h4>Caso B · Algunas operaciones terminaron, pero todavía quedan pasos pendientes</h4><p>Úsalo cuando ya existe trabajo correcto que no debe repetirse, pero aún falta completar una lectura, escritura u otro paso solicitado.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · completar solo lo pendiente</span><button class="prompt-copy" data-copy="#extra2-rescate-pendiente" type="button">Copiar</button></div><pre class="prompt-text" id="extra2-rescate-pendiente">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre></div></div><div class="callout warning"><strong>No intercambies los dos rescates</strong> Si todo terminó, el rescate A evita volver a usar herramientas. Si todavía faltan operaciones, el rescate B conserva lo ya completado y termina solo lo pendiente.</div></section>
+<details class="solution-block">
+<summary>Ver SQL de referencia y explicación</summary>
+<div class="callout">
+<strong>Úsalo como solución de referencia</strong>
+<p>Si quieres más dificultad, intenta primero con el prompt y compara después tu consulta con esta versión.</p>
+</div>
+<pre id="sql-desafio-02"><code>WITH clientes_objetivo AS (
+  SELECT DISTINCT
+    c.cliente_id
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios` AS m
+  JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS c
+    ON m.cuenta_id = c.cuenta_id
+  WHERE m.canal IN ('APP', 'WEB')
+    AND m.es_internacional = 1
+    AND m.monto &gt; 2000000
+    AND c.producto = 'Tarjeta de Crédito'
+),
+ultima_fecha AS (
+  SELECT
+    e.cliente_id,
+    MAX(e.fecha_corte) AS fecha_corte
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia` AS e
+  JOIN clientes_objetivo AS o
+    ON e.cliente_id = o.cliente_id
+  GROUP BY e.cliente_id
+),
+resumen_exposicion AS (
+  SELECT
+    e.cliente_id,
+    e.fecha_corte,
+    SUM(e.exposicion) AS exposicion_total,
+    SUM(e.limite) AS limite_total,
+    SUM(e.garantia) AS garantia_total,
+    MAX(e.dias_mora) AS max_dias_mora,
+    COUNT(*) AS productos_crediticios
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia` AS e
+  JOIN ultima_fecha AS u
+    ON e.cliente_id = u.cliente_id
+   AND e.fecha_corte = u.fecha_corte
+  GROUP BY e.cliente_id, e.fecha_corte
+)
+SELECT
+  r.cliente_id,
+  r.fecha_corte,
+  cl.segmento,
+  cl.region,
+  cl.nivel_riesgo,
+  cl.canal_preferente,
+  r.exposicion_total,
+  r.limite_total,
+  r.garantia_total,
+  r.max_dias_mora,
+  r.productos_crediticios
+FROM resumen_exposicion AS r
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.clientes` AS cl
+  ON r.cliente_id = cl.cliente_id
+ORDER BY r.exposicion_total DESC, r.cliente_id;</code></pre>
+<div class="sql-explanation"><h4>Qué enseña esta consulta</h4>
+<ul>
+<li><span class="codeish">DISTINCT cliente_id</span> evita que un cliente con varias operaciones se replique antes de consultar exposición.</li>
+<li><span class="codeish">MAX(fecha_corte)</span> define la fotografía más reciente de cada cliente.</li>
+<li>Las exposiciones se agregan antes de volver a incorporar atributos del cliente, evitando multiplicaciones de filas.</li>
+</ul></div>
+</details>
+</section>
+<section class="resource-block challenge-section" id="desafio-03">
+<span class="eyebrow">Avanzado · 4 tablas + agregación</span>
+<h2>Desafío 3 · Exposición por segmento y riesgo</h2>
+<p>Usa el mismo criterio documental, pero cambia el grano final: de clientes individuales a grupos de segmento y nivel de riesgo.</p>
+<div class="prompt-block">
+<div class="prompt-head">
+<span>💬 PROMPT DEL DESAFÍO</span>
+<button data-copy="#prompt-desafio-03" type="button">Copiar</button>
+</div>
+<pre id="prompt-desafio-03">Trabaja con el alumno-XX. Reemplaza XX por mi número de alumno.
+
+Objetivo:
+Usar el mismo criterio de operaciones digitales de
+gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt
+para construir un resumen de exposición crediticia por segmento y nivel de riesgo.
+
+Fuentes de datos:
+- `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia`
+
+Reglas adicionales:
+- Usa clientes distintos asociados a las operaciones que cumplen el criterio.
+- Para cada cliente, utiliza su fecha_corte más reciente.
+- Primero resume la exposición a un único registro por cliente.
+- Recién después agrupa por segmento y nivel_riesgo.
+
+Resultado esperado en estructura:
+segmento, nivel_riesgo, clientes, exposicion_total, limite_total, garantia_total y max_dias_mora.
+
+Instrucciones:
+1. Lee el criterio y revisa los esquemas antes de consultar.
+2. Controla explícitamente el grano para evitar doble conteo.
+3. Realiza como máximo una única ejecución analítica mediante execute_sql_readonly.
+4. Guarda consulta, CSV e informe como:
+   - resultados/extra_03_consulta.sql
+   - resultados/extra_03_resultado.csv
+   - informe/extra_03_informe.md
+   dentro de tu carpeta alumno-XX.
+5. En el informe explica por qué fue necesario reducir primero a un registro por cliente antes del GROUP BY.
+6. Mantén una interpretación descriptiva y prudente.
+7. Al terminar las herramientas, entrega siempre una respuesta textual final.</pre>
+</div><section class="inline-rescue" id="extra3-rescate-inmediato"><h3>Si Preview se interrumpe: rescate inmediato</h3><p>Antes de pegar un rescate, revisa los <span class="codeish">tool calls</span> y <span class="codeish">tool results</span>. Usa solo el caso que corresponda.</p><div class="rescue-case"><h4>Caso A · Las herramientas ya terminaron y solo falta la respuesta humana</h4><p>Úsalo únicamente cuando las operaciones solicitadas ya tienen resultado y no quedan lecturas, consultas ni escrituras pendientes.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · solo respuesta final</span><button class="prompt-copy" data-copy="#extra3-rescate-final" type="button">Copiar</button></div><pre class="prompt-text" id="extra3-rescate-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre></div></div><div class="rescue-case"><h4>Caso B · Algunas operaciones terminaron, pero todavía quedan pasos pendientes</h4><p>Úsalo cuando ya existe trabajo correcto que no debe repetirse, pero aún falta completar una lectura, escritura u otro paso solicitado.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · completar solo lo pendiente</span><button class="prompt-copy" data-copy="#extra3-rescate-pendiente" type="button">Copiar</button></div><pre class="prompt-text" id="extra3-rescate-pendiente">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre></div></div><div class="callout warning"><strong>No intercambies los dos rescates</strong> Si todo terminó, el rescate A evita volver a usar herramientas. Si todavía faltan operaciones, el rescate B conserva lo ya completado y termina solo lo pendiente.</div></section>
+<details class="solution-block">
+<summary>Ver SQL de referencia y explicación</summary>
+<div class="callout">
+<strong>Úsalo como solución de referencia</strong>
+<p>Si quieres más dificultad, intenta primero con el prompt y compara después tu consulta con esta versión.</p>
+</div>
+<pre id="sql-desafio-03"><code>WITH clientes_objetivo AS (
+  SELECT DISTINCT
+    c.cliente_id
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios` AS m
+  JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS c
+    ON m.cuenta_id = c.cuenta_id
+  WHERE m.canal IN ('APP', 'WEB')
+    AND m.es_internacional = 1
+    AND m.monto &gt; 2000000
+    AND c.producto = 'Tarjeta de Crédito'
+),
+ultima_fecha AS (
+  SELECT
+    e.cliente_id,
+    MAX(e.fecha_corte) AS fecha_corte
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia` AS e
+  JOIN clientes_objetivo AS o
+    ON e.cliente_id = o.cliente_id
+  GROUP BY e.cliente_id
+),
+exposicion_cliente AS (
+  SELECT
+    e.cliente_id,
+    SUM(e.exposicion) AS exposicion_total,
+    SUM(e.limite) AS limite_total,
+    SUM(e.garantia) AS garantia_total,
+    MAX(e.dias_mora) AS max_dias_mora
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia` AS e
+  JOIN ultima_fecha AS u
+    ON e.cliente_id = u.cliente_id
+   AND e.fecha_corte = u.fecha_corte
+  GROUP BY e.cliente_id
+)
+SELECT
+  cl.segmento,
+  cl.nivel_riesgo,
+  COUNT(*) AS clientes,
+  SUM(ec.exposicion_total) AS exposicion_total,
+  SUM(ec.limite_total) AS limite_total,
+  SUM(ec.garantia_total) AS garantia_total,
+  MAX(ec.max_dias_mora) AS max_dias_mora
+FROM exposicion_cliente AS ec
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.clientes` AS cl
+  ON ec.cliente_id = cl.cliente_id
+GROUP BY cl.segmento, cl.nivel_riesgo
+ORDER BY exposicion_total DESC, cl.segmento, cl.nivel_riesgo;</code></pre>
+<div class="sql-explanation"><h4>Qué enseña esta consulta</h4>
+<ul>
+<li>Primero se obtiene un único resumen por cliente; recién después se hace el <span class="codeish">GROUP BY</span>.</li>
+<li>Esto evita contar varias veces la misma exposición por haber partido de movimientos individuales.</li>
+<li>El grano final pasa a ser una fila por combinación <span class="codeish">segmento + nivel_riesgo</span>.</li>
+</ul></div>
+</details>
+</section>
+<section class="resource-block challenge-section" id="desafio-04">
+<span class="eyebrow">Intermedio/avanzado · 2 tablas</span>
+<h2>Desafío 4 · Instrumentos con PnL negativo</h2>
+<p>Usa las tablas de instrumentos que no aparecen en la Prueba Tipo. El criterio vive directamente en el prompt, sin crear un archivo nuevo.</p>
+<div class="prompt-block">
+<div class="prompt-head">
+<span>💬 PROMPT DEL DESAFÍO</span>
+<button data-copy="#prompt-desafio-04" type="button">Copiar</button>
+</div>
+<pre id="prompt-desafio-04">Trabaja con el alumno-XX. Reemplaza XX por mi número de alumno.
+
+Este desafío no necesita un documento nuevo. El criterio de análisis está definido directamente en este prompt.
+
+Objetivo:
+Revisar la valorización más reciente de cada instrumento y seleccionar únicamente aquellos cuyo pnl_diario sea negativo.
+
+Fuentes de datos:
+- `arched-osprey-506820-i9.analitica_bancaria_demo.instrumentos`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.valorizaciones_instrumentos`
+
+Criterio:
+- Para cada instrumento utiliza solo su fecha_valorizacion más reciente.
+- Conserva únicamente los instrumentos con pnl_diario &lt; 0.
+
+Resultado:
+Incluye instrumento_id, tipo_instrumento, tipo_emisor, moneda, fecha_vencimiento, tasa_cupon, nominal, fecha_valorizacion, precio_referencia, tasa_referencia, valor_mercado y pnl_diario.
+
+Instrucciones:
+1. Declara que el criterio fue entregado directamente por el usuario en la conversación.
+2. Revisa el esquema de ambas tablas.
+3. Relaciónalas por instrumento_id.
+4. Asegura un único registro reciente por instrumento antes de filtrar pnl_diario.
+5. Realiza como máximo una única ejecución analítica mediante execute_sql_readonly.
+6. Guarda:
+   - resultados/extra_04_consulta.sql
+   - resultados/extra_04_resultado.csv
+   - informe/extra_04_informe.md
+   dentro de tu carpeta alumno-XX.
+7. Un pnl_diario negativo es un resultado de valorización; no lo describas por sí solo como fraude, error o incumplimiento.
+8. Al terminar las herramientas, entrega siempre una respuesta textual final.</pre>
+</div><section class="inline-rescue" id="extra4-rescate-inmediato"><h3>Si Preview se interrumpe: rescate inmediato</h3><p>Antes de pegar un rescate, revisa los <span class="codeish">tool calls</span> y <span class="codeish">tool results</span>. Usa solo el caso que corresponda.</p><div class="rescue-case"><h4>Caso A · Las herramientas ya terminaron y solo falta la respuesta humana</h4><p>Úsalo únicamente cuando las operaciones solicitadas ya tienen resultado y no quedan lecturas, consultas ni escrituras pendientes.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · solo respuesta final</span><button class="prompt-copy" data-copy="#extra4-rescate-final" type="button">Copiar</button></div><pre class="prompt-text" id="extra4-rescate-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre></div></div><div class="rescue-case"><h4>Caso B · Algunas operaciones terminaron, pero todavía quedan pasos pendientes</h4><p>Úsalo cuando ya existe trabajo correcto que no debe repetirse, pero aún falta completar una lectura, escritura u otro paso solicitado.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · completar solo lo pendiente</span><button class="prompt-copy" data-copy="#extra4-rescate-pendiente" type="button">Copiar</button></div><pre class="prompt-text" id="extra4-rescate-pendiente">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre></div></div><div class="callout warning"><strong>No intercambies los dos rescates</strong> Si todo terminó, el rescate A evita volver a usar herramientas. Si todavía faltan operaciones, el rescate B conserva lo ya completado y termina solo lo pendiente.</div></section>
+<details class="solution-block">
+<summary>Ver SQL de referencia y explicación</summary>
+<div class="callout">
+<strong>Úsalo como solución de referencia</strong>
+<p>Si quieres más dificultad, intenta primero con el prompt y compara después tu consulta con esta versión.</p>
+</div>
+<pre id="sql-desafio-04"><code>WITH valorizaciones_ordenadas AS (
+  SELECT
+    v.*,
+    ROW_NUMBER() OVER (
+      PARTITION BY v.instrumento_id
+      ORDER BY v.fecha_valorizacion DESC
+    ) AS rn
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.valorizaciones_instrumentos` AS v
+)
+SELECT
+  i.instrumento_id,
+  i.tipo_instrumento,
+  i.tipo_emisor,
+  i.moneda,
+  i.fecha_vencimiento,
+  i.tasa_cupon,
+  i.nominal,
+  v.fecha_valorizacion,
+  v.precio_referencia,
+  v.tasa_referencia,
+  v.valor_mercado,
+  v.pnl_diario
+FROM valorizaciones_ordenadas AS v
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.instrumentos` AS i
+  ON v.instrumento_id = i.instrumento_id
+WHERE v.rn = 1
+  AND v.pnl_diario &lt; 0
+ORDER BY v.pnl_diario ASC, i.instrumento_id;</code></pre>
+<div class="sql-explanation"><h4>Qué enseña esta consulta</h4>
+<ul>
+<li><span class="codeish">ROW_NUMBER()</span> permite elegir la valorización más reciente de cada instrumento.</li>
+<li>El filtro <span class="codeish">pnl_diario &lt; 0</span> se aplica después de fijar cuál es la observación vigente.</li>
+<li>También muestra que el agente puede trabajar con un criterio entregado directamente por el usuario, no solo con un documento.</li>
+</ul></div>
+</details>
+</section>
+<section class="resource-block challenge-section" id="desafio-05">
+<span class="eyebrow">Avanzado · ventana + JOIN + agregación</span>
+<h2>Desafío 5 · Resumen de cartera</h2>
+<p>Construye una vista de cartera por tipo de instrumento y emisor usando una sola valorización reciente por instrumento.</p>
+<div class="prompt-block">
+<div class="prompt-head">
+<span>💬 PROMPT DEL DESAFÍO</span>
+<button data-copy="#prompt-desafio-05" type="button">Copiar</button>
+</div>
+<pre id="prompt-desafio-05">Trabaja con el alumno-XX. Reemplaza XX por mi número de alumno.
+
+Este desafío no necesita un documento nuevo. La pregunta analítica está definida directamente en este prompt.
+
+Objetivo:
+Construir una visión resumida de la cartera usando únicamente la valorización más reciente de cada instrumento.
+
+Fuentes de datos:
+- `arched-osprey-506820-i9.analitica_bancaria_demo.instrumentos`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.valorizaciones_instrumentos`
+
+Reglas:
+- Conserva una sola valorización: la fecha_valorizacion más reciente de cada instrumento.
+- Agrupa por tipo_instrumento y tipo_emisor.
+- Calcula cantidad de instrumentos, nominal total, valor de mercado total, pnl diario total y tasa de referencia promedio.
+
+Instrucciones:
+1. Declara las fuentes efectivamente consultadas.
+2. Revisa los esquemas de ambas tablas.
+3. Explica cuál es el grano antes y después de la agregación.
+4. Realiza como máximo una única ejecución analítica mediante execute_sql_readonly.
+5. Guarda:
+   - resultados/extra_05_consulta.sql
+   - resultados/extra_05_resultado.csv
+   - informe/extra_05_informe.md
+   dentro de tu carpeta alumno-XX.
+6. El informe debe ser descriptivo: no conviertas variaciones de valorización en conclusiones de incumplimiento.
+7. Al terminar las herramientas, entrega siempre una respuesta textual final.</pre>
+</div><section class="inline-rescue" id="extra5-rescate-inmediato"><h3>Si Preview se interrumpe: rescate inmediato</h3><p>Antes de pegar un rescate, revisa los <span class="codeish">tool calls</span> y <span class="codeish">tool results</span>. Usa solo el caso que corresponda.</p><div class="rescue-case"><h4>Caso A · Las herramientas ya terminaron y solo falta la respuesta humana</h4><p>Úsalo únicamente cuando las operaciones solicitadas ya tienen resultado y no quedan lecturas, consultas ni escrituras pendientes.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · solo respuesta final</span><button class="prompt-copy" data-copy="#extra5-rescate-final" type="button">Copiar</button></div><pre class="prompt-text" id="extra5-rescate-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre></div></div><div class="rescue-case"><h4>Caso B · Algunas operaciones terminaron, pero todavía quedan pasos pendientes</h4><p>Úsalo cuando ya existe trabajo correcto que no debe repetirse, pero aún falta completar una lectura, escritura u otro paso solicitado.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · completar solo lo pendiente</span><button class="prompt-copy" data-copy="#extra5-rescate-pendiente" type="button">Copiar</button></div><pre class="prompt-text" id="extra5-rescate-pendiente">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre></div></div><div class="callout warning"><strong>No intercambies los dos rescates</strong> Si todo terminó, el rescate A evita volver a usar herramientas. Si todavía faltan operaciones, el rescate B conserva lo ya completado y termina solo lo pendiente.</div></section>
+<details class="solution-block">
+<summary>Ver SQL de referencia y explicación</summary>
+<div class="callout">
+<strong>Úsalo como solución de referencia</strong>
+<p>Si quieres más dificultad, intenta primero con el prompt y compara después tu consulta con esta versión.</p>
+</div>
+<pre id="sql-desafio-05"><code>WITH valorizaciones_ordenadas AS (
+  SELECT
+    v.*,
+    ROW_NUMBER() OVER (
+      PARTITION BY v.instrumento_id
+      ORDER BY v.fecha_valorizacion DESC
+    ) AS rn
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.valorizaciones_instrumentos` AS v
+)
+SELECT
+  i.tipo_instrumento,
+  i.tipo_emisor,
+  COUNT(*) AS instrumentos,
+  SUM(i.nominal) AS nominal_total,
+  SUM(v.valor_mercado) AS valor_mercado_total,
+  SUM(v.pnl_diario) AS pnl_diario_total,
+  AVG(v.tasa_referencia) AS tasa_referencia_promedio
+FROM valorizaciones_ordenadas AS v
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.instrumentos` AS i
+  ON v.instrumento_id = i.instrumento_id
+WHERE v.rn = 1
+GROUP BY i.tipo_instrumento, i.tipo_emisor
+ORDER BY valor_mercado_total DESC, i.tipo_instrumento, i.tipo_emisor;</code></pre>
+<div class="sql-explanation"><h4>Qué enseña esta consulta</h4>
+<ul>
+<li>Primero controla el grano temporal: una valorización por instrumento.</li>
+<li>Después relaciona atributos del instrumento y recién entonces agrega.</li>
+<li>El resultado final ya no representa instrumentos individuales, sino grupos de <span class="codeish">tipo_instrumento + tipo_emisor</span>.</li>
+</ul></div>
+</details>
+</section>
+<section class="resource-block" id="recuperacion">
+<h2>Recuperación del agente</h2>
+<p>Esta sección repite como referencia los mismos dos prompts que ya aparecen debajo de cada desafío. Son las versiones que se validaron durante las pruebas del agente.</p>
+<h3>Si las herramientas terminaron y solo falta la respuesta textual</h3>
+<div class="prompt-block">
+<div class="prompt-head">
+<span>💬 PROMPT DEL DESAFÍO</span>
+<button data-copy="#extra-recovery-final" type="button">Copiar</button>
+</div>
+<pre id="extra-recovery-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre>
+</div>
+<h3>Si todavía quedan operaciones pendientes</h3>
+<div class="prompt-block">
+<div class="prompt-head">
+<span>💬 PROMPT DEL DESAFÍO</span>
+<button data-copy="#extra-recovery-pending" type="button">Copiar</button>
+</div>
+<pre id="extra-recovery-pending">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre>
+</div>
+<div class="callout warning">
+<strong>Antes de recuperar</strong>
+<p>Revisa los eventos. Si una lectura, consulta o escritura ya tiene un <span class="codeish">tool result</span> válido, no debe repetirse. Un error <span class="codeish">429 / Resource exhausted</span> puede ser temporal: si no hubo tool calls, reintenta; si persiste, refresca la página y vuelve a probar.</p>
+</div>
+</section>
+<section class="related">
+<h2>Para repasar antes</h2>
+<div class="related-links">
+<a href="googlesql-relaciones.html">JOIN, grano y duplicación →</a>
+<a href="googlesql-agregaciones.html">GROUP BY y agregaciones →</a>
+<a href="agent-studio-pruebas.html">Preview y recuperación →</a>
+<a href="recursos.html#diccionario">Diccionario de datos →</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.</div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

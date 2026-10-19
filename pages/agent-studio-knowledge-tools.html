@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Agent Studio: Knowledge y Tools. Diferencia entre instrucciones, conocimiento estable y herramientas; configuración del Analista de Validación Integrada con Cloud Storage y BigQuery." name="description"/>
+<title>Agent Studio — Knowledge y Tools · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#agent-studio">Agent Studio</a> › Knowledge y Tools</div>
+<div class="article-layout">
+<aside aria-label="Contenido de Knowledge y Tools" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#tres-capas">Tres capas distintas</a>
+<a href="#knowledge">Knowledge</a>
+<a href="#que-va">Qué va en Knowledge</a>
+<a href="#que-no-va">Qué no va en Knowledge</a>
+<a href="#tools">Tools</a>
+<a href="#tools-curso">Tools del curso</a>
+<a href="#permisos">Permisos e identidad</a>
+<a href="#uso-real">Acceso vs uso real</a>
+<a href="#configuracion">Configuración del agente</a>
+<a href="#prueba">Uso en Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Agent Studio</span>
+<h1>Knowledge y Tools</h1>
+<p class="lead">Un agente puede tener instrucciones permanentes, referencias estables y herramientas para consultar o modificar sistemas externos. Estas tres capas cumplen funciones distintas y no deberían mezclarse.</p>
+<section id="tres-capas">
+<h2>1. Instructions, Knowledge y Tools no son lo mismo</h2>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Instructions</h3>
+<p>Definen el método de trabajo persistente: orden, reglas, límites y criterios de validación.</p>
+</div>
+<div class="concept-card">
+<h3>Knowledge</h3>
+<p>Aporta referencias estáticas o relativamente estables que el agente puede consultar para fundamentar respuestas.</p>
+</div>
+<div class="concept-card">
+<h3>Tools</h3>
+<p>Permiten que el agente interactúe con sistemas o servicios para leer, consultar, escribir o ejecutar acciones.</p>
+</div>
+</div>
+<div class="callout">
+<strong>Modelo mental</strong>
+          Instructions = cómo trabajar. Knowledge = qué referencia estable consultar. Tools = qué acciones o accesos puede utilizar.
+        </div>
+</section>
+<section id="knowledge">
+<h2>2. Knowledge: referencia estable</h2>
+<p>Agent Studio permite adjuntar archivos de conocimiento al agente principal. La documentación actual admite archivos PDF y texto plano, hasta 10 archivos por agente y 2 MB por archivo.</p>
+<p>Los archivos de Knowledge quedan almacenados en un bucket de Cloud Storage del proyecto y se asocian al agente.</p>
+<div class="callout success">
+<strong>Ejemplo del curso</strong>
+          El <strong>Analista de Validación Integrada</strong> utiliza como Knowledge estable el archivo <span class="codeish">Metodo_Validacion_Integrada.pdf</span>.
+        </div>
+</section>
+<section id="que-va">
+<h2>3. ¿Qué conviene poner en Knowledge?</h2>
+<p>Knowledge funciona mejor para referencias que deben mantenerse relativamente constantes entre muchos casos.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Buen candidato</th><th>Por qué</th></tr>
+</thead>
+<tbody>
+<tr><td>Metodología de validación</td><td>Define un marco estable que se reutiliza en múltiples casos.</td></tr>
+<tr><td>Diccionario de indicadores</td><td>Aporta definiciones que deberían mantenerse consistentes.</td></tr>
+<tr><td>Marco de análisis</td><td>Ayuda a interpretar tareas repetidas con las mismas reglas metodológicas.</td></tr>
+<tr><td>Guía de calidad o auditoría</td><td>Puede actuar como referencia persistente si su vigencia está controlada.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout">
+<strong>Knowledge no reemplaza Instructions</strong>
+          Aunque una metodología esté cargada como Knowledge, las reglas esenciales de comportamiento deben estar reflejadas en las Instructions si queremos que el agente las aplique de forma consistente.
+        </div>
+</section>
+<section id="que-no-va">
+<h2>4. ¿Qué no conviene poner en Knowledge?</h2>
+<p>No cargues como conocimiento permanente todos los archivos variables de cada caso o evaluación.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>No conviene</th><th>Motivo</th></tr>
+</thead>
+<tbody>
+<tr><td>El caso que cambia cada semana</td><td>Debe llegar como fuente específica de la tarea.</td></tr>
+<tr><td>Resultados que el agente debe descubrir</td><td>Si los conoce de antemano, la prueba pierde valor.</td></tr>
+<tr><td>Archivos de evaluación usados como caso</td><td>Puede producir filtración o sobreajuste.</td></tr>
+<tr><td>Todas las salidas históricas del agente</td><td>Puede introducir confusión entre referencia y evidencia actual.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout warning">
+<strong>Knowledge no es el caso</strong>
+          Una prueba es útil solo si el agente enfrenta la fuente variable en el momento de ejecución. Si cargamos previamente la respuesta o el caso completo como conocimiento permanente, ya no estamos midiendo generalización.
+        </div>
+</section>
+<section id="tools">
+<h2>5. Tools: capacidades de acción</h2>
+<p>Las herramientas permiten que un agente salga del texto estático de sus instrucciones y consulte o actúe sobre otros sistemas. La documentación actual de Agent Studio permite agregar herramientas al nodo del agente; entre las opciones estándar aparecen Google Search, URL Context y servidores MCP registrados en Agent Registry.</p><div class="callout"><strong>Concepto adicional · MCP</strong><p><strong>MCP (Model Context Protocol)</strong> es un protocolo que estandariza cómo aplicaciones y agentes de IA se conectan con herramientas y fuentes externas. Un servidor MCP puede exponer acciones o datos para que el agente los utilice bajo permisos definidos.</p><p><strong>Por qué aparece aquí:</strong> Agent Studio puede adjuntar servidores MCP publicados en Agent Registry como herramientas del agente. Esto amplía lo que el agente puede hacer, pero no reemplaza IAM ni los controles de acceso.</p><p><a href="https://docs.cloud.google.com/agent-registry/manage-mcp-tools" rel="noopener" target="_blank">Agent Registry · administrar servidores y herramientas MCP →</a></p></div>
+<div class="callout">
+<strong>La herramienta disponible depende de la configuración</strong>
+          Que Agent Studio admita una categoría de herramienta no significa que todos los agentes tengan las mismas. El agente solo puede utilizar las que hayan sido configuradas y autorizadas en su entorno.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Preview de Agent Studio mostrando llamadas read_object, get_table_info y execute_sql_readonly" class="course-shot-link" href="../assets/screenshots/agent-tools-execution.png" rel="noopener" target="_blank"><img alt="Preview de Agent Studio mostrando llamadas read_object, get_table_info y execute_sql_readonly" loading="lazy" src="../assets/screenshots/agent-tools-execution.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span><span> En una ejecución real, los Tools aparecen como llamadas separadas. Que una herramienta exista no prueba que una fuente haya sido consultada: hay que observar la ejecución efectiva.</span></figcaption></figure></section>
+<section id="tools-curso">
+<h2>6. Herramientas del Analista de Validación Integrada</h2>
+<p>En el entorno del curso, el agente tiene herramientas específicas para trabajar con Cloud Storage y BigQuery. Lo importante es entender su función, no memorizar únicamente el nombre técnico.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Herramienta</th><th>Servicio</th><th>Función en el flujo</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="codeish">read_object</span></td>
+<td>Cloud Storage</td>
+<td>Leer el contenido de un objeto accesible, especialmente archivos de texto.</td>
+</tr>
+<tr>
+<td><span class="codeish">write_text</span></td>
+<td>Cloud Storage</td>
+<td>Escribir entregables de texto en las rutas autorizadas del alumno.</td>
+</tr>
+<tr>
+<td><span class="codeish">get_table_info</span></td>
+<td>BigQuery</td>
+<td>Consultar esquema y metadatos necesarios para conocer campos reales antes de construir SQL.</td>
+</tr>
+<tr>
+<td><span class="codeish">execute_sql_readonly</span></td>
+<td>BigQuery</td>
+<td>Ejecutar consultas analíticas de solo lectura.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="callout success">
+<strong>Diseño intencional</strong>
+          La Prueba Tipo puede resolverse con un conjunto pequeño de herramientas: leer la fuente textual, comprobar esquemas, ejecutar una consulta de solo lectura y escribir los entregables.
+        </div>
+</section>
+<section id="permisos">
+<h2>7. Herramientas e identidad: los permisos siguen importando</h2>
+<p>Agregar una herramienta no concede acceso ilimitado. El agente opera dentro de la identidad y permisos configurados para su ejecución.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Herramienta disponible</h3>
+<p>El agente sabe que existe una capacidad que podría utilizar.</p>
+</div>
+<div class="concept-card">
+<h3>Permiso efectivo</h3>
+<p>Determina si la operación concreta puede ejecutarse sobre ese recurso.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>Un fallo de permisos no se arregla inventando el resultado</strong>
+          Si una herramienta no puede acceder a la fuente, el agente debe informar la limitación. La ausencia de acceso es parte del estado de evidencia.
+        </div>
+</section>
+<section id="uso-real">
+<h2>8. Tener acceso a una herramienta no significa haber usado una fuente</h2>
+<p>Esta distinción es central para la trazabilidad. Un agente puede tener configurada una herramienta de Storage o BigQuery y aun así no haber consultado un archivo o tabla durante esa conversación.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Situación</th><th>Qué puede afirmar el agente</th></tr>
+</thead>
+<tbody>
+<tr><td>Tiene herramienta de Storage, pero no ejecutó lectura.</td><td>No puede afirmar que leyó el archivo.</td></tr>
+<tr><td>Ejecutó <span class="codeish">read_object</span> con éxito.</td><td>Puede indicar que consultó ese objeto específico.</td></tr>
+<tr><td>Tiene Knowledge configurado, pero no recuperó información del archivo.</td><td>No debe atribuirle contenido concreto sin evidencia de consulta.</td></tr>
+<tr><td>Ejecutó <span class="codeish">get_table_info</span>.</td><td>Puede respaldar afirmaciones sobre el esquema recuperado.</td></tr>
+<tr><td>Ejecutó <span class="codeish">execute_sql_readonly</span>.</td><td>Puede utilizar el resultado real de esa consulta.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout">
+<strong>Principio de trazabilidad</strong>
+          Capacidad disponible ≠ fuente efectivamente consultada. Por eso nuestro agente empieza identificando qué fuentes pudo utilizar realmente.
+        </div>
+</section>
+<section id="configuracion">
+<h2>9. Configuración conceptual del agente del curso</h2>
+<div class="flow">
+<div class="flow-step"><strong>Instructions</strong><br/>Método de validación, orden de trabajo, prudencia y reglas de salida</div>
+<div class="flow-arrow">+</div>
+<div class="flow-step"><strong>Knowledge</strong><br/><span class="codeish">Metodo_Validacion_Integrada.pdf</span></div>
+<div class="flow-arrow">+</div>
+<div class="flow-step"><strong>Cloud Storage Tools</strong><br/><span class="codeish">read_object</span> · <span class="codeish">write_text</span></div>
+<div class="flow-arrow">+</div>
+<div class="flow-step"><strong>BigQuery Tools</strong><br/><span class="codeish">get_table_info</span> · <span class="codeish">execute_sql_readonly</span></div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><strong>Preview</strong><br/>Prompt concreto del alumno + ejecución visible</div>
+</div>
+</section>
+<section id="prueba">
+<h2>10. Cómo se usan estas capas en la Prueba Tipo</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Necesidad</th><th>Capa que la resuelve</th></tr>
+</thead>
+<tbody>
+<tr><td>Trabajar primero con fuentes y no inventar.</td><td>Instructions.</td></tr>
+<tr><td>Aplicar una metodología estable de validación.</td><td>Instructions + Knowledge.</td></tr>
+<tr><td>Leer <span class="codeish">criterio_revision.txt</span>.</td><td><span class="codeish">read_object</span>.</td></tr>
+<tr><td>Comprobar columnas de las tablas.</td><td><span class="codeish">get_table_info</span>.</td></tr>
+<tr><td>Obtener los casos que cumplen el criterio.</td><td><span class="codeish">execute_sql_readonly</span>.</td></tr>
+<tr><td>Guardar SQL, CSV e informe.</td><td><span class="codeish">write_text</span>.</td></tr>
+<tr><td>Solicitar esa tarea concreta.</td><td>Prompt del alumno en Preview.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout success">
+<strong>Esto explica por qué el agente es reutilizable</strong>
+          El caso y la ruta del alumno pueden cambiar sin reescribir todo el método. Las Instructions y Knowledge permanecen; el prompt y las fuentes específicas cambian.
+        </div>
+<div class="related-links">
+<a href="agent-studio-pruebas.html">Siguiente: pruebas, Preview y tool calls →</a>
+<a href="cloud-storage-conceptos.html">Repasar Cloud Storage →</a>
+<a href="bigquery.html">Repasar BigQuery →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio/design-agents" rel="noopener" target="_blank">Google Cloud — Design agents in Agent Studio</a></li>
+<li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/agents" rel="noopener" target="_blank">Google Cloud — Agents overview</a></li>
+</ul>
+<p>La documentación oficial vigente describe Knowledge como archivos de referencia estáticos del agente principal y Tools como capacidades agregadas al agente, con permisos e identidad asociados. Los nombres <span class="codeish">read_object</span>, <span class="codeish">write_text</span>, <span class="codeish">get_table_info</span> y <span class="codeish">execute_sql_readonly</span> corresponden a las herramientas configuradas y comprobadas en el entorno específico de este curso.</p>
+</section>
+<div class="page-nav">
+<a href="agent-studio-fundamentos.html">← Agent Studio — fundamentos</a>
+<a href="agent-studio-pruebas.html">Pruebas y Preview →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

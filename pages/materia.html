@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Mapa navegable de la materia FT-00080. Filtra por servicio, tema o palabra clave y entra directamente a cada contenido." name="description"/>
+<title>Materia · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a><a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a><a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › Materia</div>
+<article class="article materia-hub">
+<span class="eyebrow">Mapa de contenidos</span>
+<h1>Materia</h1>
+<p class="lead">Usa este mapa para entrar por tema en vez de recorrer el curso linealmente. Puedes buscar una palabra o filtrar por área.</p>
+<section aria-labelledby="filtro-materia" class="materia-filter">
+<h2 id="filtro-materia">Filtrar materia</h2>
+<div class="filter-controls">
+<label class="filter-search">
+<span>Buscar</span>
+<input data-materia-search="" placeholder="Ej.: JOIN, bucket, Preview, FARO-4…" type="search"/>
+</label>
+<label class="filter-select">
+<span>Área</span>
+<select data-materia-category="">
+<option value="all">Todas las áreas</option>
+<option value="fundamentos">Fundamentos</option>
+<option value="gcp">Google Cloud</option>
+<option value="storage">Cloud Storage</option>
+<option value="bigquery">BigQuery</option>
+<option value="sql">GoogleSQL</option>
+<option value="gemini">Gemini</option>
+<option value="agent">Agent Studio</option>
+<option value="validacion">Validación</option>
+</select>
+</label>
+</div>
+<p aria-live="polite" class="filter-status" data-materia-status=""></p>
+</section>
+<div class="materia-groups" data-materia-grid="">
+<section class="materia-group" data-materia-group="fundamentos" id="fundamentos">
+<div class="materia-group-head">
+<span class="eyebrow">01</span>
+<h2>Fundamentos</h2>
+<p>Conceptos necesarios antes de entrar a las herramientas.</p>
+</div>
+<div class="materia-cards">
+<a class="materia-card" data-category="fundamentos" data-keywords="datos informacion analitica estructurados semiestructurados no estructurados grano identificadores llaves relaciones dato calculo interpretacion" data-materia-item="" href="fundamentos.html">
+<strong>Fundamentos de datos</strong>
+<span>Datos e información · tipos de datos · grano · llaves · relaciones · dato, cálculo e interpretación.</span>
+</a>
+</div>
+</section>
+<section class="materia-group" data-materia-group="gcp" id="gcp">
+<div class="materia-group-head">
+<span class="eyebrow">02</span>
+<h2>Navegación en Google Cloud</h2>
+<p>Orientación básica antes de usar cualquier servicio.</p>
+</div>
+<div class="materia-cards">
+<a class="materia-card" data-category="gcp" data-keywords="google cloud console proyecto project id buscador servicios menu navegacion regiones ubicaciones permisos acceso" data-materia-item="" href="navegacion-gcp.html">
+<strong>Navegación básica en GCP</strong>
+<span>Console · proyecto activo · Project ID · buscador · menú · región · permisos.</span>
+</a>
+</div>
+</section>
+<section class="materia-group" data-materia-group="storage" id="cloud-storage">
+<div class="materia-group-head">
+<span class="eyebrow">03</span>
+<h2>Cloud Storage</h2>
+<p>Archivos, buckets, objetos, rutas y operaciones.</p>
+</div>
+<div class="materia-cards">
+<a class="materia-card" data-category="storage" data-keywords="cloud storage bucket objeto carpetas prefijos namespace metadatos gs uri" data-materia-item="" href="cloud-storage-conceptos.html">
+<strong>Conceptos</strong>
+<span>Bucket · objeto · carpetas/prefijos · namespaces · metadatos · rutas <span class="codeish">gs://</span>.</span>
+</a>
+<a class="materia-card" data-category="storage" data-keywords="crear bucket carpeta subir descargar localizar copiar mover eliminar archivo permisos access denied" data-materia-item="" href="cloud-storage-operaciones.html">
+<strong>Operaciones</strong>
+<span>Crear · subir · descargar · localizar · copiar · mover · eliminar · errores de acceso.</span>
+</a>
+</div>
+</section>
+<section class="materia-group" data-materia-group="bigquery" id="bigquery">
+<div class="materia-group-head">
+<span class="eyebrow">04</span>
+<h2>BigQuery</h2>
+<p>Entorno analítico, tablas y ejecución de consultas.</p>
+</div>
+<div class="materia-cards">
+<a class="materia-card" data-category="bigquery" data-keywords="bigquery proyecto dataset tabla explorer schema details preview editor sql ejecutar resultados exportar" data-materia-item="" href="bigquery.html">
+<strong>Entorno de BigQuery</strong>
+<span>Proyecto → dataset → tabla · Explorer · Schema · Details · Preview · editor SQL · resultados.</span>
+</a>
+</div>
+</section>
+<section class="materia-group" data-materia-group="sql" id="googlesql">
+<div class="materia-group-head">
+<span class="eyebrow">05</span>
+<h2>GoogleSQL</h2>
+<p>Lenguaje utilizado para analizar los datos en BigQuery.</p>
+</div>
+<div class="materia-cards">
+<a class="materia-card" data-category="sql" data-keywords="googlesql sql select from where and or in order by limit alias" data-materia-item="" href="googlesql-fundamentos.html">
+<strong>Fundamentos</strong>
+<span>SELECT · FROM · WHERE · AND/OR/IN · ORDER BY · LIMIT · alias.</span>
+</a>
+<a class="materia-card" data-category="sql" data-keywords="sql agregaciones count sum avg min max group by having count distinct countif null" data-materia-item="" href="googlesql-agregaciones.html">
+<strong>Agregaciones</strong>
+<span>COUNT · SUM · AVG · MIN/MAX · GROUP BY · HAVING · DISTINCT · COUNTIF.</span>
+</a>
+<a class="materia-card" data-category="sql" data-keywords="sql relaciones join inner join left join cardinalidad grano duplicacion llaves cuenta_id cliente_id" data-materia-item="" href="googlesql-relaciones.html">
+<strong>Relaciones y JOIN</strong>
+<span>JOIN · INNER vs LEFT · cardinalidad · grano · multiplicación de filas · controles.</span>
+</a>
+</div>
+</section>
+<section class="materia-group" data-materia-group="gemini" id="gemini">
+<div class="materia-group-head">
+<span class="eyebrow">06</span>
+<h2>Gemini y prompting</h2>
+<p>Prompts controlados, documentos y asistencia en BigQuery.</p>
+</div>
+<div class="materia-cards">
+<a class="materia-card" data-category="gemini" data-keywords="gemini prompting prompt objetivo fuentes contexto tarea restricciones formato validacion" data-materia-item="" href="gemini-prompting.html">
+<strong>Prompting</strong>
+<span>Objetivo · fuentes · contexto · tarea · restricciones · formato · validación.</span>
+</a>
+<a class="materia-card" data-category="gemini" data-keywords="gemini documentos pdf texto plano txt cloud storage importar legibilidad" data-materia-item="" href="gemini-documentos.html">
+<strong>Gemini con documentos</strong>
+<span>Importar fuentes · legibilidad · PDF → texto plano · guardar TXT.</span>
+</a>
+<a class="materia-card" data-category="gemini bigquery" data-keywords="gemini bigquery generar sql lenguaje natural revisar consulta equivalencia verificacion" data-materia-item="" href="gemini-bigquery.html">
+<strong>Gemini en BigQuery</strong>
+<span>Generar SQL · revisar antes de ejecutar · contexto · equivalencia · verificación.</span>
+</a>
+</div>
+</section>
+<section class="materia-group" data-materia-group="agent" id="agent-studio">
+<div class="materia-group-head">
+<span class="eyebrow">07</span>
+<h2>Agent Studio</h2>
+<p>Diseño, conocimiento, herramientas y pruebas de agentes.</p>
+</div>
+<div class="materia-cards">
+<a class="materia-card" data-category="agent" data-keywords="agent studio agente prompt instrucciones persistentes name description instructions model save flow preview suggested prompts" data-materia-item="" href="agent-studio-fundamentos.html">
+<strong>Fundamentos</strong>
+<span>Agente vs prompt · Name · Description · Instructions · Model · Save · Flow · Preview.</span>
+</a>
+<a class="materia-card" data-category="agent" data-keywords="agent studio knowledge tools read_object write_text get_table_info execute_sql_readonly permisos identidad" data-materia-item="" href="agent-studio-knowledge-tools.html">
+<strong>Knowledge y Tools</strong>
+<span>Knowledge estable · herramientas · Storage · BigQuery · permisos · uso efectivo.</span>
+</a>
+<a class="materia-card" data-category="agent" data-keywords="agent studio preview pruebas tool calls tool result 0 1 2 3 recuperacion 429 resource exhausted" data-materia-item="" href="agent-studio-pruebas.html">
+<strong>Pruebas y Preview</strong>
+<span>Prueba 0-1-2-3 · eventos · tool calls · interrupciones · recuperación · cuota.</span>
+</a>
+</div>
+</section>
+<section class="materia-group" data-materia-group="validacion" id="validacion">
+<div class="materia-group-head">
+<span class="eyebrow">08</span>
+<h2>Validación y trazabilidad</h2>
+<p>Cómo conectar criterio y evidencia sin sobreinterpretar.</p>
+</div>
+<div class="materia-cards">
+<a class="materia-card" data-category="validacion" data-keywords="validacion fuentes alcance criterio evidencia interpretacion faro-4 faro trazabilidad informe final informacion faltante contradicciones" data-materia-item="" href="validacion-integrada.html">
+<strong>Validación integrada</strong>
+<span>Criterio · evidencia · interpretación · FARO-4 · información faltante · trazabilidad · informe final.</span>
+</a>
+</div>
+</section>
+</div>
+<section class="related">
+<h2>¿Buscas el flujo de evaluación?</h2>
+<div class="related-links">
+<a href="prueba-tipo.html">Abrir Prueba Tipo paso a paso →</a>
+<a href="recursos.html">Abrir prompts, diccionario y glosario →</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

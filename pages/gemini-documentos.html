@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Gemini con documentos: importar PDF desde Cloud Storage, comprobar legibilidad y convertir fielmente PDF a texto plano para la Prueba Tipo." name="description"/>
+<title>Gemini con documentos · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#gemini">Gemini</a> › Documentos</div>
+<div class="article-layout">
+<aside aria-label="Contenido de Gemini con documentos" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#documentos">IA y documentos</a>
+<a href="#legibilidad">Legibilidad</a>
+<a href="#importar">Importar desde Storage</a>
+<a href="#pdf-txt">PDF → texto plano</a>
+<a href="#prompt">Prompt validado</a>
+<a href="#resultado">Resultado esperado</a>
+<a href="#guardar">Guardar y subir TXT</a>
+<a href="#por-que">Por qué convertir</a>
+<a href="#errores">Errores frecuentes</a>
+<a href="#prueba">Uso en Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Gemini</span>
+<h1>Gemini con documentos</h1>
+<p class="lead">En esta etapa utilizaremos Gemini para leer un PDF almacenado en Cloud Storage y convertir su contenido a texto plano sin resumir ni interpretar. Esa copia textual será la entrada documental que después leerá el agente.</p>
+<section id="documentos">
+<h2>1. Trabajar con documentos no es lo mismo que trabajar con tablas</h2>
+<p>Un PDF es una fuente documental no estructurada. Puede contener títulos, listas, párrafos, tablas o incluso páginas escaneadas. Antes de pedir conclusiones, necesitamos comprobar si el contenido fue incorporado y si puede leerse con suficiente fidelidad.</p>
+<div class="callout">
+<strong>Disciplina del curso</strong>
+          Primero identifica y comprende la fuente. Después analiza. Si una parte no puede leerse, la respuesta correcta es reconocer esa limitación, no completar el contenido por inferencia.
+        </div>
+</section>
+<section id="legibilidad">
+<h2>2. Comprueba la legibilidad</h2>
+<p>No todos los PDF son equivalentes. Un PDF con texto seleccionable suele ser más fácil de procesar que un documento compuesto principalmente por imágenes o páginas escaneadas.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>PDF con texto legible</h3>
+<p>El modelo puede acceder al contenido textual y conservar títulos, cifras y listas con mayor facilidad.</p>
+</div>
+<div class="concept-card">
+<h3>PDF escaneado o complejo</h3>
+<p>Puede necesitar capacidades adicionales de análisis/OCR y siempre requiere revisar con mayor cuidado el resultado.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>No completes lo ilegible</strong>
+          Para esta práctica, si una parte no puede leerse con certeza, el prompt exige escribir <span class="codeish">[CONTENIDO NO LEGIBLE]</span>.
+        </div>
+</section>
+<section id="importar">
+<h2>3. Importar el PDF desde Cloud Storage</h2>
+<p>En el entorno de Google Cloud utilizado en este curso comprobamos que el chat de Gemini permite usar la opción <strong>Importar desde Cloud Storage</strong>. Así evitamos descargar el PDF al computador solo para volver a adjuntarlo.</p>
+<ol>
+<li>Abre el espacio de chat de Gemini utilizado en el curso.</li>
+<li>Inicia un chat nuevo.</li>
+<li>Abre el selector para añadir/importar una fuente.</li>
+<li>Selecciona <strong>Cloud Storage</strong>.</li>
+<li>Localiza el PDF de la Prueba Tipo.</li>
+<li>Confirma que el documento quedó incorporado a la conversación.</li>
+<li>Recién entonces ejecuta el prompt de conversión.</li>
+</ol>
+<div class="callout success">
+<strong>Fuente de la Prueba Tipo</strong>
+<span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/fuentes/criterio_revision_operaciones_digitales.pdf</span>
+</div>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: Menú de Gemini con la opción Importar desde Cloud Storage resaltada" class="course-shot-link" href="../assets/screenshots/gemini-import-menu.png" rel="noopener" target="_blank"><img alt="Menú de Gemini con la opción Importar desde Cloud Storage resaltada" loading="lazy" src="../assets/screenshots/gemini-import-menu.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Para trabajar con el PDF del curso, usa Importar desde Cloud Storage en lugar de copiar manualmente su contenido.</span></figcaption></figure>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: Selector de objetos de Cloud Storage dentro de prueba-tipo con la carpeta fuentes resaltada" class="course-shot-link" href="../assets/screenshots/gemini-source-folder.png" rel="noopener" target="_blank"><img alt="Selector de objetos de Cloud Storage dentro de prueba-tipo con la carpeta fuentes resaltada" loading="lazy" src="../assets/screenshots/gemini-source-folder.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Navega hasta prueba-tipo/fuentes para localizar el PDF oficial de la evaluación.</span></figcaption></figure><figure class="course-shot"><a aria-label="Abrir captura completa: PDF del criterio ya adjunto al chat de Gemini" class="course-shot-link" href="../assets/screenshots/gemini-source-attached.png" rel="noopener" target="_blank"><img alt="PDF del criterio ya adjunto al chat de Gemini" loading="lazy" src="../assets/screenshots/gemini-source-attached.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Antes de enviar el prompt, confirma visualmente que el PDF oficial aparece adjunto en el cuadro de conversación.</span></figcaption></figure>
+<div class="callout">
+<strong>Interfaz validada en el curso</strong>
+          Los nombres exactos de botones pueden cambiar con la interfaz. Si cambia la ubicación del control, conserva la lógica: abrir Gemini → adjuntar/importar fuente → Cloud Storage → seleccionar el PDF correcto.
+        </div>
+</section>
+<section id="pdf-txt">
+<h2>4. Qué significa convertir PDF → texto plano</h2>
+<p>En esta actividad <strong>convertir no significa resumir</strong>. Queremos una representación textual fiel del documento para que otro componente pueda leerla de forma directa.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Sí queremos</th><th>No queremos</th></tr>
+</thead>
+<tbody>
+<tr><td>Conservar títulos y subtítulos.</td><td>Reescribir el documento con “mejor estilo”.</td></tr>
+<tr><td>Conservar cifras y condiciones.</td><td>Redondear, simplificar o reinterpretar cifras.</td></tr>
+<tr><td>Conservar listas y aclaraciones.</td><td>Eliminar detalles por considerarlos poco importantes.</td></tr>
+<tr><td>Marcar contenido ilegible.</td><td>Inventar lo que probablemente decía.</td></tr>
+<tr><td>Obtener solo texto.</td><td>Agregar introducciones o comentarios del modelo.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="flow">
+<div class="flow-step">PDF original en Cloud Storage</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Gemini lee el documento</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Texto plano fiel en la respuesta</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">criterio_revision.txt</span></div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Cloud Storage → agente</div>
+</div>
+</section>
+<section id="prompt">
+<h2>5. Prompt validado para PDF → TXT</h2>
+<p>Este es el prompt que utilizamos y validamos para la Prueba Tipo. En la evaluación se debe copiar <strong>sin reformularlo innecesariamente</strong>.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>Prompt validado · PDF → texto plano</span>
+<button class="prompt-copy" data-copy="#prompt-pdf-txt" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="prompt-pdf-txt">El PDF adjunto es la fuente documental oficial de una evaluación.
+
+Convierte fielmente su contenido a texto plano para que posteriormente pueda ser procesado por otro agente.
+
+Debes cumplir estas reglas:
+- No resumas.
+- No interpretes.
+- No agregues información.
+- No elimines condiciones, cifras, títulos ni aclaraciones.
+- No reformules el significado de ninguna condición.
+- Conserva el código del documento, títulos, subtítulos, listas numeradas, cifras y expresiones relevantes.
+- Conserva expresiones como “criterio de revisión”, “revisión adicional” y cualquier limitación expresada en el documento.
+- Si alguna parte no puede leerse con certeza, escribe `[CONTENIDO NO LEGIBLE]` en lugar de inferirla.
+
+Devuelve únicamente el texto resultante, sin introducción, explicación, comentarios adicionales ni bloques Markdown.
+
+Ese contenido será guardado posteriormente con el nombre `criterio_revision.txt`.
+
+Antes de finalizar, verifica que el texto represente fielmente el PDF original y que ninguna condición haya sido alterada.</pre>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Prompt de conversión a texto plano con el PDF adjunto y botón de envío resaltado" class="course-shot-link" href="../assets/screenshots/gemini-prompt-send.png" rel="noopener" target="_blank"><img alt="Prompt de conversión a texto plano con el PDF adjunto y botón de envío resaltado" loading="lazy" src="../assets/screenshots/gemini-prompt-send.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Con la fuente ya adjunta, pega el prompt validado completo y recién entonces envíalo.</span></figcaption></figure>
+</section>
+<section id="resultado">
+<h2>6. Qué deberías observar en el resultado</h2>
+<p>La respuesta debe contener solamente la representación textual del documento. En nuestro PDF de práctica deberían conservarse, entre otros elementos, el código del documento y las cuatro condiciones simultáneas del criterio.</p>
+<div class="callout success">
+<strong>Comprobación mínima</strong>
+          Antes de guardar el TXT, confirma que siguen presentes las referencias a APP/WEB, operación internacional, monto superior a 2.000.000 y producto “Tarjeta de Crédito”, además de la aclaración de que cumplir el criterio implica revisión adicional y no demuestra fraude o incumplimiento.
+        </div>
+<div class="callout warning">
+<strong>No corrijas silenciosamente la salida</strong>
+          Si una condición desapareció, cambió de sentido o fue resumida, vuelve a ejecutar o corrige el proceso comparando contra el PDF original. La fidelidad documental es parte de la evaluación.
+        </div>
+</section>
+<section id="guardar">
+<h2>7. Guardar el resultado como <span class="codeish">criterio_revision.txt</span></h2>
+<p>En el entorno que probamos, Gemini mostró el texto resultante en el chat, pero no produjo automáticamente un archivo TXT descargable ni lo escribió de regreso en Cloud Storage. Por eso este tramo es manual.</p>
+<ol>
+<li>Copia únicamente el texto resultante.</li>
+<li>Guárdalo localmente como <span class="codeish">criterio_revision.txt</span>.</li>
+<li>Abre tu espacio personal en Cloud Storage.</li>
+<li>Entra a la carpeta <span class="codeish">insumos/</span>.</li>
+<li>Sube <span class="codeish">criterio_revision.txt</span>.</li>
+<li>Verifica que el archivo quedó en la ruta correcta.</li>
+</ol>
+<div class="callout">
+<strong>Ruta esperada</strong>
+<span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt</span>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Respuesta de Gemini con el criterio de revisión convertido a texto plano" class="course-shot-link" href="../assets/screenshots/gemini-text-result.png" rel="noopener" target="_blank"><img alt="Respuesta de Gemini con el criterio de revisión convertido a texto plano" loading="lazy" src="../assets/screenshots/gemini-text-result.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>La salida debe conservar código, condiciones, fuentes requeridas, alcance y nota operativa sin agregar interpretación.</span></figcaption></figure>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Cloud Storage mostrando criterio_revision.txt dentro de alumno-00/insumos" class="course-shot-link" href="../assets/screenshots/storage-criterio-uploaded.png" rel="noopener" target="_blank"><img alt="Cloud Storage mostrando criterio_revision.txt dentro de alumno-00/insumos" loading="lazy" src="../assets/screenshots/storage-criterio-uploaded.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>El paso termina cuando criterio_revision.txt aparece en la carpeta insumos del alumno.</span></figcaption></figure>
+</section>
+<section id="por-que">
+<h2>8. ¿Por qué convertir el PDF si Gemini ya puede leerlo?</h2>
+<p>Porque intervienen herramientas distintas. El chat de Gemini puede interpretar el PDF directamente en esta práctica, pero la herramienta de lectura de Cloud Storage utilizada por nuestro agente trabaja de forma más directa y predecible con contenido textual.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>PDF original</h3>
+<p>Se conserva como la fuente documental oficial y permite volver a verificar el contenido.</p>
+</div>
+<div class="concept-card">
+<h3>TXT derivado</h3>
+<p>Es una representación textual fiel preparada como entrada para el agente.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>El TXT no reemplaza conceptualmente al PDF</strong>
+          El PDF sigue siendo la fuente original. El TXT es un insumo derivado cuya validez depende de que la conversión haya conservado fielmente el contenido.
+        </div>
+</section>
+<section id="errores">
+<h2>9. Errores frecuentes</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Problema</th><th>Qué hacer</th></tr>
+</thead>
+<tbody>
+<tr><td>Se importó el PDF equivocado.</td><td>Retíralo del flujo y selecciona la ruta oficial antes de ejecutar el prompt.</td></tr>
+<tr><td>Gemini agregó una introducción.</td><td>No la copies al TXT; revisa además que haya respetado el resto de las reglas.</td></tr>
+<tr><td>El resultado resumió condiciones.</td><td>Vuelve al prompt validado y comprueba fidelidad contra el PDF.</td></tr>
+<tr><td>Una parte no es legible.</td><td>Debe aparecer <span class="codeish">[CONTENIDO NO LEGIBLE]</span>, no una inferencia.</td></tr>
+<tr><td>El TXT quedó en otra carpeta.</td><td>Muévelo o vuelve a subirlo a <span class="codeish">alumno-XX/insumos/</span>.</td></tr>
+<tr><td>Se esperaba que Gemini escribiera en Storage.</td><td>En el flujo validado, esa escritura es manual: guardar TXT y luego subirlo.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="prueba">
+<h2>10. Lugar exacto dentro de la Prueba Tipo</h2>
+<p>Este módulo cubre los pasos documentales centrales de la evaluación:</p>
+<div class="flow">
+<div class="flow-step">02 · Localizar documento fuente</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">03 · Importar PDF en Gemini</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">04 · Convertir PDF a TXT</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">05 · Subir <span class="codeish">criterio_revision.txt</span></div>
+</div>
+<div class="related-links">
+<a href="cloud-storage-operaciones.html#subir">Repasar: subir archivos a Cloud Storage →</a>
+<a href="gemini-prompting.html#validacion">Repasar: validación en prompting →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Base técnica y evidencia utilizada</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/gemini/enterprise/docs/connectors/prepare-data" rel="noopener" target="_blank">Google Cloud — Preparar datos: documentos no estructurados desde Cloud Storage</a></li>
+<li><a href="https://docs.cloud.google.com/generative-ai-app-builder/docs/prepare-data" rel="noopener" target="_blank">Google Cloud — Agent Search: formatos de documentos e importación desde Cloud Storage</a></li>
+</ul>
+<p>La documentación oficial confirma que los productos Gemini/Agent de Google Cloud trabajan con documentos no estructurados, incluidos PDF, y admiten Cloud Storage como origen. La ruta exacta “Importar desde Cloud Storage → PDF → respuesta de texto” descrita arriba fue además comprobada directamente en la interfaz utilizada durante este curso. La interfaz puede evolucionar, por lo que se prioriza el flujo funcional sobre memorizar la posición exacta de un botón.</p>
+</section>
+<div class="page-nav">
+<a href="gemini-prompting.html">← Gemini y prompting</a>
+<a href="gemini-bigquery.html">Gemini en BigQuery →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

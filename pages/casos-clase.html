@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Casos y preguntas reales surgidas en clases, desarrolladas con foco en GCP, BigQuery, IA, auditoría, riesgo y control." name="description"/>
+<title>Casos de clase y profundizaciones · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+  </script>
+<link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a aria-current="page" href="casos-clase.html">Casos de clase</a>
+<a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="theme-toggle-icon">☾</span>
+<span class="theme-toggle-label">Modo nocturno</span>
+</button>
+<button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a aria-current="page" href="casos-clase.html">Casos de clase</a>
+<a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › Casos de clase y profundizaciones</div>
+<article class="article">
+<span class="eyebrow">Conversaciones reales del curso</span>
+<h1>Casos de clase y profundizaciones</h1>
+<p class="lead">
+      Preguntas, necesidades y situaciones que surgieron durante las clases, reorganizadas para conectar
+      el problema profesional con Google Cloud, BigQuery e inteligencia artificial. Ningún caso representa
+      por sí solo “el tema central” del curso: son distintas facetas del trabajo de auditoría, riesgo y control.
+    </p>
+<div class="callout">
+<strong>Cómo están construidos los casos</strong>
+<p>
+        Primero se abstrae el problema. Después se distinguen datos, reglas, operaciones y riesgos.
+        Finalmente se propone cómo abordarlo con los servicios utilizados en el curso.
+        Cuando aparece SQL en esta sección, el bloque está preparado para ejecutarse en BigQuery
+        sobre <span class="codeish">arched-osprey-506820-i9.analitica_bancaria_demo</span>.
+      </p>
+</div>
+<nav aria-label="Casos de clase" class="resource-jumps"><a href="#caso-01">01 · Agentes y flujo de auditoría</a><a href="#profundizaciones-caso01">01A–F · Profundizaciones de agentes</a><a href="#caso-02">02 · Naturaleza de los datos</a><a href="#caso-03">03 · Validaciones y comportamiento</a><a href="#caso-04">04 · Autoservicio de datos</a><a href="#caso-05">05 · Excel/CSV y GoogleSQL</a><a href="#caso-06">06 · Patrones SQL</a><a href="#caso-07">07 · Indicadores y actualización</a></nav>
+<section class="resource-block class-case" id="caso-01">
+<span class="eyebrow">Caso 01 · Agentes aplicados al flujo de auditoría</span>
+<h2>De documentos, datos y pruebas a un informe trazable</h2>
+<p>
+        En clase se describió un flujo donde el equipo recibe documentos y datos de distintos formatos,
+        debe interpretar normas o procedimientos, ejecutar pruebas y terminar produciendo entregables.
+        La preocupación no era solamente “automatizar un resumen”, sino conseguir que la salida final
+        sea coherente con las pruebas y fuentes efectivamente utilizadas.
+      </p>
+<h3>El problema, ordenado</h3>
+<div class="concept-grid">
+<div class="concept-card"><h4>Entradas</h4><ul>
+<li>Normativas, procedimientos y políticas internas.</li>
+<li>PDF, Word y TXT.</li>
+<li>Excel y otras fuentes tabulares.</li>
+<li>Imágenes, links y antecedentes complementarios.</li>
+</ul></div>
+<div class="concept-card"><h4>Trabajo</h4><ul>
+<li>Resumir sin perder condiciones relevantes.</li>
+<li>Extraer criterios, controles y exigencias.</li>
+<li>Diseñar o ejecutar pruebas.</li>
+<li>Comparar normativa con políticas.</li>
+<li>Analizar datos y preparar evidencia.</li>
+</ul></div>
+<div class="concept-card"><h4>Salidas</h4><ul>
+<li>Resumen ejecutivo.</li>
+<li>Programa de revisión.</li>
+<li>Matriz de criterios o controles.</li>
+<li>Resultados de consultas.</li>
+<li>Informe y material ejecutivo.</li>
+</ul></div>
+<div class="concept-card"><h4>Preocupaciones</h4><ul>
+<li>Que la conclusión esté respaldada por la evidencia.</li>
+<li>Que no se omitan requisitos relevantes.</li>
+<li>Que el informe no se contradiga.</li>
+<li>Que el resumen ejecutivo no exagere los resultados.</li>
+</ul></div>
+</div>
+<div class="callout success">
+<strong>Cadena de trabajo</strong>
+<p><strong>fuente → criterio → prueba → evidencia → interpretación → conclusión</strong></p>
+<p>Para auditoría, riesgo y control, mantener esa cadena suele ser más importante que automatizar un documento final sin trazabilidad.</p>
+</div>
+<h3>Cómo repartir el trabajo en GCP</h3>
+<div class="table-scroll"><table>
+<thead><tr><th>Servicio</th><th>Rol</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td><strong>Cloud Storage</strong></td><td>Conservar fuentes y entregables.</td><td>PDF original, TXT preparado, SQL, CSV e informe.</td></tr>
+<tr><td><strong>Gemini</strong></td><td>Comprender y transformar contenido.</td><td>Extraer condiciones de un documento o comparar dos textos.</td></tr>
+<tr><td><strong>BigQuery</strong></td><td>Ejecutar pruebas reproducibles sobre datos estructurados.</td><td>Filtrar operaciones, cruzar tablas o calcular exposición.</td></tr>
+<tr><td><strong>Agent Studio</strong></td><td>Orquestar fuentes, herramientas y respuesta.</td><td>Leer un criterio, consultar BigQuery, guardar evidencia y redactar una interpretación.</td></tr>
+</tbody>
+</table></div>
+<h3>Qué hacer con distintos tipos de archivo</h3>
+<div class="table-scroll"><table>
+<thead><tr><th>Tipo</th><th>Tratamiento razonable con el stack del curso</th></tr></thead>
+<tbody>
+<tr><td>PDF / TXT</td><td>Conservar el original y, cuando corresponda, producir una versión textual controlada para análisis.</td></tr>
+<tr><td>Word</td><td>Puede conservarse en Storage; para reproducir el flujo del curso, conviene convertirlo a PDF o TXT antes del análisis.</td></tr>
+<tr><td>Excel</td><td>Si sus hojas contienen datos para pruebas, exportar la hoja relevante a CSV y cargarla a BigQuery.</td></tr>
+<tr><td>Imágenes</td><td>Conservarlas como evidencia. Analizarlas requiere una capacidad multimodal explícita; almacenarlas no equivale a interpretarlas.</td></tr>
+<tr><td>Links</td><td>Un link no constituye por sí mismo una fuente consultada. El contenido debe recuperarse mediante una herramienta o incorporarse como fuente controlada.</td></tr>
+</tbody>
+</table></div>
+<h3>Un uso especialmente valioso: control de calidad del informe</h3>
+<p>
+        La IA puede aportar no solo redactando, sino revisando si lo redactado se sostiene con la evidencia.
+        Por ejemplo, puede ayudar a comprobar si una conclusión importante tiene fuente, si el resumen ejecutivo
+        es más fuerte que los resultados, o si se está confundiendo una selección para revisión con un incumplimiento confirmado.
+      </p>
+<div class="callout warning"><strong>Guardar no significa consultar</strong>
+<p>Que un archivo exista en Cloud Storage no significa que el agente lo haya leído. El agente debe distinguir entre una fuente disponible y una fuente efectivamente consultada.</p>
+</div>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/storage/docs" rel="noopener" target="_blank">Cloud Storage · documentación oficial →</a>
+<a href="https://docs.cloud.google.com/bigquery/docs" rel="noopener" target="_blank">BigQuery · documentación oficial →</a>
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio?hl=es-419" rel="noopener" target="_blank">Agent Studio · documentación oficial →</a>
+</div>
+<div class="deep-dives" id="profundizaciones-caso01">
+<h3>Profundizaciones del Caso 01</h3>
+<p>
+    Estas preguntas surgieron a partir del mismo caso, pero van más allá de lo practicado formalmente en el curso.
+    Por eso cada profundización incluye una definición breve y enlaces oficiales para continuar leyendo.
+  </p>
+<details class="deep-dive" id="caso01-a">
+<summary>Profundización A · ¿Puede un agente trabajar con todo un repositorio?</summary>
+<div class="deep-dive-body">
+<p>
+        Sí, pero no conviene imaginar un modelo que “carga todo el repositorio en su memoria”.
+        Una arquitectura más razonable separa <strong>almacenamiento, recuperación de conocimiento, datos estructurados y herramientas</strong>.
+      </p>
+<pre><code>Repositorio documental
+Cloud Storage / Drive / otras fuentes
+          │
+          ├── búsqueda / RAG
+          ▼
+      contexto relevante
+          │
+          ▼
+        AGENTE
+       /   |   \
+      /    |    \
+Storage  BigQuery  herramientas
+          │
+          ▼
+informe / CSV / imagen / otro entregable</code></pre>
+<div class="callout">
+<strong>Concepto adicional · RAG</strong>
+<p>
+<strong>Qué es:</strong> Retrieval-Augmented Generation. El sistema recupera fragmentos relevantes
+          desde fuentes externas y los entrega al modelo como contexto antes de responder.
+        </p>
+<p>
+<strong>Qué no significa:</strong> el modelo no “memoriza” automáticamente todo el repositorio.
+          Recupera información pertinente cuando la necesita.
+        </p>
+<p>
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/rag-engine/rag-overview?hl=es-419" rel="noopener" target="_blank">RAG Engine · documentación oficial de Google →</a>
+</p>
+</div>
+<p>
+        RAG Engine puede ingerir información desde fuentes como <strong>Cloud Storage, Google Drive, Slack, Jira o SharePoint</strong>.
+        Para Cloud Storage y Drive, los archivos se incorporan a un corpus de búsqueda y pueden volver a indexarse cuando cambia su contenido.
+      </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/rag-engine/use-data-ingestion?hl=es" rel="noopener" target="_blank">RAG Engine · fuentes de datos e ingesta →</a>
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/rag-engine/supported-documents?hl=en" rel="noopener" target="_blank">RAG Engine · tipos de documento compatibles →</a>
+</div>
+<h4>Knowledge no reemplaza las herramientas</h4>
+<div class="table-scroll"><table>
+<thead><tr><th>Necesidad</th><th>Mecanismo apropiado</th></tr></thead>
+<tbody>
+<tr><td>Buscar una política o procedimiento</td><td>Knowledge / RAG</td></tr>
+<tr><td>Consultar movimientos o exposición</td><td>BigQuery</td></tr>
+<tr><td>Leer o escribir un objeto concreto</td><td>Herramienta de Cloud Storage</td></tr>
+<tr><td>Generar una imagen o pieza visual</td><td>Modelo/herramienta con generación de imágenes</td></tr>
+<tr><td>Crear un PPTX o XLSX final</td><td>Herramienta o API especializada para ese artefacto</td></tr>
+</tbody>
+</table></div>
+<p>
+        Esto permite pensar el “super agente” como un <strong>orquestador</strong> y no como una sola caja que hace todo.
+        Para generar imágenes, por ejemplo, Gemini dispone actualmente de modelos con salida de imagen; esa capacidad es distinta de RAG.
+      </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/image-generation?hl=es-419" rel="noopener" target="_blank">Gemini · generación de imágenes →</a>
+</div>
+<h4>Pros y contras</h4>
+<div class="table-scroll"><table>
+<thead><tr><th>A favor</th><th>En contra / atención</th></tr></thead>
+<tbody>
+<tr><td>Punto único de interacción</td><td>Mayor complejidad de diseño y prueba</td></tr>
+<tr><td>Puede combinar documentos y datos</td><td>Mayor superficie de permisos</td></tr>
+<tr><td>Reduce búsquedas manuales</td><td>Puede recuperar una fuente equivocada</td></tr>
+<tr><td>Permite reutilizar conocimiento corporativo</td><td>Hay que gestionar versiones y actualización</td></tr>
+<tr><td>Puede producir resultados en varios formatos</td><td>Cada formato puede requerir una herramienta distinta</td></tr>
+</tbody>
+</table></div>
+<div class="callout warning">
+<strong>Para auditoría: acceso no equivale a uso</strong>
+<p>
+          Un agente puede tener acceso a un corpus o bucket completo y aun así haber utilizado solo dos documentos.
+          Debe poder declarar qué fuentes recuperó y utilizó efectivamente.
+        </p>
+</div>
+<p>
+        Una alternativa a un único “super agente” es usar varios agentes o especialistas con responsabilidades distintas
+        —documentos, datos, revisión de informe, generación de artefactos— y un orquestador que decida a cuál llamar.
+      </p>
+</div>
+</details>
+<details class="deep-dive" id="caso01-b">
+<summary>Profundización B · Preview versus agente desplegado</summary>
+<div class="deep-dive-body">
+<p>
+        En el curso trabajamos en <strong>Agent Studio Preview</strong>: un entorno para diseñar, probar,
+        observar tool calls, ajustar instrucciones y repetir pruebas. Desplegar es un paso distinto:
+        convierte el agente en un servicio remoto que puede recibir solicitudes desde aplicaciones autorizadas.
+      </p>
+<div class="table-scroll"><table>
+<thead><tr><th>Preview</th><th>Desplegado</th></tr></thead>
+<tbody>
+<tr><td>Diseño y experimentación</td><td>Operación</td></tr>
+<tr><td>El desarrollador está encima de cada prueba</td><td>Usuarios o aplicaciones consumen el agente</td></tr>
+<tr><td>Se ajustan prompts y herramientas</td><td>Se usa una versión controlada</td></tr>
+<tr><td>Útil para inspeccionar fallos</td><td>Requiere seguridad, monitoreo y gobierno</td></tr>
+<tr><td>No es necesariamente la interfaz final</td><td>Puede integrarse con una app o servicio</td></tr>
+</tbody>
+</table></div>
+<div class="callout">
+<strong>Concepto adicional · Agent Runtime</strong>
+<p>
+<strong>Qué es:</strong> el entorno administrado de Gemini Enterprise Agent Platform para desplegar,
+          operar y escalar agentes en producción.
+        </p>
+<p>
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/runtime?hl=es-419" rel="noopener" target="_blank">Agent Runtime · documentación oficial de Google →</a>
+</p>
+</div>
+<p>
+        Agent Studio permite pasar de la etapa de preview a una instancia de Agent Runtime.
+        Una vez desplegado, el agente queda disponible de forma remota y puede integrarse con aplicaciones externas.
+      </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio/design-agents?hl=en" rel="noopener" target="_blank">Agent Studio · diseñar, probar y desplegar →</a>
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/deploy-an-agent?hl=es-419" rel="noopener" target="_blank">Agent Runtime · opciones de despliegue →</a>
+</div>
+<h4>¿Qué cambia para auditoría?</h4>
+<p>
+        Aparecen preguntas que en Preview pueden pasar desapercibidas: quién puede usar el agente, qué identidad utiliza,
+        qué tablas puede leer, dónde escribe, qué versión está activa, cómo se monitorea y cómo se revierte un cambio.
+      </p>
+<pre><code>Preview
+  ↓
+prueba controlada
+  ↓
+evaluación
+  ↓
+versión aprobada
+  ↓
+Agent Runtime
+  ↓
+usuarios / aplicaciones</code></pre>
+</div>
+</details>
+<details class="deep-dive" id="caso01-c">
+<summary>Profundización C · ¿Puede un agente “ir aprendiendo”?</summary>
+<div class="deep-dive-body">
+<p>
+        Sí, pero “aprender” puede significar cosas distintas. La mayoría no implica que Gemini se esté
+        reentrenando después de cada conversación.
+      </p>
+<div class="table-scroll"><table>
+<thead><tr><th>Tipo de “aprendizaje”</th><th>Qué cambia</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td>Contexto de sesión</td><td>Conversación actual</td><td>Recuerda qué período se está revisando.</td></tr>
+<tr><td>Memoria persistente</td><td>Información recuperable entre sesiones</td><td>Recuerda una preferencia de trabajo autorizada.</td></tr>
+<tr><td>Knowledge / RAG</td><td>Fuentes consultables</td><td>Se incorpora una nueva versión de una norma.</td></tr>
+<tr><td>Feedback y evaluación</td><td>Prompts, herramientas o configuración futura</td><td>Se detecta un patrón de error y se corrige.</td></tr>
+<tr><td>Fine-tuning</td><td>Pesos/comportamiento del modelo</td><td>Se ajusta un modelo con ejemplos etiquetados.</td></tr>
+</tbody>
+</table></div>
+<div class="callout">
+<strong>Concepto adicional · Memory Bank</strong>
+<p>
+<strong>Qué es:</strong> un servicio de Agent Platform para generar, almacenar y recuperar memorias
+          de largo plazo que persisten entre sesiones y pueden personalizar futuras interacciones.
+        </p>
+<p><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/memory-bank?hl=es-419" rel="noopener" target="_blank">Memory Bank · documentación oficial de Google →</a></p>
+</div>
+<p>
+        Para una organización regulada, la opción más segura suele ser un aprendizaje <strong>gobernado</strong>:
+        registrar feedback, evaluar fallos, actualizar fuentes o prompts y publicar una nueva versión controlada.
+      </p>
+<pre><code>ejecución
+   ↓
+feedback
+   ↓
+evaluación
+   ↓
+cambio aprobado
+   ↓
+nueva versión</code></pre>
+<div class="callout warning">
+<strong>No toda corrección debe convertirse en una regla permanente</strong>
+<p>
+          Una observación del auditor puede ser específica de un caso, de un usuario o de una fecha.
+          Memoria personal, conocimiento corporativo y reglas de control deberían tratarse como categorías distintas.
+        </p>
+</div>
+<div class="callout">
+<strong>Concepto adicional · fine-tuning</strong>
+<p>
+<strong>Qué es:</strong> ajuste supervisado del modelo usando un dataset de ejemplos para modificar su comportamiento.
+          Esto sí cambia el modelo de una forma que contexto, memoria o RAG no hacen.
+        </p>
+<p><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/tuning/supervised-tuning?hl=es-419" rel="noopener" target="_blank">Supervised fine-tuning de Gemini →</a></p>
+</div>
+</div>
+</details>
+<details class="deep-dive" id="caso01-d">
+<summary>Profundización D · ¿Esto es MLOps, LLMOps o AgentOps?</summary>
+<div class="deep-dive-body">
+<p>
+        Hay superposición, pero no son exactamente lo mismo. <strong>MLOps</strong> es la disciplina clásica para
+        desarrollar y operar sistemas de machine learning: entrenamiento, evaluación, versionado, despliegue,
+        monitoreo y, cuando corresponde, reentrenamiento.
+      </p>
+<div class="callout">
+<strong>Concepto adicional · MLOps</strong>
+<p>
+          Google define MLOps como la aplicación de prácticas de automatización y monitoreo al ciclo de vida de sistemas ML,
+          incluyendo integración, pruebas, liberación, despliegue e infraestructura.
+        </p>
+<p><a href="https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning" rel="noopener" target="_blank">Google Cloud Architecture Center · MLOps →</a></p>
+</div>
+<p>
+        En aplicaciones con modelos generativos suelen usarse además los términos <strong>LLMOps</strong> y
+        <strong>AgentOps</strong>. Son términos de industria, no nombres de un único producto Google.
+        En un agente importan cosas que no aparecen de la misma forma en un modelo predictivo tradicional:
+        prompts, tool calls, trazas, memoria, RAG, evaluaciones conversacionales, costos y permisos de herramientas.
+      </p>
+<div class="callout"><strong>Nota de terminología</strong><p><strong>LLMOps</strong> y <strong>AgentOps</strong> son términos de industria, no nombres de un producto concreto de Google Cloud. En Agent Platform, las capacidades equivalentes aparecen repartidas entre evaluación, observabilidad, trazas, despliegue, seguridad y gobierno.</p><p><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/optimize/evaluation/evaluate-agents" rel="noopener" target="_blank">Evaluación de agentes · Google Cloud →</a> · <a href="https://docs.cloud.google.com/stackdriver/docs/observability/agent-observability" rel="noopener" target="_blank">Observabilidad de agentes · Google Cloud →</a></p></div><div class="table-scroll"><table>
+<thead><tr><th>Área</th><th>Qué se opera</th></tr></thead>
+<tbody>
+<tr><td>MLOps</td><td>Datasets, entrenamiento, modelos predictivos, versiones, endpoints, drift.</td></tr>
+<tr><td>LLMOps</td><td>Prompts, modelos generativos, grounding/RAG, evaluaciones, costo y calidad.</td></tr>
+<tr><td>AgentOps</td><td>Todo lo anterior más herramientas, decisiones del agente, sesiones, memoria y trazas.</td></tr>
+</tbody>
+</table></div>
+<p>
+        Agent Platform incluye evaluación de agentes, simulación, observabilidad, trazas y monitoreo continuo,
+        por lo que cubre buena parte de lo que operacionalmente suele llamarse AgentOps.
+      </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/optimize/evaluation/agent-evaluation" rel="noopener" target="_blank">Agent Platform · evaluación de agentes →</a>
+<a href="https://docs.cloud.google.com/stackdriver/docs/observability/agent-observability?hl=es-419" rel="noopener" target="_blank">Google Cloud · observabilidad de agentes →</a>
+</div>
+</div>
+</details>
+<details class="deep-dive" id="caso01-e">
+<summary>Profundización E · Conectar regresiones, clustering, SVM y otros modelos a un agente</summary>
+<div class="deep-dive-body">
+<p>
+        Un agente generativo y un modelo predictivo pueden complementarse. El modelo especializado entrega una
+        predicción, score o grupo; el agente decide cuándo consultarlo, combina ese resultado con otras fuentes
+        y lo explica dentro del flujo de trabajo.
+      </p>
+<pre><code>datos
+  ↓
+modelo predictivo
+  ↓
+predicción / score / cluster
+  ↓
+agente
+  ↓
+contexto + explicación + evidencia</code></pre>
+<h4>Modelos nativos de BigQuery ML</h4>
+<p>
+        BigQuery ML permite entrenar y usar varios modelos directamente desde SQL, incluidos regresión lineal y logística,
+        K-means, boosted trees, random forest, redes neuronales, PCA y otros tipos compatibles con
+        <span class="codeish">ML.PREDICT</span>.
+      </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/bigquery/docs/bqml-introduction?hl=es-419" rel="noopener" target="_blank">BigQuery ML · introducción →</a>
+<a href="https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/bigqueryml-syntax-predict" rel="noopener" target="_blank">BigQuery ML · ML.PREDICT →</a>
+</div>
+<h4>SVM y One-Class SVM: externo, pero integrable</h4>
+<p>
+        SVM no aparece entre los tipos de modelos nativos que usaríamos directamente con
+        <span class="codeish">CREATE MODEL</span> en BigQuery ML. Una ruta razonable es entrenarlo fuera de BigQuery,
+        por ejemplo con Python/scikit-learn, y después importarlo a Model Registry.
+      </p>
+<div class="callout">
+<strong>Concepto adicional · SVM</strong>
+<p>
+<strong>Qué es:</strong> Support Vector Machine, un método supervisado de clasificación o regresión.
+          <strong>One-Class SVM</strong> es una variante utilizada para modelar una clase principal y detectar
+          observaciones alejadas del patrón aprendido.
+        </p>
+<p>
+          En fraude o monitoreo transaccional puede servir como señal de clasificación o anomalía,
+          pero una predicción del modelo no equivale por sí sola a fraude confirmado.
+        </p>
+<p><a href="https://developers.google.com/machine-learning/glossary#kernel_support_vector_machines_ksvms" rel="noopener" target="_blank">Google Machine Learning Glossary · Support Vector Machines →</a></p></div>
+<pre><code>Python / scikit-learn
+        ↓
+modelo.joblib
+        ↓
+Cloud Storage
+        ↓
+Model Registry
+        ↓
+endpoint
+        ↓
+agente o BigQuery</code></pre>
+<p>
+        Agent Platform permite importar modelos entrenados con scikit-learn, TensorFlow, PyTorch o XGBoost.
+        Para scikit-learn, el artefacto puede almacenarse como <span class="codeish">model.joblib</span> en Cloud Storage
+        y asociarse a un contenedor de inferencia.
+      </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/model-registry/import-model?hl=es" rel="noopener" target="_blank">Model Registry · importar modelos personalizados →</a>
+</div>
+<h4>Integrarlo de vuelta a BigQuery</h4>
+<p>
+        Si el modelo personalizado queda desplegado en un endpoint de Agent Platform, BigQuery puede representarlo
+        como un <strong>remote model</strong> y utilizarlo con <span class="codeish">ML.PREDICT</span>.
+        De esta forma, un agente que ya trabaja con BigQuery puede mantener una interfaz analítica coherente.
+      </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/bigqueryml-syntax-create-remote-model-https" rel="noopener" target="_blank">BigQuery · remote models sobre modelos personalizados →</a>
+</div>
+<div class="callout warning">
+<strong>Predicción ≠ conclusión profesional</strong>
+<p>
+          Un score alto, una clase predicha o pertenecer a un cluster es una salida del modelo.
+          La interpretación de auditoría, riesgo o cumplimiento requiere criterio, evidencia y revisión humana.
+        </p>
+</div>
+</div>
+</details>
+<details class="deep-dive" id="caso01-f">
+<summary>Profundización F · Gemini, Agent Studio, Agent Platform y el antiguo nombre Vertex AI</summary>
+<div class="deep-dive-body">
+<p>
+        Estos nombres aparecen juntos en tutoriales y documentación, pero representan capas diferentes.
+      </p>
+<div class="table-scroll"><table>
+<thead><tr><th>Concepto</th><th>Qué es</th></tr></thead>
+<tbody>
+<tr><td><strong>Gemini</strong></td><td>Familia de modelos de IA de Google.</td></tr>
+<tr><td><strong>Agent Studio</strong></td><td>Entorno low-code para diseñar y probar agentes.</td></tr>
+<tr><td><strong>Agent Runtime</strong></td><td>Entorno administrado para desplegar y operar agentes.</td></tr>
+<tr><td><strong>Gemini Enterprise Agent Platform</strong></td><td>Plataforma cloud más amplia que integra modelos, agentes, ML, RAG, despliegue, evaluación, seguridad y gobierno.</td></tr>
+</tbody>
+</table></div>
+<h4>¿Qué pasó con “Vertex AI”?</h4>
+<p>
+        En abril de 2026 Google cambió la nomenclatura de varios productos y presentó
+        <strong>Gemini Enterprise Agent Platform</strong> como evolución de Vertex AI.
+        Por eso un tutorial anterior puede seguir diciendo “Vertex AI Studio” aunque hoy la documentación lo llame “Agent Studio”.
+      </p>
+<div class="table-scroll"><table>
+<thead><tr><th>Nombre anterior</th><th>Nombre actual</th></tr></thead>
+<tbody>
+<tr><td>Vertex AI Platform</td><td>Gemini Enterprise Agent Platform</td></tr>
+<tr><td>Generative AI on Vertex AI</td><td>Generative AI on Gemini Enterprise Agent Platform</td></tr>
+<tr><td>Vertex AI Studio</td><td>Agent Studio</td></tr>
+<tr><td>Vertex AI API</td><td>Gemini Enterprise Agent Platform API</td></tr>
+<tr><td>Vertex AI Model Garden</td><td>Model Garden</td></tr>
+<tr><td>Vertex AI Search</td><td>Agent Search</td></tr>
+</tbody>
+</table></div>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes?hl=es-419" rel="noopener" target="_blank">Google Cloud · tabla oficial de cambios de nombre →</a>
+<a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/overview" rel="noopener" target="_blank">Gemini Enterprise Agent Platform · overview →</a>
+</div>
+<p>
+        Que la documentación o una API todavía contenga términos históricos no significa necesariamente que esté obsoleta.
+        Google mantiene algunos nombres técnicos por compatibilidad; por ejemplo, Agent Runtime conserva recursos/API con
+        nomenclatura histórica como <span class="codeish">ReasoningEngine</span>.
+      </p>
+<div class="callout success">
+<strong>Mapa mental corto</strong>
+<p>
+<strong>Gemini = modelo.</strong><br/>
+<strong>Agent Studio = dónde diseñamos.</strong><br/>
+<strong>Agent Runtime = dónde operamos.</strong><br/>
+<strong>Gemini Enterprise Agent Platform = plataforma completa.</strong>
+</p>
+</div>
+</div>
+</details>
+</div></section>
+<section class="resource-block class-case" id="caso-02">
+<span class="eyebrow">Caso 02 · Tipos y naturaleza de los datos</span>
+<h2>No todos los datos bancarios representan lo mismo</h2>
+<p>
+        En clase aparecieron clientes, cuentas, productos, movimientos, exposición, valorizaciones y reportes.
+        Antes de pensar en una consulta conviene identificar <strong>qué representa una fila</strong>, qué llave relaciona
+        los datos y si la información representa una entidad, un evento o una fotografía temporal.
+      </p>
+<h3>Familias de información del dataset del curso</h3>
+<div class="table-scroll"><table>
+<thead><tr><th>Naturaleza</th><th>Tabla</th><th>Pregunta que ayuda a responder</th></tr></thead>
+<tbody>
+<tr><td>Maestro de clientes</td><td><span class="codeish">clientes</span></td><td>¿Quién es el cliente y qué atributos tiene?</td></tr>
+<tr><td>Relación cliente-producto</td><td><span class="codeish">cuentas_productos</span></td><td>¿Qué cuentas o productos mantiene cada cliente?</td></tr>
+<tr><td>Transacción / evento</td><td><span class="codeish">movimientos_diarios</span></td><td>¿Qué ocurrió, cuándo, por qué canal y por qué monto?</td></tr>
+<tr><td>Snapshot de riesgo</td><td><span class="codeish">exposicion_crediticia</span></td><td>¿Cuál era la posición del cliente en una fecha de corte?</td></tr>
+<tr><td>Maestro de instrumentos</td><td><span class="codeish">instrumentos</span></td><td>¿Qué instrumento es y qué características contractuales tiene?</td></tr>
+<tr><td>Serie temporal</td><td><span class="codeish">valorizaciones_instrumentos</span></td><td>¿Cómo cambia la valorización de un instrumento en el tiempo?</td></tr>
+</tbody>
+</table></div>
+<h3>Evento, snapshot y serie temporal</h3>
+<div class="concept-grid">
+<div class="concept-card"><h4>Evento</h4><p>Una fila de <span class="codeish">movimientos_diarios</span> representa una operación. La fecha y la hora indican cuándo ocurrió.</p></div>
+<div class="concept-card"><h4>Snapshot</h4><p>Una fila de <span class="codeish">exposicion_crediticia</span> representa una posición en una <span class="codeish">fecha_corte</span>. Para hablar de “la situación actual” primero hay que definir qué corte utilizar.</p></div>
+<div class="concept-card"><h4>Serie temporal</h4><p>Un mismo <span class="codeish">instrumento_id</span> puede tener muchas valorizaciones. Elegir la más reciente requiere una regla temporal explícita.</p></div>
+</div>
+<h3>Tipo técnico versus significado de negocio</h3>
+<p>
+        El significado conceptual de una variable y el tipo con que fue almacenada no son exactamente lo mismo.
+        En el dataset del curso, <span class="codeish">es_internacional</span> representa una condición binaria,
+        pero está almacenada como <span class="codeish">INT64</span> con valores 0/1.
+      </p>
+<div class="table-scroll"><table>
+<thead><tr><th>Campo</th><th>Tipo técnico</th><th>Significado</th></tr></thead>
+<tbody>
+<tr><td><span class="codeish">cliente_id</span></td><td>STRING</td><td>Identificador.</td></tr>
+<tr><td><span class="codeish">fecha_movimiento</span></td><td>DATE</td><td>Fecha del evento.</td></tr>
+<tr><td><span class="codeish">hora</span></td><td>INT64</td><td>Hora codificada numéricamente.</td></tr>
+<tr><td><span class="codeish">monto</span></td><td>NUMERIC</td><td>Magnitud monetaria.</td></tr>
+<tr><td><span class="codeish">tasa_cupon</span></td><td>FLOAT64</td><td>Tasa numérica de un instrumento.</td></tr>
+<tr><td><span class="codeish">es_internacional</span></td><td>INT64</td><td>Indicador binario 0/1.</td></tr>
+</tbody>
+</table></div>
+<h3>Cinco preguntas antes de analizar una tabla</h3>
+<ol>
+<li><strong>¿Qué representa una fila?</strong> Define el grano.</li>
+<li><strong>¿Cuál es la llave?</strong> Identifica cómo relacionarla con otras tablas.</li>
+<li><strong>¿Tiene dimensión temporal?</strong> Distingue fecha de evento, corte o valorización.</li>
+<li><strong>¿Es dato fuente o derivado?</strong> Un reporte no necesariamente es la fuente original.</li>
+<li><strong>¿Qué puede ocurrir al hacer JOIN?</strong> Una relación 1:N puede multiplicar filas y montos.</li>
+</ol>
+<div class="callout success"><strong>Idea práctica</strong>
+<p>Antes de preguntar “¿qué SQL uso?”, conviene poder responder “¿qué representa una fila y qué pregunta de negocio quiero contestar?”.</p>
+</div>
+</section>
+<section class="resource-block class-case" id="caso-03">
+<span class="eyebrow">Caso 03 · Integridad, consistencia y comportamiento</span>
+<h2>Convertir reglas de control en pruebas reproducibles</h2>
+<p>
+        En clase aparecieron validaciones de campos vacíos, cruces entre bases, reglas de negocio,
+        casos de borde y operaciones con comportamientos poco habituales. Conviene separar estas preguntas
+        porque no todas significan lo mismo ni requieren el mismo tipo de control.
+      </p>
+<div class="table-scroll"><table>
+<thead><tr><th>Tipo de revisión</th><th>Pregunta</th></tr></thead>
+<tbody>
+<tr><td>Completitud</td><td>¿Está informado el dato que debería existir?</td></tr>
+<tr><td>Validez</td><td>¿El valor pertenece al dominio permitido?</td></tr>
+<tr><td>Integridad</td><td>¿La referencia existe en la otra fuente?</td></tr>
+<tr><td>Consistencia</td><td>¿Los valores concuerdan con las reglas de negocio?</td></tr>
+<tr><td>Unicidad</td><td>¿Existen duplicados que no deberían existir?</td></tr>
+<tr><td>Temporalidad</td><td>¿Fechas, cortes y secuencias tienen sentido?</td></tr>
+<tr><td>Comportamiento</td><td>¿El patrón observado se aleja de lo habitual?</td></tr>
+</tbody>
+</table></div>
+<h3>Prueba 1 · Integridad referencial</h3>
+<p>Pregunta: ¿hay movimientos asociados a una cuenta que no existe en la tabla de cuentas/productos? Un <span class="codeish">LEFT JOIN</span> conserva precisamente las filas sin correspondencia.</p>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Movimientos sin cuenta válida</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso03-integridad" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso03-integridad"><code>SELECT
+  m.movimiento_id,
+  m.cuenta_id,
+  m.fecha_movimiento,
+  m.hora,
+  m.tipo_movimiento,
+  m.canal,
+  m.monto,
+  m.moneda
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios` AS m
+LEFT JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS cp
+  ON m.cuenta_id = cp.cuenta_id
+WHERE cp.cuenta_id IS NULL
+ORDER BY
+  m.fecha_movimiento,
+  m.movimiento_id;</code></pre>
+<div class="sql-example-note"><p>Si devuelve filas, esas operaciones no pudieron relacionarse mediante <span class="codeish">cuenta_id</span>. Eso requiere revisión; por sí solo no demuestra fraude ni incumplimiento.</p></div>
+</div>
+<h3>Prueba 2 · Completitud</h3>
+<p>Los campos obligatorios pueden fallar por <span class="codeish">NULL</span> o, en texto, por cadenas vacías. El control debe considerar ambas posibilidades cuando corresponda.</p>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Campos relevantes sin informar</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso03-completitud" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso03-completitud"><code>SELECT
+  movimiento_id,
+  cuenta_id,
+  fecha_movimiento,
+  canal,
+  monto,
+  moneda
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+WHERE movimiento_id IS NULL
+   OR cuenta_id IS NULL
+   OR canal IS NULL
+   OR TRIM(canal) = ''
+   OR monto IS NULL
+   OR moneda IS NULL
+   OR TRIM(moneda) = ''
+ORDER BY
+  fecha_movimiento,
+  movimiento_id;</code></pre>
+<div class="sql-example-note"><p>La consulta usa solamente campos existentes en <span class="codeish">movimientos_diarios</span>.</p></div>
+</div>
+<h3>Prueba 3 · Dominio permitido</h3>
+<p>En nuestro dataset <span class="codeish">es_internacional</span> se almacena como 0/1. Podemos comprobar si aparecen valores inesperados sin asumir que el campo sea BOOL.</p>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Valores inesperados en es_internacional</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso03-dominio" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso03-dominio"><code>SELECT DISTINCT
+  es_internacional
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+WHERE es_internacional IS NULL
+   OR es_internacional NOT IN (0, 1)
+ORDER BY es_internacional;</code></pre>
+<div class="sql-example-note"><p>Un resultado vacío significa que no se encontraron valores fuera de 0/1 ni nulos en los datos disponibles.</p></div>
+</div>
+<h3>Prueba 4 · Casos de borde</h3>
+<p>Si un criterio utiliza <span class="codeish">monto &gt; 2000000</span>, conviene inspeccionar registros justo alrededor del umbral para comprobar que el control distingue entre <span class="codeish">&gt;</span> y <span class="codeish">&gt;=</span>.</p>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Movimientos más cercanos al umbral de 2.000.000</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso03-borde" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso03-borde"><code>SELECT
+  movimiento_id,
+  cuenta_id,
+  fecha_movimiento,
+  canal,
+  monto,
+  es_internacional,
+  ABS(monto - 2000000) AS diferencia_umbral
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+ORDER BY
+  diferencia_umbral,
+  monto,
+  fecha_movimiento,
+  movimiento_id
+LIMIT 10;</code></pre>
+<div class="sql-example-note"><p>Ordenar por la distancia al umbral permite inspeccionar casos de borde aunque no exista exactamente un movimiento por 1.999.999, 2.000.000 o 2.000.001. Después se valida si la regla correcta es <span class="codeish">&gt;</span> o <span class="codeish">&gt;=</span>.</p></div>
+</div>
+<h3>Prueba 5 · Señal de comportamiento</h3>
+<p>Un registro puede ser completo y consistente y, aun así, presentar un patrón poco habitual. Este ejemplo identifica días/cuentas cuya cantidad de movimientos supera el percentil 95 de la distribución observada.</p>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Cuentas con actividad diaria sobre el percentil 95</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso03-senal" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso03-senal"><code>WITH actividad_diaria AS (
+  SELECT
+    cuenta_id,
+    fecha_movimiento,
+    COUNT(*) AS cantidad_movimientos,
+    SUM(monto) AS monto_total
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+  GROUP BY
+    cuenta_id,
+    fecha_movimiento
+),
+umbral AS (
+  SELECT
+    APPROX_QUANTILES(cantidad_movimientos, 100)[OFFSET(95)] AS p95_cantidad_movimientos
+  FROM actividad_diaria
+)
+SELECT
+  a.cuenta_id,
+  a.fecha_movimiento,
+  a.cantidad_movimientos,
+  a.monto_total,
+  u.p95_cantidad_movimientos
+FROM actividad_diaria AS a
+CROSS JOIN umbral AS u
+WHERE a.cantidad_movimientos &gt; u.p95_cantidad_movimientos
+ORDER BY
+  a.cantidad_movimientos DESC,
+  a.monto_total DESC,
+  a.cuenta_id,
+  a.fecha_movimiento;</code></pre>
+<div class="sql-example-note"><p><strong>Importante:</strong> genera una señal analítica, no una conclusión de fraude. El percentil 95 es una regla exploratoria del ejemplo, no un criterio normativo.</p></div>
+</div>
+<div class="callout success"><strong>Regla de diseño</strong>
+<p>Si una condición puede expresarse exactamente en SQL, conviene que la prueba sea determinística y reproducible. Gemini puede ayudar a interpretar la regla, proponer el SQL y explicar el resultado.</p>
+</div>
+<h3>Secuencia útil de controles</h3>
+<pre><code>1. ¿El dato está?
+        ↓
+2. ¿Tiene un valor permitido?
+        ↓
+3. ¿Existe la referencia en las otras fuentes?
+        ↓
+4. ¿Cumple las reglas de negocio?
+        ↓
+5. ¿Es consistente con otros datos?
+        ↓
+6. ¿Su comportamiento es esperado?
+        ↓
+7. ¿Requiere revisión?</code></pre>
+</section>
+<section class="resource-block class-case" id="caso-04">
+<span class="eyebrow">Caso 04 · Autoservicio de datos</span>
+<h2>Más autonomía analítica sin perder gobierno</h2>
+<p>
+    En clase apareció una necesidad recurrente: que auditoría, riesgo y control puedan encontrar y analizar
+    información sin depender de un requerimiento técnico para cada pregunta. El objetivo no es abrir acceso
+    irrestricto al data lake, sino construir <strong>autoservicio gobernado</strong>: cada profesional puede
+    descubrir y utilizar los datos que está autorizado a consultar, con contexto suficiente para entenderlos.
+  </p>
+<div class="callout success">
+<strong>Autoservicio no significa “hacer lo que quiera con el lago”</strong>
+<p>
+      Significa poder descubrir, comprender y analizar datos autorizados dentro de una plataforma con permisos,
+      metadatos, reglas de acceso y trazabilidad.
+    </p>
+</div>
+<h3>La barrera real no suele ser la sintaxis SQL</h3>
+<p>
+    Antes de consultar, el profesional necesita saber qué tabla usar, qué representa una fila, cuál es la llave,
+    qué fecha corresponde y qué relación existe entre fuentes. Un SQL técnicamente válido puede responder una
+    pregunta equivocada si el modelo de datos no se entiende.
+  </p>
+<h3>Primer paso: descubrir qué tablas y columnas existen</h3>
+<p>
+    BigQuery expone metadatos mediante <span class="codeish">INFORMATION_SCHEMA</span>. La siguiente consulta es
+    ejecutable en el dataset del curso y permite recorrer todas sus columnas.
+  </p><div class="related-links"><a href="https://docs.cloud.google.com/bigquery/docs/information-schema-intro" rel="noopener" target="_blank">BigQuery · INFORMATION_SCHEMA →</a></div>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Inventario de tablas y columnas del dataset</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso04-esquema" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso04-esquema"><code>SELECT
+  table_name,
+  column_name,
+  data_type,
+  is_nullable,
+  ordinal_position
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.INFORMATION_SCHEMA.COLUMNS`
+ORDER BY
+  table_name,
+  ordinal_position;</code></pre>
+<div class="sql-example-note"><p>Esto no reemplaza un diccionario de datos, pero permite inspeccionar de forma reproducible qué campos existen y con qué tipo fueron almacenados.</p></div>
+</div>
+<h3>Cuando la organización tiene miles de activos</h3>
+<p>
+    Dar acceso a BigQuery no resuelve por sí solo el problema de descubrimiento. En entornos grandes aparece la necesidad
+    de un <strong>catálogo de datos</strong>: un inventario gobernado con metadatos técnicos y de negocio, descripciones,
+    calidad y relaciones.
+  </p>
+<div class="callout">
+<strong>Concepto adicional · Knowledge Catalog</strong>
+<p>
+<strong>Qué es:</strong> el catálogo de datos de Google Cloud, anteriormente llamado Dataplex Universal Catalog.
+      Ayuda a descubrir y gobernar activos de datos, reunir metadatos y aportar contexto de negocio para analítica y agentes.
+    </p>
+<p>
+<strong>Por qué aparece aquí:</strong> en autoservicio, encontrar la tabla correcta y entender qué significa puede ser
+      tan importante como saber escribir la consulta.
+    </p>
+<p><a href="https://docs.cloud.google.com/knowledge-catalog/docs?hl=es-419" rel="noopener" target="_blank">Knowledge Catalog · documentación oficial de Google →</a></p>
+</div>
+<h3>Datos estructurados y documentos no necesitan vivir en el mismo formato</h3>
+<p>
+    Las tablas operacionales encajan naturalmente en BigQuery. Normativas, políticas, informes y otros documentos pueden
+    permanecer en almacenamiento documental y ser consultados por Gemini o por un agente mediante las herramientas apropiadas.
+    El valor está en poder combinarlos sin confundir <strong>contexto</strong> con <strong>evidencia cuantitativa</strong>.
+  </p>
+<h3>Archivos en Cloud Storage sin cargarlos físicamente a BigQuery</h3>
+<p>
+    BigQuery también puede consultar datos estructurados que siguen almacenados fuera de su almacenamiento, por ejemplo en
+    Cloud Storage, mediante tablas externas. Los formatos admitidos incluyen CSV, JSON delimitado por líneas, Avro, ORC y Parquet.
+  </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/bigquery/docs/external-data-cloud-storage?hl=es-419" rel="noopener" target="_blank">BigQuery · tablas externas sobre Cloud Storage →</a>
+</div>
+<div class="callout">
+<strong>Idea práctica</strong>
+<p>
+      Autoservicio funciona mejor cuando el usuario puede pasar de <em>pregunta de negocio → activo correcto → grano →
+      relación → consulta → interpretación</em>, en vez de depender de conocer de memoria nombres de tablas.
+    </p>
+</div>
+</section><section class="resource-block class-case" id="caso-05">
+<span class="eyebrow">Caso 05 · De Excel y CSV a análisis reproducible</span>
+<h2>Qué conviene resolver con GoogleSQL y cuándo mirar hacia notebooks</h2>
+<p>
+    Los estudiantes describieron tareas frecuentes con Excel, CSV, cruces, tablas dinámicas, agrupaciones,
+    estadísticas descriptivas y correlaciones. Muchas de esas operaciones se traducen naturalmente a GoogleSQL,
+    con una ventaja importante para control: la lógica queda escrita y puede repetirse.
+  </p>
+<div class="table-scroll"><table>
+<thead><tr><th>Operación habitual</th><th>GoogleSQL</th></tr></thead>
+<tbody>
+<tr><td>Filtrar registros</td><td><span class="codeish">WHERE</span></td></tr>
+<tr><td>Combinar bases</td><td><span class="codeish">JOIN</span></td></tr>
+<tr><td>Eliminar repeticiones del resultado</td><td><span class="codeish">DISTINCT</span></td></tr>
+<tr><td>Agrupar y resumir</td><td><span class="codeish">GROUP BY</span></td></tr>
+<tr><td>Clasificar reglas</td><td><span class="codeish">CASE</span></td></tr>
+<tr><td>Estadísticas</td><td><span class="codeish">AVG</span>, <span class="codeish">STDDEV_SAMP</span>, <span class="codeish">CORR</span></td></tr>
+<tr><td>Analizar filas dentro de un grupo</td><td>Funciones de ventana como <span class="codeish">ROW_NUMBER()</span></td></tr>
+</tbody>
+</table></div>
+<h3>Estadística descriptiva sin salir de BigQuery</h3>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Resumen descriptivo de montos</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso05-estadistica" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso05-estadistica"><code>SELECT
+  COUNT(*) AS cantidad_movimientos,
+  AVG(monto) AS monto_promedio,
+  MIN(monto) AS monto_minimo,
+  MAX(monto) AS monto_maximo,
+  STDDEV_SAMP(monto) AS desviacion_estandar_monto
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`;</code></pre>
+<div class="sql-example-note"><p>La consulta devuelve cantidad, promedio, mínimo, máximo y desviación estándar muestral de los montos disponibles.</p></div>
+</div><h3>Agrupar para obtener una tabla analítica</h3><div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Movimientos por canal</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso05-agrupacion" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso05-agrupacion"><code>SELECT
+  canal,
+  COUNT(*) AS cantidad_movimientos,
+  SUM(monto) AS monto_total,
+  AVG(monto) AS monto_promedio
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+GROUP BY canal
+ORDER BY monto_total DESC, canal;</code></pre>
+<div class="sql-example-note"><p>Este patrón es equivalente a muchas tablas de resumen que suelen construirse manualmente en hojas de cálculo.</p></div>
+</div><h3>Correlación entre variables</h3><div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Correlación entre exposición y días de mora</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso05-correlacion" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso05-correlacion"><code>SELECT
+  CORR(exposicion, dias_mora) AS correlacion_exposicion_mora
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia`
+WHERE exposicion IS NOT NULL
+  AND dias_mora IS NOT NULL;</code></pre>
+<div class="sql-example-note"><p><strong>Interpretación prudente:</strong> una correlación describe asociación lineal; no demuestra causalidad ni implica por sí sola un hallazgo de riesgo.</p></div>
+</div>
+<h3>Cuando un archivo tabular llega “roto”</h3>
+<p>
+    Si un CSV trae encabezados desplazados, filas con distintas estructuras o comentarios mezclados con datos,
+    el problema ocurre antes del análisis. BigQuery funciona mejor cuando la estructura ya está definida.
+    En esos casos puede ser necesaria una etapa previa de limpieza o transformación.
+  </p>
+<h3>¿SQL o Python?</h3>
+<p>
+    Si el problema consiste principalmente en filtrar, relacionar, agrupar y calcular sobre tablas, GoogleSQL suele
+    ser una excelente primera opción. Python empieza a aportar cuando la limpieza es muy irregular, se necesita
+    exploración estadística más avanzada, visualización, machine learning o una combinación flexible de código y consultas.
+  </p>
+<div class="callout">
+<strong>Concepto adicional · notebooks</strong>
+<p>
+<strong>Qué son:</strong> documentos interactivos donde se pueden combinar código, texto explicativo y resultados.
+      BigQuery Studio permite crear notebooks de Colab Enterprise para trabajar con SQL y Python.
+    </p>
+<p>
+<strong>Por qué aparece aquí:</strong> son una continuación natural para quien quiera pasar de análisis tabular en SQL
+      a trabajo exploratorio o ciencia de datos. No son requisito de este curso.
+    </p>
+<p><a href="https://docs.cloud.google.com/bigquery/docs/create-notebooks?hl=es-419" rel="noopener" target="_blank">BigQuery notebooks · documentación oficial de Google →</a></p>
+</div>
+<div class="callout success">
+<strong>La IA cambia la barrera de entrada, no la necesidad de entender los datos</strong>
+<p>
+      Gemini puede ayudar a traducir una pregunta a SQL, pero el profesional todavía debe reconocer qué tabla,
+      qué grano, qué JOIN y qué agregación responden realmente la pregunta.
+    </p>
+</div>
+</section><section class="resource-block class-case" id="caso-06">
+<span class="eyebrow">Caso 06 · Patrones SQL para clientes y productos</span>
+<h2>Frecuencias, clientes multiproducto, vistas horizontales y combinaciones</h2>
+<p>
+    Este caso profundiza en operaciones SQL que aparecen naturalmente al analizar relaciones cliente-producto:
+    contar productos distintos, calcular frecuencias, construir una fila por cliente y estudiar qué productos
+    suelen aparecer juntos.
+  </p>
+<h3>¿Cuántos productos distintos tiene cada cliente?</h3>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Cantidad de productos distintos por cliente</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso06-productos-cliente" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso06-productos-cliente"><code>SELECT
+  cliente_id,
+  COUNT(DISTINCT producto) AS cantidad_productos
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+GROUP BY cliente_id
+ORDER BY cantidad_productos DESC, cliente_id;</code></pre>
+<div class="sql-example-note"><p><span class="codeish">COUNT(DISTINCT producto)</span> calcula la cardinalidad de productos de cada cliente; no es lo mismo que usar <span class="codeish">DISTINCT</span> sobre el resultado completo.</p></div>
+</div><h3>Frecuencia absoluta y relativa de cada producto</h3><div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Clientes que poseen cada producto</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso06-frecuencias" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso06-frecuencias"><code>WITH clientes_producto AS (
+  SELECT DISTINCT
+    cliente_id,
+    producto
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+),
+frecuencias AS (
+  SELECT
+    producto,
+    COUNT(*) AS frecuencia_absoluta
+  FROM clientes_producto
+  GROUP BY producto
+),
+total_clientes AS (
+  SELECT
+    COUNT(DISTINCT cliente_id) AS total_clientes
+  FROM clientes_producto
+)
+SELECT
+  f.producto,
+  f.frecuencia_absoluta,
+  SAFE_DIVIDE(f.frecuencia_absoluta, t.total_clientes) AS frecuencia_relativa,
+  ROUND(
+    100 * SAFE_DIVIDE(f.frecuencia_absoluta, t.total_clientes),
+    2
+  ) AS porcentaje_clientes
+FROM frecuencias AS f
+CROSS JOIN total_clientes AS t
+ORDER BY frecuencia_absoluta DESC, f.producto;</code></pre>
+<div class="sql-example-note"><p>La frecuencia absoluta cuenta clientes; la relativa divide esa cantidad por el total de clientes presentes en la relación cliente-producto.</p></div>
+</div><div>
+<h3>Ver múltiples productos horizontalmente</h3>
+<p>
+    Esto no es necesariamente un <em>self join</em>. Si el objetivo es transformar una relación 1:N en una sola fila
+    por cliente con varias columnas de producto, podemos numerar los productos y después hacer agregación condicional.
+  </p>
+</div><div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Hasta cinco productos en columnas por cliente</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso06-horizontal" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso06-horizontal"><code>WITH productos_unicos AS (
+  SELECT DISTINCT
+    cliente_id,
+    producto
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+),
+productos_ordenados AS (
+  SELECT
+    cliente_id,
+    producto,
+    ROW_NUMBER() OVER (
+      PARTITION BY cliente_id
+      ORDER BY producto
+    ) AS posicion
+  FROM productos_unicos
+)
+SELECT
+  cliente_id,
+  MAX(IF(posicion = 1, producto, NULL)) AS producto_1,
+  MAX(IF(posicion = 2, producto, NULL)) AS producto_2,
+  MAX(IF(posicion = 3, producto, NULL)) AS producto_3,
+  MAX(IF(posicion = 4, producto, NULL)) AS producto_4,
+  MAX(IF(posicion = 5, producto, NULL)) AS producto_5,
+  COUNT(*) AS cantidad_productos
+FROM productos_ordenados
+GROUP BY cliente_id
+ORDER BY cantidad_productos DESC, cliente_id;</code></pre>
+<div class="sql-example-note"><p>La consulta funciona sin conocer previamente los nombres de los productos. Si un cliente tiene más de cinco productos, <span class="codeish">cantidad_productos</span> lo mostrará aunque las columnas visibles lleguen hasta producto_5.</p></div>
+</div><div>
+<h3>Una alternativa más flexible: mantener todos los productos en una sola columna</h3>
+<p>
+    Para revisión humana, muchas veces es más cómodo conservar una fila por cliente y concatenar los nombres de producto.
+  </p>
+</div><div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Perfil de cliente con lista de productos</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso06-stringagg" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso06-stringagg"><code>SELECT
+  cl.cliente_id,
+  cl.segmento,
+  cl.nivel_riesgo,
+  COUNT(DISTINCT cp.producto) AS cantidad_productos,
+  STRING_AGG(
+    DISTINCT cp.producto,
+    ' | '
+    ORDER BY cp.producto
+  ) AS productos
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes` AS cl
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS cp
+  ON cl.cliente_id = cp.cliente_id
+GROUP BY
+  cl.cliente_id,
+  cl.segmento,
+  cl.nivel_riesgo
+ORDER BY cantidad_productos DESC, cl.cliente_id;</code></pre>
+<div class="sql-example-note"><p>Esta versión agrega atributos reales de <span class="codeish">clientes</span> y conserva una fila por cliente.</p></div>
+</div><div>
+<h3>Ahora sí: self join para estudiar combinaciones</h3>
+<p>
+    Si queremos saber qué <strong>pares de productos</strong> aparecen juntos en los mismos clientes, la misma tabla
+    cliente-producto puede unirse consigo misma. La condición <span class="codeish">a.producto &lt; b.producto</span>
+    evita tanto las parejas duplicadas como producto + el mismo producto.
+  </p>
+</div><div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Pares de productos que aparecen en los mismos clientes</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso06-selfjoin" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso06-selfjoin"><code>WITH productos_cliente AS (
+  SELECT DISTINCT
+    cliente_id,
+    producto
+  FROM `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+)
+SELECT
+  a.producto AS producto_a,
+  b.producto AS producto_b,
+  COUNT(DISTINCT a.cliente_id) AS clientes_con_ambos
+FROM productos_cliente AS a
+JOIN productos_cliente AS b
+  ON a.cliente_id = b.cliente_id
+ AND a.producto &lt; b.producto
+GROUP BY
+  producto_a,
+  producto_b
+ORDER BY
+  clientes_con_ambos DESC,
+  producto_a,
+  producto_b;</code></pre>
+<div class="sql-example-note"><p>Esto es una forma simple de análisis de combinaciones. Describe co-ocurrencia; no demuestra que un producto cause la contratación de otro.</p></div>
+</div><div class="callout">
+<strong>¿Y PIVOT?</strong>
+<p>
+    GoogleSQL también dispone de <span class="codeish">PIVOT</span>. Es útil cuando conocemos de antemano las categorías
+    que queremos convertir en columnas. En este caso preferimos una solución ejecutable que no dependa de conocer previamente
+    todos los nombres de producto presentes en los datos.
+  </p>
+</div></section><section class="resource-block class-case" id="caso-07">
+<span class="eyebrow">Caso 07 · Indicadores que se actualizan</span>
+<h2>Separar fuente, transformación, actualización y visualización</h2>
+<p>
+    En clase se planteó un flujo donde un Excel en un servidor o disco departamental se actualiza periódicamente,
+    se transforma y alimenta indicadores en Power BI. La pregunta de fondo es cómo reducir tareas manuales y mantener
+    los indicadores al día sin convertir un agente de IA en el mecanismo encargado de recalcular reglas simples.
+  </p>
+<h3>El problema se divide en tres capas</h3>
+<div class="concept-grid">
+<div class="concept-card"><h4>1 · Fuente</h4><p>¿Quién actualiza los datos y con qué frecuencia?</p></div>
+<div class="concept-card"><h4>2 · Transformación</h4><p>¿Qué fórmulas, reglas y estados deben calcularse?</p></div>
+<div class="concept-card"><h4>3 · Visualización</h4><p>¿Cuándo y cómo Power BI vuelve a consultar o importar la información?</p></div>
+</div>
+<div class="callout warning">
+<strong>Refrescar el dashboard no corrige una fuente atrasada</strong>
+<p>
+      Si el archivo de origen llega con un día de retraso, un refresh perfecto de Power BI seguirá mostrando datos atrasados.
+      Hay que distinguir latencia de la fuente y latencia del reporte.
+    </p>
+</div>
+<h3>Las reglas determinísticas deberían seguir siendo determinísticas</h3>
+<p>
+    Si un indicador se define como límite menos exposición, porcentaje de utilización y una clasificación por umbrales,
+    no necesitamos un modelo generativo para recalcularlo. Esa lógica puede expresarse en SQL y ejecutarse siempre igual.
+  </p>
+<div class="sql-example">
+<div class="sql-example-head">
+<div>
+<span class="eyebrow">GoogleSQL · ejecutable</span>
+<h4>Indicadores de utilización sobre exposición crediticia</h4>
+</div>
+<button class="prompt-copy" data-copy="#sql-caso07-indicadores" type="button">Copiar SQL</button>
+</div>
+<pre id="sql-caso07-indicadores"><code>SELECT
+  exposicion_id,
+  fecha_corte,
+  cliente_id,
+  producto_crediticio,
+  exposicion,
+  limite,
+  limite - exposicion AS holgura,
+  SAFE_DIVIDE(exposicion, limite) AS porcentaje_utilizacion,
+  CASE
+    WHEN limite IS NULL OR limite = 0 THEN 'Sin límite comparable'
+    WHEN SAFE_DIVIDE(exposicion, limite) &lt;= 0.80 THEN 'Normal'
+    WHEN SAFE_DIVIDE(exposicion, limite) &lt;= 1.00 THEN 'Atención'
+    ELSE 'Excedido'
+  END AS estado_utilizacion
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia`
+ORDER BY
+  fecha_corte DESC,
+  cliente_id,
+  producto_crediticio;</code></pre>
+<div class="sql-example-note"><p>Los umbrales 80% y 100% son una regla didáctica de este ejemplo, no una política bancaria del curso. La consulta usa campos reales de <span class="codeish">exposicion_crediticia</span>.</p></div>
+</div>
+<h3>Una arquitectura posible con BigQuery</h3>
+<pre><code>fuente actualizada
+        ↓
+BigQuery
+        ↓
+GoogleSQL con reglas reproducibles
+        ↓
+tabla o resultado de indicadores
+        ↓
+Power BI</code></pre>
+<p>
+    BigQuery permite programar consultas GoogleSQL para que se ejecuten de forma recurrente. Eso es útil cuando el cálculo
+    de indicadores es periódico y no depende de pasos externos complejos.
+  </p>
+<div class="related-links">
+<a href="https://docs.cloud.google.com/bigquery/docs/scheduling-queries?hl=es-419" rel="noopener" target="_blank">BigQuery · consultas programadas →</a>
+</div>
+<h3>Power BI puede conectarse directamente a BigQuery</h3>
+<p>
+    El conector oficial de Google BigQuery para Power Query admite tanto <strong>Import</strong> como
+    <strong>DirectQuery</strong> para modelos semánticos de Power BI. Por lo tanto, Excel no necesariamente tiene
+    que seguir siendo la capa intermedia central si los datos y las reglas ya viven en BigQuery.
+  </p>
+<div class="related-links">
+<a href="https://learn.microsoft.com/en-us/power-query/connectors/google-bigquery" rel="noopener" target="_blank">Microsoft Learn · conector Google BigQuery →</a>
+</div>
+<h3>¿Y si el Excel debe seguir en un servidor interno?</h3>
+<p>
+    En un flujo Microsoft, Power BI puede utilizar un <strong>on-premises data gateway</strong> para conectar el servicio
+    con fuentes internas y realizar refresh programado. Eso resuelve la conectividad y actualización del modelo; no sustituye
+    el proceso que alimenta el Excel original.
+  </p>
+<div class="related-links">
+<a href="https://learn.microsoft.com/en-us/power-bi/connect-data/refresh-scheduled-refresh" rel="noopener" target="_blank">Microsoft Learn · refresh programado y gateways →</a>
+</div>
+<h3>¿Dónde aporta IA?</h3>
+<ul>
+<li>Ayudar a convertir una definición de indicador en SQL o DAX para revisión humana.</li>
+<li>Revisar consistencia entre definiciones de varios indicadores.</li>
+<li>Explicar qué indicadores cambiaron y resumir excepciones.</li>
+<li>Ayudar a investigar resultados ya calculados de forma reproducible.</li>
+</ul>
+<div class="callout success">
+<strong>Principio de diseño</strong>
+<p><strong>Primero automatizar el dato y las reglas; después agregar IA.</strong> El agente puede construir, revisar o explicar indicadores, pero no debería reemplazar innecesariamente una transformación determinística.</p>
+</div>
+</section><section class="related">
+<h2>Relacionado con el curso</h2>
+<div class="related-links">
+<a href="recursos.html#diccionario">Diccionario de datos →</a>
+<a href="googlesql-relaciones.html">JOIN y relaciones →</a>
+<a href="googlesql-agregaciones.html">Agregaciones →</a>
+<a href="validacion-integrada.html">Validación integrada →</a>
+</div>
+</section>
+</article>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.</div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Gemini en BigQuery: generar SQL con lenguaje natural, revisar la consulta propuesta y verificar de forma independiente la consulta de la Prueba Tipo." name="description"/>
+<title>Gemini en BigQuery · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#gemini">Gemini</a> › BigQuery</div>
+<div class="article-layout">
+<aside aria-label="Contenido de Gemini en BigQuery" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#que-es">Qué hace Gemini aquí</a>
+<a href="#generar">Generar SQL</a>
+<a href="#contexto">Contexto de tablas</a>
+<a href="#revisar">Revisar antes de ejecutar</a>
+<a href="#equivalencia">Equivalencia vs texto idéntico</a>
+<a href="#verificacion">Verificación de Prueba Tipo</a>
+<a href="#prompt">Prompt de verificación</a>
+<a href="#esperado">SQL esperado</a>
+<a href="#comparar">Cómo comparar</a>
+<a href="#errores">Errores frecuentes</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Gemini en BigQuery</span>
+<h1>Gemini en BigQuery</h1>
+<p class="lead">BigQuery Studio puede utilizar Gemini para generar SQL a partir de instrucciones en lenguaje natural. La salida es una propuesta de código: debe revisarse antes de ejecutarse y nunca sustituye la comprensión del esquema, las llaves ni el criterio de negocio.</p>
+<section id="que-es">
+<h2>1. ¿Qué puede hacer Gemini en BigQuery?</h2>
+<p>La asistencia de Gemini en BigQuery puede generar consultas SQL, explicar consultas existentes, completar código y sugerir correcciones. En esta sección nos concentraremos únicamente en la generación de SQL.</p>
+<div class="callout">
+<strong>Rol en el curso</strong>
+          Utilizamos Gemini como asistente para formular una consulta y, en la Prueba Tipo, como una segunda vía de verificación. La responsabilidad de revisar la consulta sigue siendo del usuario.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: BigQuery Studio mostrando el acceso a funciones de Gemini en BigQuery" class="course-shot-link" href="../assets/screenshots/bq-overview.png" rel="noopener" target="_blank"><img alt="BigQuery Studio mostrando el acceso a funciones de Gemini en BigQuery" loading="lazy" src="../assets/screenshots/bq-overview.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span><span> BigQuery integra asistencia de Gemini dentro del mismo entorno analítico; el SQL generado sigue necesitando revisión.</span></figcaption></figure>
+</section>
+<section id="generar">
+<h2>2. Generar SQL desde lenguaje natural</h2>
+<p>El flujo general documentado por Google es:</p>
+<ol>
+<li>Abre BigQuery Studio.</li>
+<li>Abre el editor de consultas.</li>
+<li>Abre la herramienta de <strong>generación de SQL</strong> con Gemini.</li>
+<li>Escribe una instrucción que describa la consulta deseada.</li>
+<li>Cuando sea necesario, especifica explícitamente las tablas que deben utilizarse.</li>
+<li>Selecciona <strong>Generate</strong>.</li>
+<li>Revisa el SQL producido antes de insertarlo o ejecutarlo.</li>
+</ol>
+<div class="callout success">
+<strong>Consejo práctico</strong>
+          Para tareas controladas, incluye los nombres completos de las tablas y los nombres exactos de las columnas relevantes en el prompt. Reduce la dependencia del contexto implícito de la interfaz.
+        </div>
+</section>
+<section id="contexto">
+<h2>3. ¿De dónde obtiene contexto?</h2>
+<p>La herramienta puede utilizar información de tablas vistas o consultadas recientemente y también permite especificar manualmente las tablas fuente. Por eso dos conversaciones aparentemente iguales pueden producir consultas distintas si el contexto de BigQuery no es el mismo.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Contexto implícito</h3>
+<p>Tablas que la interfaz tiene recientemente en contexto.</p>
+</div>
+<div class="concept-card">
+<h3>Contexto explícito</h3>
+<p>Tablas, columnas y condiciones escritas directamente en el prompt.</p>
+</div>
+</div>
+<div class="callout">
+<strong>Para una evaluación reproducible</strong>
+          Preferimos contexto explícito. El prompt debe poder entenderse aunque Gemini no sepa qué hiciste en los pasos anteriores.
+        </div>
+</section>
+<section id="revisar">
+<h2>4. La consulta generada debe revisarse</h2>
+<p>Google advierte que la IA generativa puede producir resultados plausibles pero incorrectos. Antes de ejecutar, revisa al menos:</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Control</th><th>Pregunta</th></tr>
+</thead>
+<tbody>
+<tr><td>Tablas</td><td>¿Usa exactamente las fuentes solicitadas?</td></tr>
+<tr><td>Columnas</td><td>¿Los nombres existen en el esquema?</td></tr>
+<tr><td>JOIN</td><td>¿La llave y la dirección de la relación son correctas?</td></tr>
+<tr><td>Filtros</td><td>¿Cada condición del criterio aparece sin alteraciones?</td></tr>
+<tr><td>Operadores</td><td>¿Usa <span class="codeish">&gt;</span>, <span class="codeish">&gt;=</span>, <span class="codeish">IN</span>, etc. de acuerdo con el criterio?</td></tr>
+<tr><td>Grano</td><td>¿Una fila del resultado sigue representando lo que necesitamos?</td></tr>
+<tr><td>Columnas de salida</td><td>¿Permiten comparar el resultado con la otra consulta?</td></tr>
+<tr><td>Filtros extra</td><td>¿Agregó condiciones que nunca fueron solicitadas?</td></tr>
+</tbody>
+</table>
+</div>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: SQL generado por Gemini dentro de BigQuery" class="course-shot-link" href="../assets/screenshots/bq-gemini-generated.png" rel="noopener" target="_blank"><img alt="SQL generado por Gemini dentro de BigQuery" loading="lazy" src="../assets/screenshots/bq-gemini-generated.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Comprueba tablas, JOIN, columnas y filtros contra el criterio antes de ejecutar la propuesta.</span></figcaption></figure>
+</section>
+<section id="equivalencia">
+<h2>5. Dos consultas pueden ser equivalentes sin ser idénticas</h2>
+<p>En nuestra prueba previa, Gemini generó una consulta lógicamente equivalente al SQL del agente, pero introdujo diferencias de forma: utilizó <span class="codeish">INNER JOIN</span> explícito y agregó un <span class="codeish">ORDER BY</span>. Eso no cambia necesariamente qué filas cumplen el criterio.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Diferencia semántica</h3>
+<p>Cambia qué registros devuelve o cómo se calculan. Es crítica.</p>
+</div>
+<div class="concept-card">
+<h3>Diferencia de forma</h3>
+<p>Puede cambiar orden, alias o estilo sin cambiar el conjunto de registros.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>Pero cuidado con el CSV</strong>
+          Si queremos comparar archivos directamente, no basta con obtener las mismas filas: conviene pedir también las mismas columnas y evitar ordenamientos innecesarios.
+        </div>
+</section>
+<section id="verificacion">
+<h2>6. Verificación independiente de la Prueba Tipo</h2>
+<p>Después de que el agente genere <span class="codeish">consulta.sql</span> y <span class="codeish">resultado.csv</span>, utilizaremos Gemini en BigQuery como una segunda vía para reconstruir la consulta desde cero.</p>
+<div class="flow">
+<div class="flow-step">Criterio de negocio conocido</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Prompt autosuficiente a Gemini en BigQuery</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">SQL generado de forma independiente</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Revisión manual</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Ejecutar y comparar resultados</div>
+</div>
+<div class="callout success">
+<strong>Esta consulta de verificación no es una segunda consulta del agente</strong>
+          La regla de “una única ejecución analítica” corresponde al flujo del agente. La verificación posterior la realiza el alumno directamente en BigQuery.
+        </div>
+</section>
+<section id="prompt">
+<h2>7. Prompt de verificación para la Prueba Tipo</h2>
+<p>La primera prueba mostró que pedir solo el criterio podía producir el mismo conjunto de filas con columnas distintas. Por eso, para la comparación final especificamos también las columnas de salida.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>Prompt de verificación · Prueba Tipo</span>
+<button class="prompt-copy" data-copy="#prompt-bq-verificacion" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="prompt-bq-verificacion">Genera una consulta GoogleSQL de solo lectura en BigQuery.
+
+Utiliza exclusivamente estas dos tablas:
+- `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+
+Relaciona ambas tablas mediante `cuenta_id`.
+
+La consulta debe seleccionar exclusivamente las operaciones que cumplan simultáneamente estas cuatro condiciones:
+1. `canal` es APP o WEB.
+2. `es_internacional` = 1.
+3. `monto` &gt; 2000000.
+4. `producto` = 'Tarjeta de Crédito'.
+
+Devuelve exactamente estas columnas, en este orden:
+- movimiento_id
+- cuenta_id
+- fecha_movimiento
+- hora
+- tipo_movimiento
+- canal
+- monto
+- moneda
+- es_internacional
+- categoria_contraparte
+- cliente_id
+- producto
+- estado
+
+No agregues filtros adicionales.
+No agregues agregaciones.
+No agregues GROUP BY.
+No agregues ORDER BY salvo que sea estrictamente necesario para la lógica, lo que en este caso no debería serlo.
+
+Devuelve solamente la consulta SQL.</pre>
+</div>
+<div class="callout">
+<strong>Nota sobre idioma</strong>
+          La documentación oficial vigente indica soporte de prompts en inglés para esta función. En el entorno utilizado durante el curso ya comprobamos generación de SQL desde instrucciones en español. Si la interfaz cambia y deja de aceptar el prompt, utiliza el mismo contenido traducido al inglés sin alterar las condiciones.
+        </div>
+</section>
+<section id="esperado">
+<h2>8. SQL que deberíamos esperar conceptualmente</h2>
+<p>Gemini puede usar otros alias o escribir <span class="codeish">INNER JOIN</span> en vez de <span class="codeish">JOIN</span>. Lo importante es que la lógica sea equivalente a:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;">SELECT
+  m.movimiento_id,
+  m.cuenta_id,
+  m.fecha_movimiento,
+  m.hora,
+  m.tipo_movimiento,
+  m.canal,
+  m.monto,
+  m.moneda,
+  m.es_internacional,
+  m.categoria_contraparte,
+  c.cliente_id,
+  c.producto,
+  c.estado
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios` AS m
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS c
+  ON m.cuenta_id = c.cuenta_id
+WHERE m.canal IN ('APP', 'WEB')
+  AND m.es_internacional = 1
+  AND m.monto &gt; 2000000
+  AND c.producto = 'Tarjeta de Crédito';</pre>
+<div class="callout success">
+<strong>Resultado de referencia</strong>
+          Con los datos de práctica utilizados en la evaluación, la consulta debe devolver 5 operaciones.
+        </div>
+</section>
+<section id="comparar">
+<h2>9. Cómo comparar contra el resultado del agente</h2>
+<p>No compares solo “se parece al SQL”. Realiza una comprobación en tres niveles:</p>
+<ol>
+<li><strong>Lógica:</strong> mismas tablas, JOIN y cuatro condiciones.</li>
+<li><strong>Esquema de salida:</strong> mismas 13 columnas y mismo significado.</li>
+<li><strong>Registros:</strong> mismo conjunto de operaciones; en los datos de práctica, 5 filas.</li>
+</ol>
+<div class="callout warning">
+<strong>Orden no es identidad</strong>
+          Si dos resultados contienen las mismas filas pero aparecen en distinto orden, eso no implica una discrepancia analítica. Para comparación visual, puedes ordenar posteriormente por un identificador; no agregues un orden al criterio original solo para “hacer coincidir” la consulta.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Resultados de la consulta de verificación en BigQuery" class="course-shot-link" href="../assets/screenshots/bq-results.png" rel="noopener" target="_blank"><img alt="Resultados de la consulta de verificación en BigQuery" loading="lazy" src="../assets/screenshots/bq-results.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>La verificación independiente debe reproducir el mismo conjunto esperado de cinco operaciones.</span></figcaption></figure>
+</section>
+<section id="errores">
+<h2>10. Errores frecuentes</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Problema</th><th>Qué revisar</th></tr>
+</thead>
+<tbody>
+<tr><td>Gemini usa otra tabla.</td><td>Especifica nombres completos y edita las fuentes del generador.</td></tr>
+<tr><td>Falta una condición.</td><td>Revisa el WHERE antes de ejecutar.</td></tr>
+<tr><td>Usa <span class="codeish">&gt;= 2000000</span>.</td><td>El criterio exige estrictamente <span class="codeish">&gt; 2000000</span>.</td></tr>
+<tr><td>Agrega otro canal.</td><td>Debe limitarse a APP o WEB.</td></tr>
+<tr><td>Devuelve solo un conteo.</td><td>La verificación principal debe conservar el detalle de las operaciones.</td></tr>
+<tr><td>Omite <span class="codeish">cliente_id</span> o <span class="codeish">estado</span>.</td><td>Usa el prompt de verificación que fija las 13 columnas.</td></tr>
+<tr><td>Agrega ORDER BY.</td><td>No es necesariamente incorrecto, pero no es necesario para seleccionar los casos.</td></tr>
+<tr><td>El resultado no tiene 5 filas.</td><td>Revisa tablas, JOIN, operadores y valores exactos antes de concluir que el agente está mal.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="related">
+<h2>Material relacionado</h2>
+<div class="related-links">
+<a href="bigquery.html">Repasar: BigQuery — entorno →</a>
+<a href="googlesql-fundamentos.html">Repasar: GoogleSQL — fundamentos →</a>
+<a href="googlesql-relaciones.html#prueba">Repasar: JOIN de la Prueba Tipo →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuente técnica oficial consultada</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/write-sql-gemini" rel="noopener" target="_blank">Google Cloud — Write queries with Gemini assistance</a></li>
+</ul>
+<p>La documentación oficial confirma la herramienta de generación de SQL, el uso de tablas recientemente vistas o seleccionadas manualmente, la necesidad de revisar el SQL generado y la posibilidad de insertar/refinar la consulta. Los detalles de la Prueba Tipo —tablas, criterio, columnas y resultado de referencia— corresponden al entorno didáctico validado del curso.</p>
+</section>
+<div class="page-nav">
+<a href="gemini-documentos.html">← Gemini con documentos</a>
+<a href="agent-studio-fundamentos.html">Agent Studio — fundamentos →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

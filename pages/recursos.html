@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Recursos FT-00080: prompts, diccionario de datos, relaciones, errores frecuentes, glosario y archivos de la Prueba Tipo." name="description"/>
+<title>Recursos · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a><a href="casos-clase.html">Casos de clase</a><a aria-current="page" href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a><a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › Recursos</div>
+<div class="article-layout">
+<aside aria-label="Recursos del curso" class="sidebar">
+<h2>Recursos</h2>
+<a class="active" href="#prompts">Todos los prompts</a>
+<a href="#diccionario">Diccionario de datos</a>
+<a href="#relaciones">Relaciones entre tablas</a>
+<a href="#errores">Errores frecuentes</a>
+<a href="#glosario">Glosario</a>
+<a href="#archivos">Archivos de la prueba</a>
+<a href="#rutas-rapidas">Rutas rápidas</a>
+</aside>
+<article class="article resource-page">
+<span class="eyebrow">Recursos</span>
+<h1>Recursos de referencia</h1>
+<p class="lead">Una página índice para localizar rápidamente prompts, consultas, diccionario de datos, relaciones, errores frecuentes, vocabulario y rutas. Los prompts y SQL completos permanecen integrados en el módulo donde se enseñan o ejecutan.</p><div class="callout"><strong>Práctica adicional</strong><p>Los <a href="desafios-extra.html">Desafíos Extra</a> reúnen prompts completos y SQL de referencia para trabajar con clientes, exposición crediticia, instrumentos y valorizaciones.</p></div>
+<section aria-label="Accesos rápidos de recursos" class="resource-jumps">
+<a href="#prompts">Prompts</a>
+<a href="#diccionario">Diccionario</a>
+<a href="#relaciones">Relaciones</a>
+<a href="#errores">Errores</a>
+<a href="#glosario">Glosario</a>
+<a href="#archivos">Archivos</a>
+</section>
+<section id="prompts">
+<h2>1. Prompts y consultas en su contexto</h2>
+<p>Los prompts y las consultas <strong>no viven separados del contenido que explican</strong>. Esta sección funciona solo como índice: el texto completo de cada prompt y cada SQL permanece dentro de la página de Gemini, Agent Studio, GoogleSQL, BigQuery o Prueba Tipo donde se utiliza.</p>
+<div class="callout success">
+<strong>Una sola fuente de verdad</strong>
+          Si un prompt o una consulta cambia, se actualiza en su módulo correspondiente. Recursos solo enlaza hacia esa versión para evitar copias distintas o desactualizadas.
+        </div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Recurso</th><th>Dónde está integrado</th><th>Abrir</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt débil vs controlado</td>
+<td>Gemini y prompting, junto con la explicación de objetivo, fuentes, restricciones, formato y validación.</td>
+<td><a href="gemini-prompting.html#debil-controlado">Ir al prompt →</a></td>
+</tr>
+<tr>
+<td>PDF → texto plano</td>
+<td>Gemini con documentos y paso 04 de la Prueba Tipo.</td>
+<td><a href="gemini-documentos.html#prompt">Ir al prompt →</a></td>
+</tr>
+<tr>
+<td>Prueba 0 del agente</td>
+<td>Agent Studio — pruebas y Preview, dentro del método 0-1-2-3.</td>
+<td><a href="agent-studio-pruebas.html#metodo">Ir al prompt →</a></td>
+</tr>
+<tr>
+<td>Prompts de recuperación</td>
+<td>Prueba Tipo — ejecución, inmediatamente debajo del prompt principal; también se explican en Agent Studio — pruebas.</td>
+<td><a href="prueba-tipo-ejecucion.html#prueba-rescate-inmediato">Ir a los rescates →</a></td>
+</tr>
+<tr>
+<td>Prompt principal de la evaluación</td>
+<td>Prueba Tipo — ejecución, junto con presupuesto de herramientas, secuencia y SQL esperado.</td>
+<td><a href="prueba-tipo-ejecucion.html#prompt">Ir al prompt →</a></td>
+</tr>
+<tr>
+<td>Consulta SQL esperada de la Prueba Tipo</td>
+<td>Prueba Tipo — ejecución, inmediatamente después del flujo del agente.</td>
+<td><a href="prueba-tipo-ejecucion.html#sql">Ir al SQL →</a></td>
+</tr>
+<tr>
+<td>Prompt para generar SQL con Gemini</td>
+<td>Gemini en BigQuery, junto con cómo revisar la consulta antes de ejecutarla.</td>
+<td><a href="gemini-bigquery.html#prompt">Ir al prompt →</a></td>
+</tr>
+<tr>
+<td>SQL esperado de Gemini en BigQuery</td>
+<td>Gemini en BigQuery, junto con equivalencia lógica y comparación.</td>
+<td><a href="gemini-bigquery.html#esperado">Ir al SQL →</a></td>
+</tr>
+<tr>
+<td>SELECT, FROM, WHERE y filtros</td>
+<td>GoogleSQL — fundamentos, con explicación de cada cláusula.</td>
+<td><a href="googlesql-fundamentos.html#select-from">Ir a las consultas →</a></td>
+</tr>
+<tr>
+<td>COUNT, SUM, AVG, GROUP BY y HAVING</td>
+<td>GoogleSQL — agregaciones, junto con el cambio de grano.</td>
+<td><a href="googlesql-agregaciones.html#funciones">Ir a las consultas →</a></td>
+</tr>
+<tr>
+<td>JOIN de las tablas del curso</td>
+<td>GoogleSQL — relaciones, junto con llaves, cardinalidad y controles de duplicación.</td>
+<td><a href="googlesql-relaciones.html#join">Ir a las consultas →</a></td>
+</tr>
+<tr>
+<td>Verificación manual y segunda consulta</td>
+<td>Prueba Tipo — recuperación y verificación, pasos 09–10.</td>
+<td><a href="prueba-tipo-recuperacion.html#paso-09">Ir a verificación →</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="diccionario">
+<h2>2. Diccionario de datos</h2>
+<p>Estas son las variables documentadas en la guía del curso. Los tipos técnicos indicados son <strong>tipos sugeridos</strong>; para una consulta real, revisa siempre <strong>Schema</strong> en BigQuery.</p>
+<details class="resource-block" open="">
+<summary><span class="codeish">clientes</span> · 1 fila por cliente</summary>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Campo</th><th>Significado</th><th>Tipo sugerido</th></tr></thead>
+<tbody>
+<tr><td><span class="codeish">cliente_id</span></td><td>Identificador sintético estable del cliente.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">segmento</span></td><td>Segmento comercial: Personas, PyME, Empresa o Corporativo.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">region</span></td><td>Región asociada al cliente.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">fecha_alta</span></td><td>Fecha de incorporación al sistema simulado.</td><td>DATE</td></tr>
+<tr><td><span class="codeish">nivel_riesgo</span></td><td>Categoría ordinal didáctica: Bajo &lt; Medio &lt; Alto.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">canal_preferente</span></td><td>Canal predominante: Digital, Sucursal o Mixto.</td><td>STRING</td></tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="resource-block" open="">
+<summary><span class="codeish">cuentas_productos</span> · 1 fila por cuenta/producto</summary>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Campo</th><th>Significado</th><th>Tipo sugerido</th></tr></thead>
+<tbody>
+<tr><td><span class="codeish">cuenta_id</span></td><td>Identificador de la cuenta o relación de producto.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">cliente_id</span></td><td>Cliente titular; conecta con <span class="codeish">clientes</span>.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">producto</span></td><td>Tipo de producto asociado a la cuenta.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">moneda</span></td><td>Moneda de denominación del producto.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">fecha_apertura</span></td><td>Fecha de apertura del producto o cuenta.</td><td>DATE</td></tr>
+<tr><td><span class="codeish">saldo_actual</span></td><td>Saldo observado en el conjunto sintético.</td><td>NUMERIC*</td></tr>
+<tr><td><span class="codeish">limite_credito</span></td><td>Límite de crédito; puede ser 0 en productos sin línea.</td><td>NUMERIC*</td></tr>
+<tr><td><span class="codeish">estado</span></td><td>Estado simulado: Activa, Bloqueada o Cerrada.</td><td>STRING</td></tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="resource-block" open="">
+<summary><span class="codeish">movimientos_diarios</span> · 1 fila por movimiento</summary>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Campo</th><th>Significado</th><th>Tipo sugerido</th></tr></thead>
+<tbody>
+<tr><td><span class="codeish">movimiento_id</span></td><td>Identificador sintético del movimiento.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">cuenta_id</span></td><td>Cuenta del movimiento; conecta con <span class="codeish">cuentas_productos</span>.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">fecha_movimiento</span></td><td>Fecha del movimiento.</td><td>DATE</td></tr>
+<tr><td><span class="codeish">hora</span></td><td>Hora del día codificada de 0 a 23.</td><td>INT64</td></tr>
+<tr><td><span class="codeish">tipo_movimiento</span></td><td>Compra, transferencia, abono, pago o retiro.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">canal</span></td><td>APP, WEB, POS, ATM o Sucursal.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">monto</span></td><td>Monto del movimiento.</td><td>NUMERIC*</td></tr>
+<tr><td><span class="codeish">moneda</span></td><td>Moneda del movimiento.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">es_internacional</span></td><td>Indicador binario 0/1 de movimiento internacional.</td><td>INT64 (0/1)**</td></tr>
+<tr><td><span class="codeish">categoria_contraparte</span></td><td>Categoría didáctica de contraparte o destino/origen.</td><td>STRING</td></tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="resource-block">
+<summary><span class="codeish">exposicion_crediticia</span> · 1 fila por cliente/producto y fecha de corte</summary>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Campo</th><th>Significado</th><th>Tipo sugerido</th></tr></thead>
+<tbody>
+<tr><td><span class="codeish">exposicion_id</span></td><td>Identificador del registro de exposición.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">fecha_corte</span></td><td>Fecha del snapshot de exposición.</td><td>DATE</td></tr>
+<tr><td><span class="codeish">cliente_id</span></td><td>Cliente de la exposición.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">producto_crediticio</span></td><td>Producto que origina la exposición.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">exposicion</span></td><td>Monto de exposición observado.</td><td>NUMERIC*</td></tr>
+<tr><td><span class="codeish">limite</span></td><td>Límite asociado al producto crediticio.</td><td>NUMERIC*</td></tr>
+<tr><td><span class="codeish">garantia</span></td><td>Monto de garantía asociado.</td><td>NUMERIC*</td></tr>
+<tr><td><span class="codeish">dias_mora</span></td><td>Cantidad de días de mora.</td><td>INT64</td></tr>
+<tr><td><span class="codeish">clasificacion_riesgo</span></td><td>Categoría ordinal Bajo, Medio o Alto.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">provision_estimada</span></td><td>Provisión sintética calculada para la práctica.</td><td>NUMERIC*</td></tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="resource-block">
+<summary><span class="codeish">instrumentos</span> · 1 fila por instrumento financiero</summary>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Campo</th><th>Significado</th><th>Tipo sugerido</th></tr></thead>
+<tbody>
+<tr><td><span class="codeish">instrumento_id</span></td><td>Identificador sintético del instrumento.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">tipo_instrumento</span></td><td>Bono, Depósito, Forward FX o Swap Tasa.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">tipo_emisor</span></td><td>Categoría didáctica del emisor.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">moneda</span></td><td>Moneda o unidad de denominación.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">fecha_vencimiento</span></td><td>Fecha de vencimiento.</td><td>DATE</td></tr>
+<tr><td><span class="codeish">tasa_cupon</span></td><td>Tasa cupón sintética cuando aplica.</td><td>FLOAT64</td></tr>
+<tr><td><span class="codeish">nominal</span></td><td>Monto nominal del instrumento.</td><td>NUMERIC*</td></tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="resource-block">
+<summary><span class="codeish">valorizaciones_instrumentos</span> · 1 fila por instrumento y fecha</summary>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Campo</th><th>Significado</th><th>Tipo sugerido</th></tr></thead>
+<tbody>
+<tr><td><span class="codeish">fecha_valorizacion</span></td><td>Fecha de la valorización diaria.</td><td>DATE</td></tr>
+<tr><td><span class="codeish">instrumento_id</span></td><td>Instrumento valorizado; conecta con <span class="codeish">instrumentos</span>.</td><td>STRING</td></tr>
+<tr><td><span class="codeish">precio_referencia</span></td><td>Precio o factor de referencia simulado.</td><td>FLOAT64</td></tr>
+<tr><td><span class="codeish">tasa_referencia</span></td><td>Tasa de referencia utilizada en la simulación.</td><td>FLOAT64</td></tr>
+<tr><td><span class="codeish">valor_mercado</span></td><td>Valor de mercado sintético en la fecha.</td><td>NUMERIC*</td></tr>
+<tr><td><span class="codeish">pnl_diario</span></td><td>Variación diaria de valorización (P&amp;L).</td><td>NUMERIC*</td></tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="callout">
+<strong>Notas técnicas de la guía</strong>
+          La autodetección puede inferir montos enteros como INT64 aunque para modelado monetario se prefiera NUMERIC. <span class="codeish">es_internacional</span> se representa como 0/1 en el CSV, pero analíticamente es una variable binaria. Los identificadores deben conservarse como STRING.
+        </div>
+</section>
+<section id="relaciones">
+<h2>3. Relaciones entre tablas</h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Tabla A</th><th>Llave</th><th>Tabla B</th><th>Lectura conceptual</th></tr></thead>
+<tbody>
+<tr><td><span class="codeish">clientes</span></td><td><span class="codeish">cliente_id</span></td><td><span class="codeish">cuentas_productos</span></td><td>Un cliente puede tener varias cuentas/productos.</td></tr>
+<tr><td><span class="codeish">cuentas_productos</span></td><td><span class="codeish">cuenta_id</span></td><td><span class="codeish">movimientos_diarios</span></td><td>Una cuenta puede tener muchos movimientos.</td></tr>
+<tr><td><span class="codeish">clientes</span></td><td><span class="codeish">cliente_id</span></td><td><span class="codeish">exposicion_crediticia</span></td><td>Un cliente puede tener varias exposiciones/fechas.</td></tr>
+<tr><td><span class="codeish">instrumentos</span></td><td><span class="codeish">instrumento_id</span></td><td><span class="codeish">valorizaciones_instrumentos</span></td><td>Un instrumento puede tener muchas valorizaciones por fecha.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sql-example"><div class="sql-example-head"><div><span class="eyebrow">GoogleSQL · ejecutable</span><h4>Relación usada en la Prueba Tipo</h4></div><button class="prompt-copy" data-copy="#sql-recursos-relacion-prueba" type="button">Copiar SQL</button></div><pre class="visual-placeholder" id="sql-recursos-relacion-prueba" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  m.movimiento_id,
+  m.cuenta_id,
+  m.fecha_movimiento,
+  m.canal,
+  m.monto,
+  cp.cliente_id,
+  cp.producto,
+  cp.estado
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios` AS m
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS cp
+  ON m.cuenta_id = cp.cuenta_id
+ORDER BY
+  m.fecha_movimiento,
+  m.movimiento_id
+LIMIT 20;</code></pre><div class="sql-example-note"><p>Consulta de ejemplo que conserva una fila por movimiento y agrega atributos reales de la cuenta/producto.</p></div></div>
+<div class="callout warning">
+<strong>Comprueba siempre el grano después del JOIN</strong>
+          En la Prueba Tipo queremos conservar una fila por movimiento que cumple el criterio, enriquecida con información de la cuenta/producto.
+        </div>
+<p><a href="googlesql-relaciones.html">Ver JOIN, cardinalidad y controles de duplicación →</a></p>
+</section>
+<section id="errores">
+<h2>4. Errores frecuentes</h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Problema</th><th>Qué hacer</th><th>Ayuda</th></tr></thead>
+<tbody>
+<tr><td>No encuentro un servicio.</td><td>Confirma proyecto activo y usa el buscador superior de Google Cloud.</td><td><a href="navegacion-gcp.html">Navegación</a></td></tr>
+<tr><td>Aparece Access Denied.</td><td>No intentes modificar IAM por cuenta propia; confirma que estás en el recurso autorizado.</td><td><a href="navegacion-gcp.html#permisos">Permisos</a></td></tr>
+<tr><td>Confundo bucket con carpeta.</td><td>Recuerda: bucket = contenedor; objeto = archivo; carpetas visuales pueden ser prefijos.</td><td><a href="cloud-storage-conceptos.html">Storage</a></td></tr>
+<tr><td>Preview de BigQuery no coincide con un SELECT.</td><td>Preview inspecciona filas; una consulta ejecuta lógica SQL explícita.</td><td><a href="bigquery.html">BigQuery</a></td></tr>
+<tr><td>JOIN genera más filas de lo esperado.</td><td>Revisa cardinalidad, unicidad de la llave y grano antes/después.</td><td><a href="googlesql-relaciones.html">JOIN</a></td></tr>
+<tr><td>Uso <span class="codeish">&gt;= 2000000</span>.</td><td>El criterio de la Prueba Tipo exige estrictamente <span class="codeish">&gt; 2000000</span>.</td><td><a href="prueba-tipo-ejecucion.html#sql">SQL esperado</a></td></tr>
+<tr><td>Gemini resume el PDF.</td><td>Usa el prompt PDF → TXT y verifica que no altere condiciones ni limitaciones.</td><td><a href="prueba-tipo-preparacion.html#paso-04">Paso 04</a></td></tr>
+<tr><td>El agente ejecuta dos consultas.</td><td>No pidas un conteo adicional; exige como máximo una llamada a <span class="codeish">execute_sql_readonly</span>.</td><td><a href="prueba-tipo-ejecucion.html#prompt">Paso 06</a></td></tr>
+<tr><td>Preview queda solo en cajas.</td><td>Revisa qué operaciones terminaron y usa el prompt de recuperación adecuado.</td><td><a href="prueba-tipo-recuperacion.html#paso-07">Paso 07</a></td></tr>
+<tr><td>Aparece 429 / Resource exhausted.</td><td>Reintenta más tarde si no hubo ejecución previa; no “recuperes” trabajo inexistente.</td><td><a href="agent-studio-pruebas.html#quota">Cuota</a></td></tr>
+<tr><td>Una fuente está configurada pero no fue consultada.</td><td>No la declares como fuente utilizada. Capacidad disponible no equivale a uso efectivo.</td><td><a href="agent-studio-knowledge-tools.html#uso-real">Trazabilidad</a></td></tr>
+<tr><td>El informe llama fraude a los casos seleccionados.</td><td>Vuelve al alcance del criterio: son casos de revisión adicional, no una conclusión de fraude.</td><td><a href="validacion-integrada.html#prudencia">Prudencia</a></td></tr>
+<tr><td>Dos resultados tienen las mismas filas en otro orden.</td><td>No lo trates automáticamente como discrepancia; compara el conjunto de registros.</td><td><a href="prueba-tipo-recuperacion.html#comparar">Comparación</a></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="glosario">
+<h2>5. Glosario</h2>
+<div class="glossary-grid">
+<div class="concept-card"><h3>Agente</h3><p>Configuración reutilizable con instrucciones persistentes y capacidades opcionales.</p></div>
+<div class="concept-card"><h3>Alcance</h3><p>Qué pregunta puede responderse y con qué evidencia disponible.</p></div>
+<div class="concept-card"><h3>BigQuery</h3><p>Servicio analítico de Google Cloud para organizar datos en datasets/tablas y consultarlos.</p></div>
+<div class="concept-card"><h3>Bucket</h3><p>Contenedor principal de objetos en Cloud Storage.</p></div>
+<div class="concept-card"><h3>Criterio</h3><p>Regla o condición explícita contra la que se compara la evidencia.</p></div>
+<div class="concept-card"><h3>Dataset</h3><p>Contenedor lógico de tablas y otros recursos de BigQuery dentro de un proyecto.</p></div>
+<div class="concept-card"><h3>Evidencia</h3><p>Contenido o datos efectivamente consultados que respaldan una afirmación.</p></div>
+<div class="concept-card"><h3>FARO-4</h3><p>Fuentes → Alcance → Resultado → Observación.</p></div>
+<div class="concept-card"><h3>Grano</h3><p>Qué representa exactamente una fila de una tabla o resultado.</p></div>
+<div class="concept-card"><h3>GoogleSQL</h3><p>Dialecto SQL utilizado por BigQuery.</p></div>
+<div class="concept-card"><h3><span class="codeish">gs://</span></h3><p>Esquema de URI utilizado para referirse a buckets y objetos de Cloud Storage.</p></div>
+<div class="concept-card"><h3>Instructions</h3><p>Reglas persistentes que definen cómo debe trabajar un agente.</p></div>
+<div class="concept-card"><h3>Interpretación</h3><p>Lectura razonada que conecta criterio y evidencia sin sobrepasar las fuentes.</p></div>
+<div class="concept-card"><h3>JOIN</h3><p>Operación SQL que relaciona filas de tablas mediante campos compatibles.</p></div>
+<div class="concept-card"><h3>Knowledge</h3><p>Referencia estable asociada al agente; no debe confundirse con el caso variable.</p></div>
+<div class="concept-card"><h3>Llave</h3><p>Campo utilizado para identificar registros o relacionar tablas.</p></div>
+<div class="concept-card"><h3>Objeto</h3><p>Archivo almacenado en Cloud Storage junto con sus metadatos.</p></div>
+<div class="concept-card"><h3>Preview</h3><p>Vista de Agent Studio para probar el agente y observar respuestas/eventos antes del despliegue.</p></div>
+<div class="concept-card"><h3>Prompt</h3><p>Instrucción concreta que indica qué tarea debe realizar el modelo y bajo qué condiciones.</p></div>
+<div class="concept-card"><h3>Schema</h3><p>Definición de columnas, tipos y modos de una tabla de BigQuery.</p></div>
+<div class="concept-card"><h3>Tool call</h3><p>Solicitud del modelo para ejecutar una herramienta con argumentos determinados.</p></div>
+<div class="concept-card"><h3>Tool result</h3><p>Respuesta de la herramienta a una llamada; no es una segunda ejecución por sí sola.</p></div>
+<div class="concept-card"><h3>Trazabilidad</h3><p>Capacidad de relacionar una afirmación con su fuente, cálculo o resultado.</p></div>
+<div class="concept-card"><h3>Variable binaria</h3><p>Categoría con dos estados; por ejemplo <span class="codeish">es_internacional</span> codificado 0/1.</p></div>
+<div class="concept-card"><h3>Variable ordinal</h3><p>Categoría cuyos niveles poseen orden; por ejemplo Bajo &lt; Medio &lt; Alto.</p></div>
+</div>
+</section>
+<section id="archivos">
+<h2>6. Archivos y rutas de la Prueba Tipo</h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Elemento</th><th>Ruta / nombre</th><th>Función</th></tr></thead>
+<tbody>
+<tr>
+<td>PDF oficial</td>
+<td><span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/fuentes/criterio_revision_operaciones_digitales.pdf</span></td>
+<td>Fuente documental original.</td>
+</tr>
+<tr>
+<td>TXT del alumno</td>
+<td><span class="codeish">alumnos/alumno-XX/insumos/criterio_revision.txt</span></td>
+<td>Representación textual fiel preparada para el agente.</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td><span class="codeish">alumnos/alumno-XX/resultados/consulta.sql</span></td>
+<td>Consulta exacta ejecutada.</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td><span class="codeish">alumnos/alumno-XX/resultados/resultado.csv</span></td>
+<td>Resultado detallado de la consulta.</td>
+</tr>
+<tr>
+<td>Informe</td>
+<td><span class="codeish">alumnos/alumno-XX/informe/informe_final.md</span></td>
+<td>Entregable final trazable.</td>
+</tr>
+<tr>
+<td>Knowledge metodológico</td>
+<td><span class="codeish">Metodo_Validacion_Integrada.pdf</span></td>
+<td>Referencia estable del Analista de Validación Integrada.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>BigQuery de la evaluación</h3>
+<div class="callout">
+<strong>Proyecto / dataset</strong>
+<span class="codeish">arched-osprey-506820-i9.analitica_bancaria_demo</span>
+</div>
+<ul>
+<li><span class="codeish">movimientos_diarios</span></li>
+<li><span class="codeish">cuentas_productos</span></li>
+</ul>
+<p><a href="prueba-tipo-entrega.html#estructura">Ver estructura final de entrega →</a></p>
+</section>
+<section id="rutas-rapidas">
+<h2>7. Rutas rápidas</h2>
+<div class="related-links">
+<a href="navegacion-gcp.html">No encuentro un servicio o proyecto →</a>
+<a href="cloud-storage-operaciones.html">Necesito subir, localizar o revisar un archivo →</a>
+<a href="bigquery.html">Necesito orientarme en BigQuery →</a>
+<a href="googlesql-fundamentos.html">Necesito recordar sintaxis SQL básica →</a>
+<a href="googlesql-relaciones.html">Mi problema está en el JOIN →</a>
+<a href="gemini-documentos.html">Necesito trabajar con un PDF →</a>
+<a href="agent-studio-pruebas.html">Necesito revisar Preview o tool calls →</a>
+<a href="prueba-tipo-recuperacion.html#paso-07">Mi ejecución del agente se interrumpió →</a>
+<a href="prueba-tipo.html">Quiero recorrer toda la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Base de esta referencia</strong>
+<p>El diccionario y las relaciones se consolidaron desde las guías del curso. Los prompts y consultas no se duplican aquí: esta página enlaza a las versiones integradas en sus módulos correspondientes para evitar divergencias. Cuando una interfaz de Google Cloud cambie, utiliza el concepto y la ruta funcional explicada en la materia correspondiente y verifica el recurso real antes de operar.</p>
+</section>
+<div class="page-nav">
+<a href="prueba-tipo-entrega.html">← Entrega final</a>
+<a href="../index.html">Volver al inicio →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

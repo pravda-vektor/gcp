@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Fundamentos de Agent Studio: qué es un agente, prompt puntual vs instrucciones persistentes, acceso, Name, Description, Instructions, Model, guardado y Preview." name="description"/>
+<title>Agent Studio — fundamentos · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#agent-studio">Agent Studio</a> › Fundamentos</div>
+<div class="article-layout">
+<aside aria-label="Contenido de Agent Studio" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#agente">Qué es un agente</a>
+<a href="#prompt-vs-agente">Prompt vs agente</a>
+<a href="#agent-studio">Qué es Agent Studio</a>
+<a href="#entrar">Entrar y crear</a>
+<a href="#campos">Name, Description, Instructions</a>
+<a href="#modelo">Model</a>
+<a href="#guardar">Guardar</a>
+<a href="#flow-preview">Flow y Preview</a>
+<a href="#suggested">Suggested prompts</a>
+<a href="#prueba">Agente del curso</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Agent Studio</span>
+<h1>Agent Studio — fundamentos</h1>
+<p class="lead">Un agente permite convertir un método de trabajo repetible en una configuración persistente: instrucciones, modelo y capacidades que pueden volver a utilizarse para distintas solicitudes.</p>
+<section id="agente">
+<h2>1. ¿Qué es un agente?</h2>
+<p>En el contexto del curso, un agente es una solución de IA configurada para aplicar un método de trabajo de forma consistente. No se limita a recibir una pregunta: puede conservar instrucciones permanentes y utilizar herramientas o conocimiento cuando la configuración lo permite.</p>
+<div class="flow">
+<div class="flow-step">Instrucciones persistentes</div>
+<div class="flow-arrow">+</div>
+<div class="flow-step">Modelo</div>
+<div class="flow-arrow">+</div>
+<div class="flow-step">Conocimiento y herramientas, cuando correspondan</div>
+<div class="flow-arrow">+</div>
+<div class="flow-step">Pruebas repetibles</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Agente reutilizable</div>
+</div>
+<div class="callout">
+<strong>Idea central</strong>
+          El agente estandariza un método. La solicitud concreta del usuario sigue siendo necesaria.
+        </div>
+</section>
+<section id="prompt-vs-agente">
+<h2>2. Prompt puntual vs agente</h2>
+<p>Un prompt y un agente cumplen funciones distintas. El prompt describe la tarea de una conversación concreta; el agente conserva reglas que deberían repetirse entre tareas.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Prompt puntual</th><th>Agente</th></tr>
+</thead>
+<tbody>
+<tr><td>Define qué necesito hacer ahora.</td><td>Define cómo debe trabajar de forma persistente.</td></tr>
+<tr><td>Puede incluir el caso concreto.</td><td>Debe evitar quedar sobreajustado a un único caso.</td></tr>
+<tr><td>Se escribe en el chat/Preview.</td><td>Se configura en Agent Studio.</td></tr>
+<tr><td>Cambia de una tarea a otra.</td><td>Conserva reglas de método, límites y validación.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout success">
+<strong>Ejemplo</strong>
+          “Analiza este criterio y genera los tres entregables” es una solicitud de usuario. “Identifica primero las fuentes y no inventes contenido” es una regla que conviene mantener en las Instructions del agente.
+        </div>
+</section>
+<section id="agent-studio">
+<h2>3. ¿Qué es Agent Studio?</h2>
+<p>Agent Studio es el entorno visual low-code de Gemini Enterprise Agent Platform para diseñar, probar y configurar agentes dentro de Google Cloud. La documentación actual lo describe como un diseñador visual donde puedes crear flujos, configurar agentes y probar su comportamiento antes de desplegarlos.</p>
+<div class="callout warning">
+<strong>La interfaz evoluciona</strong>
+          Los nombres y posiciones exactas de algunos controles pueden cambiar. En este sitio priorizamos los conceptos y el flujo funcional sobre memorizar una captura específica.
+        </div>
+<figure class="course-shot compact-xs"><a aria-label="Abrir captura completa: Menú de Agent Studio con la opción Agentes resaltada" class="course-shot-link" href="../assets/screenshots/agent-menu.png" rel="noopener" target="_blank"><img alt="Menú de Agent Studio con la opción Agentes resaltada" loading="lazy" src="../assets/screenshots/agent-menu.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Desde Plataforma de agentes, entra a Agentes para acceder al agente del curso.</span></figcaption></figure>
+</section>
+<section id="entrar">
+<h2>4. Entrar y crear un agente</h2>
+<p>En la interfaz actual documentada por Google, el flujo básico es:</p>
+<ol>
+<li>Abre Google Cloud y confirma el proyecto activo.</li>
+<li>Entra a <strong>Agent Platform → Agent Studio</strong>.</li>
+<li>Abre la sección de agentes.</li>
+<li>Selecciona <strong>Create agent</strong>.</li>
+<li>Se abrirá el canvas de diseño.</li>
+<li>Selecciona el agente principal para editar sus detalles.</li>
+</ol>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Listado de agentes con Analista de Validación Integrada resaltado" class="course-shot-link" href="../assets/screenshots/agent-list.png" rel="noopener" target="_blank"><img alt="Listado de agentes con Analista de Validación Integrada resaltado" loading="lazy" src="../assets/screenshots/agent-list.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Localiza Analista de Validación Integrada y abre su tarjeta.</span></figcaption></figure>
+</section>
+<section id="campos">
+<h2>5. Name, Description e Instructions</h2>
+<p>Estos tres campos cumplen papeles diferentes y no conviene usarlos como si fueran equivalentes.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Name</h3>
+<p>Identifica al agente. Debe ser corto y reconocible.</p>
+</div>
+<div class="concept-card">
+<h3>Description</h3>
+<p>Resume el propósito del agente: qué problema intenta resolver.</p>
+</div>
+<div class="concept-card">
+<h3>Instructions</h3>
+<p>Contienen el método de trabajo persistente: orden de pasos, restricciones, criterios de validación y comportamiento esperado.</p>
+</div>
+</div>
+<div class="callout">
+<strong>Instructions no son el caso concreto</strong>
+          No conviene pegar allí cada archivo, monto o criterio de una evaluación particular. Las Instructions deben describir el método que seguirá siendo válido cuando cambie el caso.
+        </div>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Ejemplo conceptual de Instructions</span></div>
+<pre class="prompt-text">Antes de analizar:
+1. identifica las fuentes que pudiste consultar;
+2. distingue evidencia disponible de información faltante;
+3. analiza únicamente contenido respaldado;
+4. separa dato, cálculo e interpretación;
+5. no inventes información ausente.</pre>
+</div>
+</section>
+<section id="modelo">
+<h2>6. Model</h2>
+<p>El agente también debe tener un modelo configurado. Agent Studio permite seleccionar el modelo que potencia al agente.</p>
+<div class="callout">
+<strong>No diseñes el método alrededor de una versión exacta del modelo</strong>
+          El modelo disponible puede cambiar. El comportamiento que nos interesa debe estar expresado en las Instructions y probado con casos concretos.
+        </div>
+</section>
+<section id="guardar">
+<h2>7. Guardar antes de probar</h2>
+<p>La documentación actual de Agent Studio indica que un agente nuevo debe guardarse antes de poder utilizar ciertas funciones como Preview, despliegue o carga de archivos de conocimiento. Al guardarlo por primera vez se crea también la identidad necesaria para esas operaciones.</p>
+<ol>
+<li>Configura al menos Name, Description, Instructions y Model.</li>
+<li>Selecciona <strong>Save</strong>.</li>
+<li>Completa el nombre solicitado por el diálogo de guardado.</li>
+<li>Después del primer guardado, los cambios posteriores pueden guardarse automáticamente según la interfaz actual.</li>
+</ol>
+<div class="callout warning">
+<strong>Si Preview aparece deshabilitado</strong>
+          Antes de asumir que existe un error, comprueba si el agente nuevo todavía no ha sido guardado.
+        </div>
+</section>
+<section id="flow-preview">
+<h2>8. Flow y Preview cumplen funciones distintas</h2>
+<p>Agent Studio separa el diseño del agente de su prueba conversacional.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Flow</h3>
+<p>Vista de diseño. Permite configurar el agente principal, subagentes y su flujo.</p>
+</div>
+<div class="concept-card">
+<h3>Preview</h3>
+<p>Vista de prueba. Permite conversar con el agente y observar su respuesta antes de desplegarlo.</p>
+</div>
+</div>
+<div class="callout success">
+<strong>Preview no es producción</strong>
+          Es el lugar correcto para ejecutar la Prueba 0, probar casos funcionales y detectar comportamientos incorrectos antes de cualquier despliegue.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Agent Studio con la pestaña Preview resaltada" class="course-shot-link" href="../assets/screenshots/agent-preview.png" rel="noopener" target="_blank"><img alt="Agent Studio con la pestaña Preview resaltada" loading="lazy" src="../assets/screenshots/agent-preview.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Preview es el espacio de prueba. Aquí se envían prompts y se observa el comportamiento del agente.</span></figcaption></figure>
+</section>
+<section id="suggested">
+<h2>9. Suggested prompts: orientar al usuario</h2>
+<p>En los agentes utilizados durante el curso hemos trabajado con <strong>Suggested prompts</strong> o prompts iniciales para orientar solicitudes frecuentes. Su función es servir como punto de entrada, no reemplazar las Instructions ni limitar todo lo que el agente puede hacer.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Instructions</h3>
+<p>Reglas permanentes del agente.</p>
+</div>
+<div class="concept-card">
+<h3>Suggested prompt</h3>
+<p>Ejemplo visible de una solicitud que el usuario puede iniciar.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>Elemento dependiente de la interfaz</strong>
+          La documentación actual de diseño de agentes enfatiza Name, Description, Instructions, Model y Tools. La ubicación o presentación de prompts sugeridos puede variar según la versión de Agent Studio. En este curso los trataremos como ayuda de experiencia de usuario, no como parte del core metodológico.
+        </div>
+</section>
+<section id="prueba">
+<h2>10. El agente de la Prueba Tipo</h2>
+<p>En la evaluación utilizaremos un agente ya configurado: <strong>Analista de Validación Integrada</strong>. Su método no está diseñado solo para una consulta SQL: primero identifica fuentes, comprende el criterio, revisa evidencia y recién después produce resultados.</p>
+<div class="flow">
+<div class="flow-step">Instructions · método permanente</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Knowledge · metodología estable</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Tools · acceso controlado a Storage y BigQuery</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Prompt del alumno · tarea concreta</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Preview · ejecución y verificación</div>
+</div>
+<div class="callout">
+<strong>En las páginas siguientes</strong>
+          Separaremos Knowledge y Tools del resto de la configuración, y después veremos cómo probar el agente, inspeccionar tool calls y recuperar una ejecución interrumpida.
+        </div>
+<div class="related-links">
+<a href="agent-studio-knowledge-tools.html">Siguiente: Knowledge y Tools →</a>
+<a href="gemini-prompting.html#prompt">Repasar: prompting →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/overview" rel="noopener" target="_blank">Google Cloud — Agent Platform overview</a></li>
+<li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio" rel="noopener" target="_blank">Google Cloud — Agent Studio overview</a></li>
+<li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio/design-agents" rel="noopener" target="_blank">Google Cloud — Design agents in Agent Studio</a></li>
+</ul>
+<p>La documentación oficial vigente describe Agent Studio como un entorno visual low-code y documenta Name, Description, Instructions, Model, Tools, Flow, Preview y el requisito de guardar el agente antes de previsualizarlo. La separación prompt puntual / instrucciones persistentes y el uso pedagógico de Suggested prompts siguen el método de la Clase 4 del curso.</p>
+</section>
+<div class="page-nav">
+<a href="gemini-bigquery.html">← Gemini en BigQuery</a>
+<a href="agent-studio-knowledge-tools.html">Knowledge y Tools →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

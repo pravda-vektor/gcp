@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Prueba Tipo FT-00080: revisión final, descarga de informe_final.md y entrega en la plataforma del curso." name="description"/>
+<title>Prueba Tipo — entrega final · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a aria-current="page" href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="prueba-tipo.html">Prueba Tipo</a> › Entrega final</div>
+<div class="article-layout">
+<aside aria-label="Entrega final de la Prueba Tipo" class="sidebar">
+<h2>Paso 11</h2>
+<a class="active" href="#objetivo">Objetivo</a>
+<a href="#estructura">Estructura final</a>
+<a href="#check-archivos">Archivos</a>
+<a href="#check-sql">SQL</a>
+<a href="#check-csv">CSV</a>
+<a href="#check-informe">Informe</a>
+<a href="#check-verificacion">Verificación</a>
+<a href="#errores">Errores antes de entregar</a>
+<a href="#descargar-informe">Descargar informe</a><a href="#subir-evaluacion">Subir informe</a><a href="#entrega">Cierre</a></aside>
+<article class="article">
+<span class="eyebrow">Prueba Tipo</span>
+<h1>11. Entrega final</h1>
+<p class="lead">Antes de cerrar la evaluación, revisa que la fuente, la consulta, el resultado y el informe sean coherentes. Cuando todo esté correcto, descarga únicamente informe_final.md y súbelo a la plataforma de evaluación.</p>
+<section id="objetivo">
+<h2>Objetivo del paso 11</h2>
+<p>Confirmar que tu carpeta contiene los entregables correctos, verificar que el resultado sea reproducible y descargar el archivo <span class="codeish">informe_final.md</span> que se enviará en la plataforma del curso.</p>
+<div class="callout success">
+<strong>Entrega completa</strong>
+          Tu trabajo final debe poder reconstruirse desde la fuente documental hasta la conclusión sin depender de explicaciones externas.
+        </div>
+</section>
+<section id="estructura">
+<h2>Estructura final esperada en Cloud Storage</h2>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/
+├── insumos/
+│   └── criterio_revision.txt
+├── resultados/
+│   ├── consulta.sql
+│   └── resultado.csv
+└── informe/
+    └── informe_final.md</code></pre>
+<div class="callout warning">
+<strong>No entregues archivos fuera de tu carpeta</strong>
+          Todos los artefactos del alumno deben quedar bajo <span class="codeish">alumnos/alumno-XX/</span>. El PDF oficial permanece en <span class="codeish">fuentes/</span> y no debe modificarse.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Cloud Storage mostrando los archivos generados en resultados" class="course-shot-link" href="../assets/screenshots/output-storage-folder.png" rel="noopener" target="_blank"><img alt="Cloud Storage mostrando los archivos generados en resultados" loading="lazy" src="../assets/screenshots/output-storage-folder.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Revisa la estructura final de carpetas y que los entregables estén en sus rutas correctas.</span></figcaption></figure>
+</section>
+<section id="check-archivos">
+<h2>Checklist de archivos</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Archivo</th><th>Debe existir</th><th>Debe contener</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="codeish">insumos/criterio_revision.txt</span></td>
+<td>Sí</td>
+<td>Conversión fiel del PDF oficial, sin resumen ni reinterpretación.</td>
+</tr>
+<tr>
+<td><span class="codeish">resultados/consulta.sql</span></td>
+<td>Sí</td>
+<td>La consulta exacta utilizada para obtener las operaciones seleccionadas.</td>
+</tr>
+<tr>
+<td><span class="codeish">resultados/resultado.csv</span></td>
+<td>Sí</td>
+<td>Encabezados y filas resultantes de la consulta ejecutada.</td>
+</tr>
+<tr>
+<td><span class="codeish">informe/informe_final.md</span></td>
+<td>Sí</td>
+<td>Informe final trazable, prudente y coherente con criterio y evidencia.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="check-sql">
+<h2>Revisión final de <span class="codeish">consulta.sql</span></h2>
+<p>Comprueba visualmente que el SQL siga esta lógica:</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Control</th><th>Esperado</th></tr>
+</thead>
+<tbody>
+<tr><td>Tablas</td><td><span class="codeish">movimientos_diarios</span> + <span class="codeish">cuentas_productos</span>.</td></tr>
+<tr><td>JOIN</td><td>Por <span class="codeish">cuenta_id</span>.</td></tr>
+<tr><td>Canal</td><td>APP o WEB.</td></tr>
+<tr><td>Internacional</td><td><span class="codeish">es_internacional = 1</span>.</td></tr>
+<tr><td>Monto</td><td><span class="codeish">monto &gt; 2000000</span>.</td></tr>
+<tr><td>Producto</td><td><span class="codeish">'Tarjeta de Crédito'</span>.</td></tr>
+<tr><td>Filtros extra</td><td>Ninguno.</td></tr>
+<tr><td>Agregaciones</td><td>Ninguna; se conserva el detalle de cada operación.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout warning">
+<strong>Error crítico</strong>
+          Si el SQL contiene una condición que no aparece en el criterio documental, la consulta dejó de ser una traducción fiel del caso.
+        </div>
+</section>
+<section id="check-csv">
+<h2>Revisión final de <span class="codeish">resultado.csv</span></h2>
+<p>El archivo debe conservar las 13 columnas solicitadas, en este orden:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>movimiento_id
+cuenta_id
+fecha_movimiento
+hora
+tipo_movimiento
+canal
+monto
+moneda
+es_internacional
+categoria_contraparte
+cliente_id
+producto
+estado</code></pre>
+<div class="callout success">
+<strong>Resultado de referencia</strong>
+          En los datos de práctica validados, el CSV debe contener <strong>5 operaciones</strong> más la fila de encabezados.
+        </div>
+<div class="callout">
+<strong>Si el orden de las filas cambia</strong>
+          No es necesariamente un error. Lo importante es que el conjunto de operaciones sea el mismo y que no existan registros extra o faltantes.
+        </div>
+</section>
+<section id="check-informe">
+<h2>Revisión final de <span class="codeish">informe_final.md</span></h2>
+<p>Comprueba que el informe contenga las siete secciones del método:</p>
+<ol>
+<li><strong>Objetivo</strong></li>
+<li><strong>Fuentes utilizadas</strong></li>
+<li><strong>Criterio aplicado</strong></li>
+<li><strong>Resultados observados</strong></li>
+<li><strong>Interpretación</strong></li>
+<li><strong>Conclusión</strong></li>
+<li><strong>Limitaciones o revisión humana requerida</strong></li>
+</ol>
+<div class="callout warning">
+<strong>Revisa especialmente el lenguaje</strong>
+          El informe debe hablar de operaciones que <strong>cumplen el criterio de revisión</strong> o que <strong>requieren revisión adicional</strong>. No debe transformarlas automáticamente en fraude, incumplimiento, irregularidad o error.
+        </div>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Ejemplo de conclusión proporcional</span></div>
+<pre class="prompt-text">La evidencia disponible muestra 5 operaciones que cumplen simultáneamente las condiciones del criterio de revisión definido. Estas operaciones requieren revisión adicional. Con las fuentes disponibles, este resultado no demuestra por sí solo fraude, error, incumplimiento ni conducta irregular.</pre>
+</div>
+</section>
+<section id="check-verificacion">
+<h2>Comprobaciones de verificación</h2>
+<p>Antes de entregar, deberías haber realizado dos comprobaciones independientes del resultado:</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Verificación 1</h3>
+<p>Copiar <span class="codeish">consulta.sql</span> en BigQuery, ejecutarla directamente y confirmar las 5 operaciones.</p>
+</div>
+<div class="concept-card">
+<h3>Verificación 2</h3>
+<p>Generar una consulta equivalente con Gemini en BigQuery y confirmar el mismo conjunto de operaciones.</p>
+</div>
+</div>
+<div class="callout">
+<strong>No se busca una redacción SQL idéntica</strong>
+          Se busca equivalencia: mismas fuentes, mismas cuatro condiciones, mismo grano y mismo conjunto de operaciones.
+        </div>
+</section>
+<section id="errores">
+<h2>Errores que debes corregir antes de entregar</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Problema</th><th>Acción</th></tr>
+</thead>
+<tbody>
+<tr><td>Falta uno de los cuatro archivos.</td><td>Completa el paso correspondiente antes de cerrar la evaluación.</td></tr>
+<tr><td>El TXT resume el PDF.</td><td>Repite la conversión con el prompt validado y reemplaza únicamente tu archivo derivado.</td></tr>
+<tr><td>El SQL devuelve más o menos de 5 operaciones.</td><td>Revisa JOIN, operadores y filtros contra el criterio.</td></tr>
+<tr><td>El CSV no coincide con la consulta.</td><td>Vuelve a la evidencia de la ejecución; no edites filas manualmente para “hacerlo coincidir”.</td></tr>
+<tr><td>El informe dice “fraude” o “incumplimiento” sin respaldo.</td><td>Corrige la interpretación para mantener el alcance real del criterio.</td></tr>
+<tr><td>Los archivos están en otra carpeta.</td><td>Mueve o vuelve a generar los artefactos dentro de tu <span class="codeish">alumno-XX/</span>.</td></tr>
+<tr><td>No verificaste en BigQuery.</td><td>Completa los pasos 09 y 10 antes de entregar.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="descargar-informe">
+<h2>Descargar el informe final</h2>
+<p>Cuando hayas terminado las verificaciones, vuelve a Cloud Storage y abre tu carpeta <span class="codeish">alumno-XX/informe/</span>.</p>
+<ol>
+<li>Confirma que el archivo <span class="codeish">informe_final.md</span> exista dentro de <span class="codeish">informe/</span>.</li>
+<li>Descarga únicamente <span class="codeish">informe_final.md</span> al computador.</li>
+<li>Antes de subirlo, abre el archivo y comprueba que corresponde a la versión final revisada.</li>
+</ol>
+<div class="callout"><strong>Qué se entrega</strong> En la plataforma debes subir únicamente <span class="codeish">informe_final.md</span>. Los archivos de <span class="codeish">insumos/</span> y <span class="codeish">resultados/</span> permanecen en Cloud Storage para la revisión del relator.</div>
+</section>
+<section id="subir-evaluacion">
+<h2>Subir el informe a la plataforma de evaluación</h2>
+<p>Con <span class="codeish">informe_final.md</span> descargado, entra a la plataforma de Kibernum y abre la sección de evaluación del curso.</p>
+<ol><li>Entra a <strong>Entrega de evaluaciones</strong>.</li><li>Abre <strong>Entrega de su evaluación o trabajo final</strong>.</li><li>Adjunta el archivo <span class="codeish">informe_final.md</span>.</li><li>Completa el envío usando el botón disponible en tu vista de estudiante.</li><li>Antes de cerrar la plataforma, confirma que la entrega haya quedado registrada.</li></ol>
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: sección Entrega de su evaluación o trabajo final en la plataforma del curso" class="course-shot-link" href="../assets/screenshots/kibernum-entrega-evaluacion.png" rel="noopener" target="_blank">
+<img alt="Pantalla de la tarea Entrega de su evaluación o trabajo final en la plataforma del curso" loading="lazy" src="../assets/screenshots/kibernum-entrega-evaluacion.png"/>
+</a>
+<figcaption><span class="shot-label">Plataforma del curso</span> <span>Busca la tarea <strong>Entrega de su evaluación o trabajo final</strong>. La vista del estudiante puede mostrar controles de envío distintos a los de esta captura.</span></figcaption>
+</figure>
+<div class="callout"><strong>Antes de enviar</strong> Verifica que el archivo seleccionado sea <span class="codeish">informe_final.md</span> y que sea la versión final que acabas de revisar.</div>
+</section>
+<section id="entrega">
+<h2>Cierre de la evaluación</h2>
+<div class="callout success"><strong>Entrega lista</strong> La Prueba Tipo termina cuando los archivos quedan correctamente guardados en Cloud Storage y <span class="codeish">informe_final.md</span> queda enviado en la plataforma de evaluación.</div>
+<h3>Checklist final</h3>
+<ul>
+<li><span class="codeish">criterio_revision.txt</span> existe y es fiel al PDF.</li>
+<li><span class="codeish">consulta.sql</span> implementa exactamente las cuatro condiciones.</li>
+<li><span class="codeish">resultado.csv</span> contiene las 13 columnas y 5 operaciones de referencia.</li>
+<li><span class="codeish">informe_final.md</span> contiene las siete secciones requeridas.</li>
+<li>El agente realizó como máximo una ejecución analítica con <span class="codeish">execute_sql_readonly</span>.</li>
+<li>La consulta guardada fue verificada manualmente en BigQuery.</li>
+<li>La consulta independiente de Gemini produce el mismo conjunto de operaciones.</li>
+<li>La conclusión no excede lo que las fuentes permiten afirmar.</li>
+<li>Confirmaste que la plataforma registró la entrega.</li><li>Descargaste <span class="codeish">informe_final.md</span> desde Cloud Storage.</li><li>Subiste <span class="codeish">informe_final.md</span> en “Entrega de su evaluación o trabajo final”.</li></ul><div class="shot-grid"><figure class="course-shot"><a aria-label="Abrir captura completa: Vista de informe_final.md con sus secciones" class="course-shot-link" href="../assets/screenshots/output-report.png" rel="noopener" target="_blank"><img alt="Vista de informe_final.md con sus secciones" loading="lazy" src="../assets/screenshots/output-report.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>El informe final debe conservar la estructura exigida y lenguaje prudente.</span></figcaption></figure><figure class="course-shot"><a aria-label="Abrir captura completa: Resultado tabular con cinco registros de la evaluación" class="course-shot-link" href="../assets/screenshots/output-csv.png" rel="noopener" target="_blank"><img alt="Resultado tabular con cinco registros de la evaluación" loading="lazy" src="../assets/screenshots/output-csv.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>El resultado de referencia contiene cinco operaciones y sirve para la comprobación final.</span></figcaption></figure></div>
+<div class="related-links">
+<a href="prueba-tipo.html">Volver al índice de la Prueba Tipo →</a>
+<a href="validacion-integrada.html">Repasar Validación integrada →</a>
+<a href="recursos.html">Abrir Recursos →</a>
+</div>
+<div class="page-nav">
+<a href="prueba-tipo-recuperacion.html">← Recuperación y verificación</a>
+<a href="recursos.html">Recursos →</a>
+</div>
+</section>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

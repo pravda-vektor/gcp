@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Entorno de BigQuery: proyecto, dataset, tabla, Explorer, Schema, Details, Preview, editor SQL y resultados." name="description"/>
+<title>BigQuery — entorno · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#bigquery">BigQuery</a> › Entorno</div>
+<div class="article-layout">
+<aside aria-label="Contenido de BigQuery" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#que-es">Qué es BigQuery</a>
+<a href="#jerarquia">Proyecto, dataset y tabla</a>
+<a href="#abrir">Abrir BigQuery</a>
+<a href="#explorer">Explorer</a>
+<a href="#schema">Schema</a>
+<a href="#details">Details</a>
+<a href="#preview">Preview</a>
+<a href="#editor">Editor SQL</a>
+<a href="#ejecutar">Ejecutar consulta</a>
+<a href="#resultados">Resultados</a>
+<a href="#prueba">Uso en la Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">BigQuery</span>
+<h1>BigQuery — entorno</h1>
+<p class="lead">BigQuery es la plataforma analítica que utilizaremos para explorar tablas y ejecutar consultas GoogleSQL. Antes de escribir SQL, conviene aprender a orientarse en su interfaz y revisar qué datos existen.</p>
+<section id="que-es">
+<h2>1. ¿Qué es BigQuery?</h2>
+<p>BigQuery es el data warehouse analítico administrado de Google Cloud. Permite consultar grandes volúmenes de datos sin administrar servidores y trabajar con SQL, Python y otras capacidades integradas.</p>
+<div class="callout">
+<strong>En este curso</strong>
+          Nuestro objetivo no es administrar infraestructura de BigQuery. Trabajaremos como analistas sobre recursos ya disponibles: datasets, tablas, esquemas y consultas.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Pantalla principal de BigQuery Studio con Explorer, accesos de creación y tablas recientes" class="course-shot-link" href="../assets/screenshots/bq-overview.png" rel="noopener" target="_blank"><img alt="Pantalla principal de BigQuery Studio con Explorer, accesos de creación y tablas recientes" loading="lazy" src="../assets/screenshots/bq-overview.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span><span> Esta vista general permite reconocer BigQuery Studio, el proyecto activo, Explorer y el acceso a una nueva consulta SQL.</span></figcaption></figure>
+</section>
+<section id="jerarquia">
+<h2>2. Proyecto → dataset → tabla</h2>
+<p>Para orientarse en BigQuery es útil recordar una jerarquía sencilla. El proyecto contiene datasets; los datasets contienen tablas y otros objetos analíticos.</p>
+<div aria-label="Jerarquía básica de BigQuery" class="flow">
+<div class="flow-step">Proyecto · <span class="codeish">arched-osprey-506820-i9</span></div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Dataset · <span class="codeish">analitica_bancaria_demo</span></div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Tabla · <span class="codeish">movimientos_diarios</span></div>
+</div>
+<p>El nombre completo de una tabla puede escribirse como:</p>
+<p><span class="codeish">arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios</span></p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Nivel</th><th>Qué representa</th><th>Ejemplo del curso</th></tr>
+</thead>
+<tbody>
+<tr><td>Proyecto</td><td>Contenedor administrativo de recursos.</td><td><span class="codeish">arched-osprey-506820-i9</span></td></tr>
+<tr><td>Dataset</td><td>Agrupa tablas, vistas y otros objetos de BigQuery.</td><td><span class="codeish">analitica_bancaria_demo</span></td></tr>
+<tr><td>Tabla</td><td>Objeto tabular con filas y columnas.</td><td><span class="codeish">clientes</span>, <span class="codeish">movimientos_diarios</span></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="abrir">
+<h2>3. Abrir BigQuery y confirmar el contexto</h2>
+<ol>
+<li>Desde Google Cloud Console, confirma que el proyecto activo sea el del curso.</li>
+<li>Busca <strong>BigQuery</strong> en la barra superior.</li>
+<li>Abre BigQuery.</li>
+<li>En el panel izquierdo, localiza el proyecto <span class="codeish">arched-osprey-506820-i9</span>.</li>
+</ol>
+<div class="callout warning">
+<strong>Si no ves el panel izquierdo</strong>
+          La interfaz puede mostrarlo contraído. Busca la opción para expandir el panel lateral antes de asumir que el proyecto o dataset no existe.
+        </div>
+</section>
+<section id="explorer">
+<h2>4. Explorer: encontrar datasets y tablas</h2>
+<p>El panel <strong>Explorer</strong> permite navegar los recursos de BigQuery. Allí puedes expandir un proyecto, acceder a sus datasets y seleccionar tablas o vistas.</p>
+<ol>
+<li>Expande el proyecto.</li>
+<li>Abre <strong>Datasets</strong>.</li>
+<li>Selecciona <span class="codeish">analitica_bancaria_demo</span>.</li>
+<li>Revisa las tablas disponibles.</li>
+<li>Selecciona una tabla antes de escribir SQL.</li>
+</ol>
+<div class="callout">
+<strong>Hábito recomendado</strong>
+          Antes de consultar una tabla nueva, revisa qué representa, qué columnas tiene y cuál es su grano. No empieces con <span class="codeish">SELECT *</span> solo para descubrir qué contiene.
+        </div>
+<figure class="course-shot compact-xs"><a aria-label="Abrir captura completa: Explorer de BigQuery con analitica_bancaria_demo visible" class="course-shot-link" href="../assets/screenshots/bq-explorer.png" rel="noopener" target="_blank"><img alt="Explorer de BigQuery con analitica_bancaria_demo visible" loading="lazy" src="../assets/screenshots/bq-explorer.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Expande el dataset del curso para localizar las tablas que vas a consultar.</span></figcaption></figure>
+</section>
+<section id="schema">
+<h2>5. Schema: qué columnas existen</h2>
+<p>La pestaña <strong>Schema</strong> muestra la definición del esquema de una tabla. Aquí puedes revisar nombres de campos, tipos técnicos y modos.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Elemento</th><th>Qué te ayuda a comprobar</th></tr>
+</thead>
+<tbody>
+<tr><td>Name</td><td>Nombre real de la columna.</td></tr>
+<tr><td>Type</td><td>Tipo técnico, por ejemplo STRING, INT64, NUMERIC o DATE.</td></tr>
+<tr><td>Mode</td><td>Cómo se almacena el campo, por ejemplo NULLABLE o REPEATED.</td></tr>
+<tr><td>Description</td><td>Descripción documentada del campo, cuando exista.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout success">
+<strong>Esto será obligatorio en la Prueba Tipo</strong>
+          El agente debe verificar los nombres reales de las columnas antes de construir la consulta SQL. La misma disciplina es válida cuando tú trabajas manualmente en BigQuery.
+        </div>
+</section>
+<section id="details">
+<h2>6. Details: propiedades de la tabla</h2>
+<p>La pestaña <strong>Details</strong> permite revisar información y metadatos de la tabla. Dependiendo del tipo de tabla y configuración, puedes encontrar descripción, cantidad de filas, tamaño, ubicación y otras propiedades.</p>
+<div class="callout">
+<strong>Schema responde “qué campos existen”. Details responde “qué recurso es”.</strong>
+          Ambas vistas son complementarias y sirven para orientarse antes de consultar.
+        </div>
+</section>
+<section id="preview">
+<h2>7. Preview: observar filas sin diseñar una consulta</h2>
+<p>La pestaña <strong>Preview</strong> muestra una muestra de los datos de una tabla. Es útil para inspeccionar rápidamente su forma y algunos valores antes de escribir SQL.</p>
+<div class="callout">
+<strong>Preview no es lo mismo que <span class="codeish">SELECT *</span></strong>
+          Preview sirve para explorar una muestra de datos. <span class="codeish">SELECT *</span> es una consulta real que selecciona todas las columnas. Google recomienda utilizar las opciones de vista previa para explorar tablas en lugar de ejecutar consultas innecesarias.
+        </div>
+<p>La pestaña Preview no está disponible para todos los tipos de tabla, por ejemplo ciertas tablas externas o vistas.</p>
+</section>
+<section id="editor">
+<h2>8. Editor SQL</h2>
+<p>El editor de consultas es el espacio donde escribiremos GoogleSQL. La documentación actual de BigQuery describe esta pestaña como el lugar donde se crean y ejecutan consultas SQL y se revisan sus resultados.</p>
+<ol>
+<li>Abre una nueva consulta SQL.</li>
+<li>Escribe o pega la consulta.</li>
+<li>Revisa que no existan errores visibles de sintaxis.</li>
+<li>Cuando la interfaz muestre una estimación de procesamiento, revísala antes de ejecutar.</li>
+<li>Ejecuta únicamente cuando tengas claro qué pregunta responde la consulta.</li>
+</ol>
+<figure class="course-shot compact-xs"><a aria-label="Abrir captura completa: Botón para abrir una consulta SQL nueva en BigQuery" class="course-shot-link" href="../assets/screenshots/bq-new-query.png" rel="noopener" target="_blank"><img alt="Botón para abrir una consulta SQL nueva en BigQuery" loading="lazy" src="../assets/screenshots/bq-new-query.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Abre una consulta SQL nueva antes de pegar o escribir el código.</span></figcaption></figure>
+</section>
+<section id="ejecutar">
+<h2>9. Ejecutar una consulta</h2>
+<div class="callout warning">
+<strong>Mensajes sobre APIs o permisos</strong>
+<p>BigQuery puede mostrar avisos de configuración, permisos o APIs que no necesariamente impiden trabajar con los recursos ya preparados para el curso. Si puedes abrir la tabla, ejecutar la consulta o ver resultados, continúa según las instrucciones del relator.</p>
+<p>No habilites APIs ni cambies permisos por tu cuenta. Si la consulta no se puede ejecutar de verdad, detente y consulta al relator.</p>
+</div>
+<p>Cuando la consulta esté lista, utiliza <strong>Run / Ejecutar</strong>. Para empezar, una consulta simple puede seleccionar pocas columnas y limitar la cantidad de filas mostradas.</p>
+<p>Ejemplo:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  segmento,
+  region,
+  nivel_riesgo
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+LIMIT 10;</code></pre>
+<div class="callout warning">
+<strong>LIMIT no significa “solo se leyeron esas filas”</strong>
+          LIMIT controla cuántas filas devuelve el resultado, pero no necesariamente reduce el volumen de datos procesado. Más adelante veremos cómo seleccionar solo columnas y filas realmente necesarias.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Editor SQL de BigQuery con la consulta de la Prueba Tipo" class="course-shot-link" href="../assets/screenshots/bq-query.png" rel="noopener" target="_blank"><img alt="Editor SQL de BigQuery con la consulta de la Prueba Tipo" loading="lazy" src="../assets/screenshots/bq-query.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Revisa FROM, JOIN y WHERE antes de ejecutar. La consulta del ejemplo usa movimientos_diarios y cuentas_productos.</span></figcaption></figure>
+</section>
+<section id="resultados">
+<h2>10. Leer la tabla de resultados</h2>
+<p>Después de ejecutar, BigQuery muestra los resultados de la consulta. Antes de sacar conclusiones, revisa:</p>
+<ol>
+<li>qué columnas devolvió la consulta;</li>
+<li>qué representa una fila del resultado;</li>
+<li>si los filtros aplicados corresponden a la pregunta;</li>
+<li>cuántas filas aparecen;</li>
+<li>si el resultado cambió el grano respecto de la tabla original.</li>
+</ol>
+<div class="callout success">
+<strong>Consulta reproducible</strong>
+          Una de las ventajas de trabajar con SQL es que puedes conservar la consulta exacta y volver a ejecutarla. En la Prueba Tipo guardaremos ese SQL como evidencia técnica.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: BigQuery mostrando la consulta ejecutada y cinco filas de resultado" class="course-shot-link" href="../assets/screenshots/bq-results.png" rel="noopener" target="_blank"><img alt="BigQuery mostrando la consulta ejecutada y cinco filas de resultado" loading="lazy" src="../assets/screenshots/bq-results.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Después de ejecutar, revisa tanto el mensaje de finalización como la tabla de resultados.</span></figcaption></figure>
+</section>
+<section id="prueba">
+<h2>11. ¿Dónde aparece esto en la Prueba Tipo?</h2>
+<p>BigQuery aparecerá dos veces en la evaluación:</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Durante el trabajo del agente</h3>
+<p>El agente consultará los esquemas de <span class="codeish">movimientos_diarios</span> y <span class="codeish">cuentas_productos</span>, construirá una consulta y la ejecutará una sola vez.</p>
+</div>
+<div class="concept-card">
+<h3>Durante la verificación</h3>
+<p>Tú abrirás BigQuery, ejecutarás la consulta guardada en <span class="codeish">consulta.sql</span> y comprobarás que sus resultados sean consistentes con <span class="codeish">resultado.csv</span>.</p>
+</div>
+</div>
+<div class="related-links">
+<a href="googlesql-fundamentos.html">Siguiente materia: GoogleSQL — fundamentos →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas para esta página</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/" rel="noopener" target="_blank">Google Cloud — BigQuery documentation</a></li>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/bigquery-web-ui" rel="noopener" target="_blank">Google Cloud — Explore BigQuery in the Google Cloud console</a></li>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/tables" rel="noopener" target="_blank">Google Cloud — Create and use tables</a></li>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/managing-table-data" rel="noopener" target="_blank">Google Cloud — Managing table data</a></li>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/best-practices-costs" rel="noopener" target="_blank">Google Cloud — Estimate and control costs</a></li>
+</ul>
+<p>La estructura pedagógica se mantiene alineada con la Clase 3: Explorer → Schema/Details/Preview → editor SQL → resultados, revisando grano y columnas antes de consultar.</p>
+</section>
+<div class="page-nav">
+<a href="cloud-storage-operaciones.html">← Cloud Storage — operaciones</a>
+<a href="googlesql-fundamentos.html">GoogleSQL — fundamentos →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

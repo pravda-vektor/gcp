@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Prueba Tipo FT-00080: preparación paso a paso en Cloud Storage y Gemini, desde el PDF fuente hasta criterio_revision.txt." name="description"/>
+<title>Prueba Tipo — preparación · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a aria-current="page" href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="prueba-tipo.html">Prueba Tipo</a> › Preparación</div>
+<div class="article-layout">
+<aside aria-label="Preparación de la Prueba Tipo" class="sidebar">
+<h2>Pasos 01–05</h2>
+<a class="active" href="#intro">Antes de comenzar</a>
+<a href="#paso-01">01. Preparar espacio</a>
+<a href="#paso-02">02. Localizar PDF</a>
+<a href="#paso-03">03. Importar en Gemini</a>
+<a href="#paso-04">04. PDF → TXT</a>
+<a href="#paso-05">05. Subir TXT</a>
+<a href="#check-final">Comprobación final</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Prueba Tipo</span>
+<h1>Preparación de la Prueba Tipo</h1>
+<p class="lead">En esta primera parte prepararás tu espacio de trabajo, localizarás el documento oficial, lo importarás en Gemini, lo convertirás fielmente a texto plano y subirás <span class="codeish">criterio_revision.txt</span> a tu carpeta personal.</p><div class="callout warning"><strong>Capturas de ejemplo</strong><p>Cuando una captura muestre alumno-00, léelo solo como ejemplo. Sustituye siempre ese identificador por tu alumno-XX asignado.</p></div>
+<section id="intro">
+<h2>Antes de comenzar</h2>
+<p>Necesitas acceso al proyecto del curso, al bucket compartido y al chat de Gemini utilizado en la actividad. No necesitas crear un bucket nuevo ni modificar permisos.</p>
+<div class="callout success">
+<strong>Objetivo de esta etapa</strong>
+          Terminar con un único insumo listo para el agente:
+          <span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt</span>
+</div>
+<div class="callout warning">
+<strong>Trabaja solo en tu espacio</strong>
+          No modifiques el PDF común ni archivos de otros alumnos. El documento de <span class="codeish">fuentes/</span> es compartido; tus archivos deben quedar bajo <span class="codeish">alumnos/alumno-XX/</span>.
+        </div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Elemento</th><th>Ruta</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>PDF común</td>
+<td><span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/fuentes/criterio_revision_operaciones_digitales.pdf</span></td>
+</tr>
+<tr>
+<td>Tu espacio</td>
+<td><span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/</span></td>
+</tr>
+<tr>
+<td>TXT que debes preparar</td>
+<td><span class="codeish">alumno-XX/insumos/criterio_revision.txt</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="paso-01">
+<span class="eyebrow">Paso 01</span>
+<h2>Preparar tu espacio en Cloud Storage</h2>
+<h3>Objetivo</h3>
+<p>Confirmar que estás en el bucket correcto y entrar a la carpeta asignada a tu alumno.</p>
+<h3>Procedimiento</h3>
+<ol>
+<li>Abre Google Cloud Console. Si todavía no has iniciado sesión, vuelve al <a href="prueba-tipo.html#acceso-curso">acceso inicial de la Prueba Tipo</a> y confirma después el proyecto del curso.</li>
+<li>Abre <strong>Cloud Storage → Buckets</strong>.</li>
+<li>Entra al bucket <span class="codeish">banco-curso-vertex-datos</span>.</li>
+<li>Navega a <span class="codeish">alumnos/prueba-tipo/alumnos/</span>.</li>
+<li>Entra únicamente a tu carpeta <span class="codeish">alumno-XX/</span>.</li>
+<li>Comprueba la estructura de trabajo:
+            <span class="codeish">insumos/</span>,
+            <span class="codeish">resultados/</span> e
+            <span class="codeish">informe/</span>.
+          </li>
+<li>Si una carpeta de tu propio espacio falta y la actividad te permite crearla, créala allí. No crees ni elimines carpetas fuera de tu espacio.</li>
+</ol>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Bucket del curso abierto y listo para navegar hacia el espacio del alumno" class="course-shot-link" href="../assets/screenshots/storage-bucket-details.png" rel="noopener" target="_blank"><img alt="Bucket del curso abierto y listo para navegar hacia el espacio del alumno" loading="lazy" src="../assets/screenshots/storage-bucket-details.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Parte desde el bucket compartido y navega únicamente dentro de la ruta asignada al alumno.</span></figcaption></figure>
+<h3>Comprueba antes de continuar</h3>
+<ul>
+<li>Estás en <span class="codeish">banco-curso-vertex-datos</span>.</li>
+<li>Tu ruta contiene <span class="codeish">alumnos/prueba-tipo/alumnos/alumno-XX/</span>.</li>
+<li>No estás dentro de la carpeta de otro alumno.</li>
+<li>Puedes identificar <span class="codeish">insumos/</span>.</li>
+</ul>
+<div class="related-links">
+<a href="navegacion-gcp.html">¿No encuentras el proyecto? → Navegación en Google Cloud</a>
+<a href="cloud-storage-operaciones.html#crear-carpeta">¿No sabes crear una carpeta? → Cloud Storage — operaciones</a>
+</div>
+</section>
+<section id="paso-02">
+<span class="eyebrow">Paso 02</span>
+<h2>Localizar el documento fuente</h2>
+<h3>Objetivo</h3>
+<p>Identificar el PDF oficial sin modificarlo ni copiar una versión diferente.</p>
+<h3>Procedimiento</h3>
+<ol>
+<li>Dentro del mismo bucket, vuelve a <span class="codeish">alumnos/prueba-tipo/</span>.</li>
+<li>Entra a <span class="codeish">fuentes/</span>.</li>
+<li>Localiza <span class="codeish">criterio_revision_operaciones_digitales.pdf</span>.</li>
+<li>Confirma que la URI sea:</li>
+</ol>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>URI oficial</span>
+<button class="prompt-copy" data-copy="#uri-pdf" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="uri-pdf">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/fuentes/criterio_revision_operaciones_digitales.pdf</pre>
+</div>
+<div class="callout">
+<strong>No edites el PDF</strong>
+          Este archivo es la fuente documental oficial común de la evaluación. El trabajo derivado se realizará sobre una representación textual guardada en tu propio espacio.
+        </div>
+<h3>Comprueba antes de continuar</h3>
+<ul>
+<li>El nombre del archivo coincide exactamente.</li>
+<li>La ruta termina en <span class="codeish">prueba-tipo/fuentes/</span>.</li>
+<li>No estás usando un PDF descargado de otra actividad.</li>
+</ul>
+<div class="related-links">
+<a href="cloud-storage-conceptos.html#objeto">¿No recuerdas qué es un objeto? → Cloud Storage — conceptos</a>
+<a href="cloud-storage-conceptos.html#uri">¿No entiendes <span class="codeish">gs://</span>? → Rutas de Cloud Storage</a>
+</div>
+</section>
+<section id="paso-03">
+<span class="eyebrow">Paso 03</span>
+<h2>Importar el PDF en Gemini</h2>
+<h3>Objetivo</h3>
+<p>Entregar a Gemini exactamente la fuente oficial almacenada en Cloud Storage.</p>
+<h3>Procedimiento</h3>
+<ol>
+<li>Abre el chat de Gemini utilizado en el curso.</li>
+<li>Inicia un chat nuevo para evitar contexto innecesario.</li>
+<li>Abre la opción para añadir/importar una fuente.</li>
+<li>Selecciona <strong>Importar desde Cloud Storage</strong>.</li>
+<li>Busca el PDF oficial de la ruta anterior.</li>
+<li>Adjúntalo y confirma que aparece incorporado a la conversación.</li>
+<li>No ejecutes todavía una solicitud de análisis libre.</li>
+</ol>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: Gemini mostrando la opción Importar desde Cloud Storage" class="course-shot-link" href="../assets/screenshots/gemini-import-menu.png" rel="noopener" target="_blank"><img alt="Gemini mostrando la opción Importar desde Cloud Storage" loading="lazy" src="../assets/screenshots/gemini-import-menu.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Importa la fuente oficial directamente desde Cloud Storage.</span></figcaption></figure>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: Selector de Cloud Storage mostrando la carpeta fuentes" class="course-shot-link" href="../assets/screenshots/gemini-source-folder.png" rel="noopener" target="_blank"><img alt="Selector de Cloud Storage mostrando la carpeta fuentes" loading="lazy" src="../assets/screenshots/gemini-source-folder.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>La fuente oficial se encuentra dentro de prueba-tipo/fuentes.</span></figcaption></figure>
+<div class="callout warning">
+<strong>No pidas “resume el PDF”</strong>
+          En esta evaluación no necesitamos un resumen. Necesitamos una conversión textual fiel para que otro agente pueda procesar el criterio sin cambiar su significado.
+        </div>
+<h3>Comprueba antes de continuar</h3>
+<ul>
+<li>El PDF aparece adjunto/importado en Gemini.</li>
+<li>Es el documento de <span class="codeish">fuentes/</span>.</li>
+<li>Estás en una conversación limpia o controlada.</li>
+</ul>
+<div class="related-links">
+<a href="gemini-documentos.html#importar">Repasar: importar documentos en Gemini →</a>
+<a href="gemini-prompting.html">Repasar: prompting controlado →</a>
+</div>
+</section>
+<section id="paso-04">
+<span class="eyebrow">Paso 04</span>
+<h2>Convertir el PDF a texto plano</h2>
+<h3>Objetivo</h3>
+<p>Obtener una representación textual fiel del PDF, sin resumir, interpretar ni completar información.</p>
+<h3>Prompt validado</h3>
+<p>Con el PDF ya incorporado, pega exactamente este prompt:</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>Prompt validado · PDF → TXT</span>
+<button class="prompt-copy" data-copy="#prompt-pdf-txt-prueba" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="prompt-pdf-txt-prueba">El PDF adjunto es la fuente documental oficial de una evaluación.
+
+Convierte fielmente su contenido a texto plano para que posteriormente pueda ser procesado por otro agente.
+
+Debes cumplir estas reglas:
+- No resumas.
+- No interpretes.
+- No agregues información.
+- No elimines condiciones, cifras, títulos ni aclaraciones.
+- No reformules el significado de ninguna condición.
+- Conserva el código del documento, títulos, subtítulos, listas numeradas, cifras y expresiones relevantes.
+- Conserva expresiones como “criterio de revisión”, “revisión adicional” y cualquier limitación expresada en el documento.
+- Si alguna parte no puede leerse con certeza, escribe `[CONTENIDO NO LEGIBLE]` en lugar de inferirla.
+
+Devuelve únicamente el texto resultante, sin introducción, explicación, comentarios adicionales ni bloques Markdown.
+
+Ese contenido será guardado posteriormente con el nombre `criterio_revision.txt`.
+
+Antes de finalizar, verifica que el texto represente fielmente el PDF original y que ninguna condición haya sido alterada.</pre>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Prompt validado con el PDF adjunto listo para enviarse" class="course-shot-link" href="../assets/screenshots/gemini-prompt-send.png" rel="noopener" target="_blank"><img alt="Prompt validado con el PDF adjunto listo para enviarse" loading="lazy" src="../assets/screenshots/gemini-prompt-send.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Pega el prompt completo sin abreviarlo ni reformularlo.</span></figcaption></figure>
+<h3>Resultado esperado</h3>
+<p>La salida debe conservar el criterio documental completo. Como control mínimo, confirma que aparecen las cuatro condiciones simultáneas:</p>
+<ol>
+<li>canal APP o WEB;</li>
+<li>operación internacional;</li>
+<li>monto mayor a 2.000.000;</li>
+<li>producto <span class="codeish">Tarjeta de Crédito</span>.</li>
+</ol>
+<div class="callout warning">
+<strong>También debe conservar la limitación del documento</strong>
+          Cumplir el criterio significa requerir revisión adicional. No significa automáticamente fraude, error, incumplimiento ni conducta irregular.
+        </div>
+<h3>Comprueba antes de continuar</h3>
+<ul>
+<li>No hay introducción del modelo.</li>
+<li>No se resumieron las condiciones.</li>
+<li>Las cifras y expresiones relevantes siguen presentes.</li>
+<li>Si algo fue ilegible, aparece <span class="codeish">[CONTENIDO NO LEGIBLE]</span>.</li>
+</ul>
+<div class="related-links">
+<a href="gemini-documentos.html#pdf-txt">Repasar: qué significa PDF → texto plano →</a>
+<a href="validacion-integrada.html#prudencia">Repasar: lenguaje prudente →</a>
+</div>
+</section>
+<section id="paso-05">
+<span class="eyebrow">Paso 05</span>
+<h2>Guardar y subir <span class="codeish">criterio_revision.txt</span></h2>
+<h3>Objetivo</h3>
+<p>Dejar el texto convertido en la ruta exacta que utilizará el agente.</p>
+<h3>Procedimiento</h3>
+<ol>
+<li>Copia únicamente el texto devuelto por Gemini.</li>
+<li>Guárdalo localmente con el nombre exacto <span class="codeish">criterio_revision.txt</span>.</li>
+<li>Vuelve a Cloud Storage.</li>
+<li>Entra a tu carpeta <span class="codeish">alumno-XX/insumos/</span>.</li>
+<li>Sube <span class="codeish">criterio_revision.txt</span>.</li>
+<li>Abre o inspecciona el objeto y verifica que no esté vacío.</li>
+<li>Confirma la URI final.</li>
+</ol>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>URI esperada</span>
+<button class="prompt-copy" data-copy="#uri-txt" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="uri-txt">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt</pre>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Texto plano obtenido desde el PDF oficial" class="course-shot-link" href="../assets/screenshots/gemini-text-result.png" rel="noopener" target="_blank"><img alt="Texto plano obtenido desde el PDF oficial" loading="lazy" src="../assets/screenshots/gemini-text-result.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Verifica que el texto conserve las cuatro condiciones y el alcance de la conclusión.</span></figcaption></figure>
+<figure class="course-shot"><a aria-label="Abrir captura completa: criterio_revision.txt dentro de la carpeta insumos del alumno" class="course-shot-link" href="../assets/screenshots/storage-criterio-uploaded.png" rel="noopener" target="_blank"><img alt="criterio_revision.txt dentro de la carpeta insumos del alumno" loading="lazy" src="../assets/screenshots/storage-criterio-uploaded.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>La preparación queda completa cuando el TXT aparece en alumno-XX/insumos/.</span></figcaption></figure>
+<div class="callout success">
+<strong>Cuando este archivo exista, la preparación está terminada</strong>
+          El siguiente paso comienza desde aquí: abrir el agente y ejecutar el prompt principal.
+        </div>
+<h3>Comprueba antes de continuar</h3>
+<ul>
+<li>El archivo se llama exactamente <span class="codeish">criterio_revision.txt</span>.</li>
+<li>Está en <span class="codeish">insumos/</span>, no en <span class="codeish">resultados/</span> ni <span class="codeish">informe/</span>.</li>
+<li>El contenido no está vacío.</li>
+<li>La ruta pertenece a tu <span class="codeish">alumno-XX</span>.</li>
+</ul>
+<div class="related-links">
+<a href="cloud-storage-operaciones.html#subir">¿No sabes subir el archivo? → Cloud Storage — operaciones</a>
+<a href="gemini-documentos.html#guardar">Repasar: guardar y subir TXT →</a>
+</div>
+</section>
+<section id="check-final">
+<h2>Comprobación final de la preparación</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Control</th><th>Debe quedar así</th></tr>
+</thead>
+<tbody>
+<tr><td>Fuente oficial</td><td><span class="codeish">fuentes/criterio_revision_operaciones_digitales.pdf</span></td></tr>
+<tr><td>Fuente modificada</td><td>No. El PDF común permanece intacto.</td></tr>
+<tr><td>Conversión</td><td>Fiel, sin resumen ni interpretación.</td></tr>
+<tr><td>Archivo preparado</td><td><span class="codeish">criterio_revision.txt</span></td></tr>
+<tr><td>Ubicación</td><td><span class="codeish">alumno-XX/insumos/</span></td></tr>
+<tr><td>Siguiente paso</td><td>Ejecutar el Analista de Validación Integrada.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="page-nav">
+<a href="validacion-integrada.html">← Validación integrada</a>
+<a href="prueba-tipo-ejecucion.html">Prueba Tipo — ejecución →</a>
+</div>
+</section>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

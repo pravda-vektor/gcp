@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Prueba Tipo FT-00080: ejecutar el Analista de Validación Integrada, revisar tool calls y generar consulta.sql, resultado.csv e informe_final.md." name="description"/>
+<title>Prueba Tipo — ejecución · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a aria-current="page" href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="prueba-tipo.html">Prueba Tipo</a> › Ejecución</div>
+<div class="article-layout">
+<aside aria-label="Ejecución de la Prueba Tipo" class="sidebar">
+<h2>Paso 06</h2>
+<a class="active" href="#antes">Antes de ejecutar</a>
+<a href="#abrir-agente">Abrir el agente</a>
+<a href="#prompt">Prompt principal</a><a href="#prueba-rescate-inmediato">Rescate inmediato</a>
+<a href="#secuencia">Secuencia esperada</a>
+<a href="#sql">SQL esperado</a>
+<a href="#archivos">Archivos generados</a>
+<a href="#respuesta">Respuesta final</a>
+<a href="#control">Checklist</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Prueba Tipo</span>
+<h1>06. Ejecutar el Analista de Validación Integrada</h1>
+<p class="lead">Ahora el agente leerá el criterio preparado en Storage, comprobará las tablas de BigQuery, ejecutará una única consulta analítica y guardará tres entregables trazables en tu espacio.</p>
+<section id="antes">
+<h2>Antes de ejecutar</h2>
+<p>No abras una conversación antigua con contexto de pruebas previas. Usa una conversación nueva en Preview para que la ejecución sea fácil de seguir.</p>
+<div class="callout success">
+<strong>Debes tener listo</strong>
+<span class="codeish">gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt</span>
+</div>
+<div class="callout warning">
+<strong>Sustituye solo <span class="codeish">alumno-XX</span></strong>
+          En las rutas del prompt reemplaza <span class="codeish">XX</span> por tu número asignado. No cambies nombres de archivos, dataset ni tablas.
+        </div>
+<h3>Qué hará el agente</h3>
+<div class="flow">
+<div class="flow-step">Leer criterio_revision.txt</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Revisar esquemas necesarios</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Construir una sola consulta</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Ejecutar una vez</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Escribir 3 entregables</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Responder en texto</div>
+</div>
+</section>
+<section id="abrir-agente">
+<h2>Abrir el agente</h2>
+<ol>
+<li>Abre <strong>Agent Studio</strong>.</li>
+<li>Localiza el agente <strong>Analista de Validación Integrada</strong>.</li>
+<li>Ábrelo sin modificar sus Instructions, Knowledge ni Tools.</li>
+<li>Entra a <strong>Preview</strong>.</li>
+<li>Inicia una conversación nueva.</li>
+</ol>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Tarjeta del Analista de Validación Integrada en Agent Studio" class="course-shot-link" href="../assets/screenshots/agent-list.png" rel="noopener" target="_blank"><img alt="Tarjeta del Analista de Validación Integrada en Agent Studio" loading="lazy" src="../assets/screenshots/agent-list.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Abre el agente correcto antes de iniciar la evaluación.</span></figcaption></figure>
+<div class="callout">
+<strong>✅ CORE SIN CAMBIOS</strong>
+          Para esta etapa no debes editar las Instructions permanentes del agente. Todo lo que sigue se pega únicamente como prompt del chat en Preview.
+        </div>
+</section>
+<section id="prompt">
+<h2>Prompt principal de ejecución</h2>
+<p>Reemplaza <span class="codeish">alumno-XX</span> por tu carpeta y pega el bloque completo en una conversación nueva.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>💬 PROMPT PRINCIPAL · Prueba Tipo</span>
+<button class="prompt-copy" data-copy="#prompt-principal-prueba" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="prompt-principal-prueba">Realiza una validación integrada utilizando exclusivamente las fuentes y herramientas disponibles en este agente.
+
+Fuente documental del caso:
+gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/insumos/criterio_revision.txt
+
+Fuentes de datos en BigQuery:
+- `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+
+Trabaja en este orden:
+
+1. Lee efectivamente `criterio_revision.txt` y extrae únicamente las condiciones expresas del criterio de revisión.
+2. Consulta la información de esquema necesaria de las dos tablas antes de construir la consulta.
+3. Relaciona ambas tablas mediante `cuenta_id`.
+4. Construye una única consulta GoogleSQL de solo lectura que devuelva las operaciones que cumplen simultáneamente todas las condiciones del criterio.
+5. Debe existir como máximo una única ejecución analítica mediante `execute_sql_readonly`. No ejecutes una segunda consulta para contar, verificar, resumir ni volver a validar el resultado.
+6. Conserva el detalle de cada operación seleccionada. La consulta debe devolver estas columnas, en este orden:
+   - movimiento_id
+   - cuenta_id
+   - fecha_movimiento
+   - hora
+   - tipo_movimiento
+   - canal
+   - monto
+   - moneda
+   - es_internacional
+   - categoria_contraparte
+   - cliente_id
+   - producto
+   - estado
+7. No agregues filtros, condiciones, agregaciones ni supuestos que no estén respaldados por el criterio documental.
+8. Utiliza el resultado de esa única consulta para preparar los tres entregables siguientes.
+
+Escribe exactamente estos archivos:
+
+A. SQL ejecutado:
+gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/resultados/consulta.sql
+
+B. Resultado de la consulta en formato CSV, incluyendo encabezados:
+gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/resultados/resultado.csv
+
+C. Informe final en Markdown:
+gs://banco-curso-vertex-datos/alumnos/prueba-tipo/alumnos/alumno-XX/informe/informe_final.md
+
+El informe final debe seguir la metodología de validación disponible en el agente y separar como mínimo:
+- objetivo;
+- fuentes utilizadas;
+- criterio aplicado;
+- resultados observados;
+- interpretación;
+- conclusión;
+- limitaciones o revisión humana requerida.
+
+Describe las operaciones seleccionadas únicamente como operaciones que cumplen el criterio de revisión o que requieren revisión adicional.
+No las califiques como fraude, error, incumplimiento, irregularidad ni conducta indebida salvo que una fuente lo establezca expresamente.
+
+Presupuesto y control de herramientas:
+- lee el archivo del caso solo una vez, salvo que la primera lectura falle;
+- consulta únicamente los esquemas necesarios;
+- ejecuta `execute_sql_readonly` como máximo una vez;
+- escribe cada uno de los tres entregables una sola vez;
+- no realices llamadas adicionales para volver a contar o verificar resultados que ya obtuviste;
+- si una herramienta falla, informa el fallo y no inventes que la operación se completó.
+
+Después de completar las escrituras necesarias, no finalices el turno en una herramienta.
+Entrega una respuesta textual visible indicando:
+- las fuentes efectivamente consultadas;
+- el criterio aplicado;
+- que la consulta analítica fue ejecutada una sola vez;
+- qué archivos fueron escritos correctamente;
+- una breve interpretación prudente del resultado.</pre>
+</div><section class="inline-rescue" id="prueba-rescate-inmediato"><h3>Si Preview se interrumpe: rescate inmediato</h3><p>Antes de pegar un rescate, revisa los <span class="codeish">tool calls</span> y <span class="codeish">tool results</span>. Usa solo el caso que corresponda.</p><div class="rescue-case"><h4>Caso A · Las herramientas ya terminaron y solo falta la respuesta humana</h4><p>Úsalo únicamente cuando las operaciones solicitadas ya tienen resultado y no quedan lecturas, consultas ni escrituras pendientes.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · solo respuesta final</span><button class="prompt-copy" data-copy="#prueba-rescate-final" type="button">Copiar</button></div><pre class="prompt-text" id="prueba-rescate-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre></div></div><div class="rescue-case"><h4>Caso B · Algunas operaciones terminaron, pero todavía quedan pasos pendientes</h4><p>Úsalo cuando ya existe trabajo correcto que no debe repetirse, pero aún falta completar una lectura, escritura u otro paso solicitado.</p><div class="prompt-shell"><div class="prompt-toolbar"><span>🛟 PROMPT DE RECUPERACIÓN · completar solo lo pendiente</span><button class="prompt-copy" data-copy="#prueba-rescate-pendiente" type="button">Copiar</button></div><pre class="prompt-text" id="prueba-rescate-pendiente">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre></div></div><div class="callout warning"><strong>No intercambies los dos rescates</strong> Si todo terminó, el rescate A evita volver a usar herramientas. Si todavía faltan operaciones, el rescate B conserva lo ya completado y termina solo lo pendiente.</div><p class="rescue-more">El <a href="prueba-tipo-recuperacion.html#paso-07">paso 07</a> vuelve a mostrar estos mismos prompts y explica el diagnóstico con más detalle.</p></section>
+<div class="callout">
+<strong>Qué estamos controlando con este prompt</strong>
+          Una lectura del caso, revisión de esquema, una sola ejecución analítica, tres escrituras trazables y una respuesta final visible. El conteo de filas debe salir del resultado ya obtenido, no de una segunda consulta.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Agent Studio con Preview seleccionado" class="course-shot-link" href="../assets/screenshots/agent-preview.png" rel="noopener" target="_blank"><img alt="Agent Studio con Preview seleccionado" loading="lazy" src="../assets/screenshots/agent-preview.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Pega el prompt principal en Preview y ejecuta una sola vez.</span></figcaption></figure>
+</section>
+<section id="secuencia">
+<h2>Qué deberías observar en Preview</h2>
+<p>La interfaz puede mostrar los eventos en un orden ligeramente distinto, pero conceptualmente deberías ver algo parecido a esto:</p>
+<div class="flow">
+<div class="flow-step"><span class="codeish">read_object</span><br/>criterio_revision.txt</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">get_table_info</span><br/>movimientos_diarios</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">get_table_info</span><br/>cuentas_productos</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">execute_sql_readonly</span><br/><strong>una sola vez</strong></div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">write_text</span><br/>consulta.sql</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">write_text</span><br/>resultado.csv</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step"><span class="codeish">write_text</span><br/>informe_final.md</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Respuesta textual final</div>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Respuesta final del agente con consulta, cinco registros y archivos creados" class="course-shot-link" href="../assets/screenshots/agent-final-response.png" rel="noopener" target="_blank"><img alt="Respuesta final del agente con consulta, cinco registros y archivos creados" loading="lazy" src="../assets/screenshots/agent-final-response.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Al finalizar, la respuesta debe resumir fuentes, consulta, registros obtenidos y las rutas de los tres entregables.</span></figcaption></figure>
+<div class="callout warning">
+<strong>Call + result no son dos ejecuciones</strong>
+          La solicitud de una herramienta y su resultado suelen aparecer como eventos separados. Para detectar una segunda consulta real, busca una segunda llamada independiente a <span class="codeish">execute_sql_readonly</span>.
+        </div>
+</section>
+<section id="sql">
+<h2>SQL esperado conceptualmente</h2>
+<p>El SQL del agente no necesita ser idéntico carácter por carácter, pero debe representar exactamente el mismo criterio:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  m.movimiento_id,
+  m.cuenta_id,
+  m.fecha_movimiento,
+  m.hora,
+  m.tipo_movimiento,
+  m.canal,
+  m.monto,
+  m.moneda,
+  m.es_internacional,
+  m.categoria_contraparte,
+  c.cliente_id,
+  c.producto,
+  c.estado
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios` AS m
+JOIN `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos` AS c
+  ON m.cuenta_id = c.cuenta_id
+WHERE m.canal IN ('APP', 'WEB')
+  AND m.es_internacional = 1
+  AND m.monto &gt; 2000000
+  AND c.producto = 'Tarjeta de Crédito';</code></pre>
+<div class="callout success">
+<strong>Resultado de referencia</strong>
+          En los datos de práctica validados, esta lógica devuelve <strong>5 operaciones</strong>.
+        </div>
+<h3>Qué sería un error</h3>
+<ul>
+<li>usar <span class="codeish">&gt;= 2000000</span> en vez de <span class="codeish">&gt; 2000000</span>;</li>
+<li>filtrar otros canales;</li>
+<li>omitir la condición internacional;</li>
+<li>omitir <span class="codeish">Tarjeta de Crédito</span>;</li>
+<li>agregar fechas, estados u otros filtros no solicitados;</li>
+<li>resumir con <span class="codeish">GROUP BY</span> cuando necesitamos detalle;</li>
+<li>ejecutar una segunda consulta solo para hacer <span class="codeish">COUNT(*)</span>.</li>
+</ul>
+</section>
+<section id="archivos">
+<h2>Los tres archivos que deben generarse</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Archivo</th><th>Ruta</th><th>Contenido esperado</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="codeish">consulta.sql</span></td>
+<td><span class="codeish">alumno-XX/resultados/</span></td>
+<td>La consulta exacta ejecutada en BigQuery.</td>
+</tr>
+<tr>
+<td><span class="codeish">resultado.csv</span></td>
+<td><span class="codeish">alumno-XX/resultados/</span></td>
+<td>Encabezados + filas devueltas por la única consulta.</td>
+</tr>
+<tr>
+<td><span class="codeish">informe_final.md</span></td>
+<td><span class="codeish">alumno-XX/informe/</span></td>
+<td>Informe trazable con criterio, evidencia, interpretación y limitaciones.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="callout warning">
+<strong>No fabriques un CSV separado de la consulta</strong>
+<span class="codeish">resultado.csv</span> debe representar el resultado real de <span class="codeish">execute_sql_readonly</span>. El agente no debe completar filas ni valores faltantes por su cuenta.
+        </div>
+</section>
+<section id="respuesta">
+<h2>Cómo debería cerrar el agente</h2>
+<p>Después de la última escritura normalmente aparece una respuesta textual. En Agent Studio puede ocurrir que las herramientas terminen correctamente pero Preview no alcance a mostrar ese mensaje final.</p>
+<div class="callout success">
+<strong>Señales de una ejecución completa</strong>
+          El agente identifica las fuentes usadas, describe el criterio sin rebautizarlo, confirma una única ejecución analítica, informa los tres archivos escritos y utiliza lenguaje prudente sobre las operaciones seleccionadas.
+        </div>
+<div class="callout warning"><strong>Si el agente hizo el trabajo pero no respondió</strong> Revisa los tool results. Los dos prompts de rescate están <a href="#prueba-rescate-inmediato">justo debajo del prompt principal</a>. El paso 07 explica cómo decidir cuál corresponde. No vuelvas a ejecutar el prompt principal a ciegas.</div>
+</section>
+<section id="control">
+<h2>Checklist del paso 06</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Control</th><th>Esperado</th></tr>
+</thead>
+<tbody>
+<tr><td>TXT leído</td><td><span class="codeish">criterio_revision.txt</span> de tu alumno.</td></tr>
+<tr><td>Tablas utilizadas</td><td>Solo <span class="codeish">movimientos_diarios</span> y <span class="codeish">cuentas_productos</span>.</td></tr>
+<tr><td>JOIN</td><td><span class="codeish">cuenta_id</span>.</td></tr>
+<tr><td>Condiciones</td><td>Las cuatro del documento y ninguna adicional.</td></tr>
+<tr><td><span class="codeish">execute_sql_readonly</span></td><td>Máximo una llamada real.</td></tr>
+<tr><td>Resultado de referencia</td><td>5 operaciones.</td></tr>
+<tr><td>Escrituras</td><td><span class="codeish">consulta.sql</span>, <span class="codeish">resultado.csv</span>, <span class="codeish">informe_final.md</span>.</td></tr>
+<tr><td>Interpretación</td><td>“Cumplen criterio de revisión / requieren revisión adicional”.</td></tr>
+<tr><td>Respuesta final</td><td>Visible después de las herramientas.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="page-nav">
+<a href="prueba-tipo-preparacion.html">← Prueba Tipo — preparación</a>
+<a href="prueba-tipo-recuperacion.html">Prueba Tipo — recuperación y verificación →</a>
+</div>
+</section>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

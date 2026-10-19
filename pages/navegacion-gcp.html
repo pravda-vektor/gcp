@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Navegación básica en Google Cloud: consola, proyecto activo, buscador de servicios, menú, regiones y permisos." name="description"/>
+<title>Navegación básica en Google Cloud · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › Navegación básica en Google Cloud</div>
+<div class="article-layout">
+<aside aria-label="Contenido de navegación GCP" class="sidebar">
+<h2>En esta página</h2>
+<a href="#acceso-curso">Acceso al curso</a><a class="active" href="#consola">Google Cloud Console</a>
+<a href="#proyecto">Proyecto activo</a>
+<a href="#nombre-id">Nombre vs Project ID</a>
+<a href="#buscar">Buscar servicios</a>
+<a href="#menu">Menú de navegación</a>
+<a href="#moverse">Moverse entre servicios</a>
+<a href="#ubicaciones">Regiones y ubicaciones</a>
+<a href="#permisos">Permisos</a>
+<a href="#recorrido">Recorrido rápido</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Google Cloud</span>
+<h1>Orientarse en Google Cloud Console</h1>
+<p class="lead">Antes de trabajar con Cloud Storage, BigQuery o Agent Studio, necesitas reconocer tres cosas: en qué proyecto estás, cómo encontrar un servicio y cómo volver a ubicar un recurso después.</p>
+<section id="acceso-curso">
+<h2>Acceso a Google Cloud</h2>
+<p>Antes de comenzar, inicia sesión con la cuenta de alumno asignada para el curso.</p>
+<div class="callout success" id="gcp-link-directo">
+<strong>Empieza aquí</strong>
+<p>Abre <a href="https://cloud.google.com/" rel="noopener" target="_blank"><strong>https://cloud.google.com/</strong></a> y selecciona <strong>Sign in</strong> / <strong>Iniciar sesión</strong> en la esquina superior derecha. No uses <strong>Start free</strong> / <strong>Comenzar gratis</strong>.</p>
+<p><a class="btn-site primary" href="https://cloud.google.com/" rel="noopener" target="_blank">Abrir Google Cloud</a></p>
+</div>
+<div class="credential-grid">
+<div class="credential-card"><span>Cuenta</span><strong class="codeish">alumno_XX@itacademy.cl</strong><small>Reemplaza <strong>XX</strong> por tu número de alumno. Ejemplo: alumno 24 → <span class="codeish">alumno_24@itacademy.cl</span>.</small></div>
+<div class="credential-card"><span>Contraseña</span><strong class="codeish">Academy.2026</strong><small>Escribe la contraseña tal como aparece, respetando mayúsculas, punto y números.</small></div>
+</div>
+<ol><li>Abre <a href="https://cloud.google.com/" rel="noopener" target="_blank">cloud.google.com</a>.</li><li>Haz clic en <strong>Sign in</strong> / <strong>Iniciar sesión</strong>, arriba a la derecha. No selecciones <strong>Start free</strong> / <strong>Comenzar gratis</strong>.</li><li>Si Google muestra una cuenta distinta, elige <strong>Usar otra cuenta</strong>.</li><li>Escribe <span class="codeish">alumno_XX@itacademy.cl</span> con tu número asignado y pulsa <strong>Siguiente</strong>.</li><li>Escribe <span class="codeish">Academy.2026</span> y pulsa <strong>Siguiente</strong>.</li><li>Si vuelves a la página pública de Google Cloud después de iniciar sesión, haz clic en <strong>Consola</strong> / <strong>Console</strong>, arriba a la derecha.</li><li>Si aparece el aviso de Chrome o de verificación en dos pasos, usa la opción para posponerlo y continúa.</li><li>Ya dentro de la consola, confirma que estás en el proyecto del curso antes de seguir.</li></ol>
+<div class="login-sequence">
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: página de Google Cloud con Sign in resaltado" class="course-shot-link" href="../assets/screenshots/gcp-home-signin.png" rel="noopener" target="_blank">
+<img alt="Página principal de Google Cloud con Sign in resaltado en la esquina superior derecha" loading="lazy" src="../assets/screenshots/gcp-home-signin.png"/>
+</a>
+<figcaption><span class="shot-label">1 · Entrar</span><span> Desde <span class="codeish">cloud.google.com</span>, selecciona <strong>Sign in</strong>. No uses <strong>Start free</strong>.</span></figcaption>
+</figure>
+<figure class="course-shot compact-xs">
+<a aria-label="Abrir captura completa: opción Use another account" class="course-shot-link" href="../assets/screenshots/login-use-another-account.png" rel="noopener" target="_blank">
+<img alt="Opción Use another account en la pantalla de acceso de Google" loading="lazy" src="../assets/screenshots/login-use-another-account.png"/>
+</a>
+<figcaption><span class="shot-label">2 · Cuenta correcta</span><span> Si aparece otra cuenta, usa <strong>Usar otra cuenta</strong>.</span></figcaption>
+</figure>
+<div class="shot-grid">
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: cuenta de alumno" class="course-shot-link" href="../assets/screenshots/login-student-email.png" rel="noopener" target="_blank">
+<img alt="Pantalla de inicio de sesión con una cuenta alumno_XX de ejemplo" loading="lazy" src="../assets/screenshots/login-student-email.png"/>
+</a>
+<figcaption><span class="shot-label">3 · Usuario</span><span> Ingresa <span class="codeish">alumno_XX@itacademy.cl</span>.</span></figcaption>
+</figure>
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: contraseña del curso" class="course-shot-link" href="../assets/screenshots/login-student-password.png" rel="noopener" target="_blank">
+<img alt="Pantalla de contraseña del curso" loading="lazy" src="../assets/screenshots/login-student-password.png"/>
+</a>
+<figcaption><span class="shot-label">4 · Contraseña</span><span> Ingresa <span class="codeish">Academy.2026</span>.</span></figcaption>
+</figure>
+</div>
+<figure class="course-shot">
+<a aria-label="Abrir captura completa: botón Consola en Google Cloud" class="course-shot-link" href="../assets/screenshots/gcp-home-console.png" rel="noopener" target="_blank">
+<img alt="Página principal de Google Cloud con el botón Consola resaltado" loading="lazy" src="../assets/screenshots/gcp-home-console.png"/>
+</a>
+<figcaption><span class="shot-label">5 · Abrir la consola</span><span> Después del login, si quedas en la página pública, entra por <strong>Consola</strong> / <strong>Console</strong>.</span></figcaption>
+</figure>
+</div>
+<div class="callout warning"><strong>No confundas la cuenta con la carpeta</strong> La cuenta usa guion bajo: <span class="codeish">alumno_XX@itacademy.cl</span>. La carpeta de trabajo usa guion: <span class="codeish">alumno-XX</span>.</div>
+</section><section id="consola">
+<h2>1. ¿Qué es Google Cloud Console?</h2>
+<p>Google Cloud Console es la interfaz web desde la que puedes acceder a productos y recursos de Google Cloud. En el curso la usaremos principalmente para movernos entre servicios, revisar recursos ya preparados y ejecutar tareas guiadas.</p>
+<div class="callout">
+<strong>Objetivo del curso</strong>
+          No necesitas memorizar toda la consola. Necesitas aprender a orientarte: verificar el proyecto, encontrar el servicio correcto y reconocer dónde estás antes de realizar una acción.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Consola de Google Cloud con proyecto activo, buscador y Project ID resaltados" class="course-shot-link" href="../assets/screenshots/gcp-console.png" rel="noopener" target="_blank"><img alt="Consola de Google Cloud con proyecto activo, buscador y Project ID resaltados" loading="lazy" src="../assets/screenshots/gcp-console.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Ubica primero el proyecto activo y su Project ID. El buscador superior permite saltar directamente a los servicios.</span></figcaption></figure>
+</section>
+<section id="proyecto">
+<h2>2. Verifica el proyecto activo</h2>
+<p>Un proyecto es una unidad organizativa fundamental en Google Cloud: agrupa recursos y actúa como contexto para muchos servicios. Por eso, antes de crear, abrir o consultar algo, conviene comprobar qué proyecto está seleccionado.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Proyecto del curso</h3>
+<p><strong>Nombre:</strong> Curso-Vertex-AI</p>
+<p><strong>Project ID:</strong> <span class="codeish">arched-osprey-506820-i9</span></p>
+</div>
+<div class="concept-card">
+<h3>Qué revisar</h3>
+<p>En la parte superior de la consola, abre el selector de proyectos y confirma que estás trabajando en el proyecto indicado para la actividad.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>Error frecuente</strong>
+          No asumas que el proyecto correcto está seleccionado solo porque pudiste iniciar sesión. Una misma cuenta puede tener acceso a más de un proyecto.
+        </div>
+</section>
+<section id="nombre-id">
+<h2>3. Nombre del proyecto vs Project ID</h2>
+<p>Google Cloud puede mostrar varios identificadores de un proyecto. Para el trabajo técnico, el <strong>Project ID</strong> es especialmente importante porque aparece en rutas, nombres completos de tablas y referencias a recursos.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Elemento</th><th>Ejemplo del curso</th><th>Para qué sirve</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Nombre del proyecto</td>
+<td>Curso-Vertex-AI</td>
+<td>Nombre legible que ayuda a reconocer el proyecto.</td>
+</tr>
+<tr>
+<td>Project ID</td>
+<td><span class="codeish">arched-osprey-506820-i9</span></td>
+<td>Identificador técnico usado en referencias y recursos.</td>
+</tr>
+<tr>
+<td>Project number</td>
+<td>Valor numérico administrado por Google Cloud</td>
+<td>Identificador numérico utilizado por algunos servicios y APIs.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>En BigQuery, por ejemplo, una tabla completa se referencia con la forma <span class="codeish">PROYECTO.DATASET.TABLA</span>. Por eso verás el Project ID repetido a lo largo del curso.</p>
+</section>
+<section id="buscar">
+<h2>4. La forma más rápida de encontrar un servicio: buscarlo</h2>
+<p>La barra superior de búsqueda de Google Cloud permite localizar productos, páginas y recursos. Para un usuario que todavía está aprendiendo la consola, suele ser más práctico buscar el nombre del servicio que memorizar su ubicación dentro de los menús.</p>
+<ol>
+<li>Haz clic en la barra de búsqueda superior.</li>
+<li>Escribe el nombre del servicio, por ejemplo <strong>Cloud Storage</strong> o <strong>BigQuery</strong>.</li>
+<li>Revisa el resultado y entra al producto correspondiente.</li>
+<li>Una vez dentro, vuelve a verificar que el contexto del proyecto sea el correcto.</li>
+</ol>
+<div class="callout">
+<strong>Atajo opcional</strong>
+          Google Cloud documenta la tecla <span class="codeish">/</span> como atajo para buscar productos y servicios desde la consola.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Resultados del buscador de Google Cloud con Plataforma de agentes, BigQuery y Cloud Storage resaltados" class="course-shot-link" href="../assets/screenshots/gcp-search-services.png" rel="noopener" target="_blank"><img alt="Resultados del buscador de Google Cloud con Plataforma de agentes, BigQuery y Cloud Storage resaltados" loading="lazy" src="../assets/screenshots/gcp-search-services.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>El buscador global es la ruta más rápida para abrir los servicios usados durante el curso.</span></figcaption></figure>
+</section>
+<section id="menu">
+<h2>5. Menú de navegación</h2>
+<p>La consola también dispone de un menú de navegación con acceso a productos y categorías. Puedes usarlo para explorar servicios y, según la interfaz disponible, fijar productos usados con frecuencia.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Buscador</h3>
+<p>Útil cuando ya sabes qué servicio necesitas. Es la ruta recomendada durante las primeras prácticas.</p>
+</div>
+<div class="concept-card">
+<h3>Menú</h3>
+<p>Útil para reconocer categorías, explorar productos o volver a un servicio sin escribir su nombre.</p>
+</div>
+</div>
+</section>
+<section id="moverse">
+<h2>6. Moverse entre los servicios del curso</h2>
+<p>Durante el sitio aparecerán principalmente estos destinos. No necesitas mantener varias pestañas abiertas: puedes volver al buscador superior cuando quieras cambiar de servicio.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Servicio</th><th>Qué haremos ahí</th><th>Qué conviene reconocer</th></tr>
+</thead>
+<tbody>
+<tr><td>Cloud Storage</td><td>Trabajar con buckets y archivos/objetos.</td><td>Bucket, ruta, objeto y URI <span class="codeish">gs://</span>.</td></tr>
+<tr><td>BigQuery</td><td>Explorar tablas y ejecutar GoogleSQL.</td><td>Proyecto, dataset, tabla, esquema y resultados.</td></tr>
+<tr><td>Gemini / superficies de IA</td><td>Trabajar con lenguaje natural y documentos.</td><td>Fuente utilizada, prompt y resultado.</td></tr>
+<tr><td>Agent Studio</td><td>Probar el agente y observar herramientas.</td><td>Instructions, Knowledge, Tools y Preview.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout success">
+<strong>Regla práctica</strong>
+          Si te pierdes, vuelve a tres preguntas: ¿qué proyecto está activo?, ¿qué servicio necesito?, ¿qué recurso estoy intentando abrir?
+        </div>
+</section>
+<section id="ubicaciones">
+<h2>7. Regiones y ubicaciones: lo básico</h2>
+<p>Algunos recursos de Google Cloud tienen una ubicación asociada. Dependiendo del servicio, puede tratarse de una región, una multirregión u otro tipo de ubicación. La ubicación puede afectar compatibilidad, residencia de datos, latencia y diseño.</p>
+<p>Para este curso no necesitas aprender arquitectura regional en profundidad. Sí necesitas adquirir el hábito de <strong>mirar la ubicación antes de crear o relacionar recursos</strong>.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Ejemplo de región</h3>
+<p><span class="codeish">us-central1</span></p>
+</div>
+<div class="concept-card">
+<h3>Qué debes hacer</h3>
+<p>Usar la ubicación indicada por la actividad y no cambiarla “por probar” cuando trabajes con recursos compartidos.</p>
+</div>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Detalles del bucket de práctica mostrando su ubicación y navegador de carpetas" class="course-shot-link" href="../assets/screenshots/storage-bucket-details.png" rel="noopener" target="_blank"><img alt="Detalles del bucket de práctica mostrando su ubicación y navegador de carpetas" loading="lazy" src="../assets/screenshots/storage-bucket-details.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>La ubicación del recurso aparece en sus detalles; en este bucket se observa us-central1 (Iowa).</span></figcaption></figure>
+</section>
+<section id="permisos">
+<h2>8. Permisos: ver un recurso no significa poder modificarlo</h2>
+<div class="callout warning">
+<strong>Un aviso no siempre bloquea la acción</strong>
+<p>La consola puede mostrar mensajes sobre permisos o APIs aun cuando el recurso del curso esté disponible y la operación funcione. Si el relator indicó seguir y la acción se puede completar, continúa normalmente.</p>
+<p>No intentes corregir esos avisos cambiando IAM, roles, políticas o habilitando APIs por tu cuenta. Si aparece un error que efectivamente impide ejecutar la acción, ahí sí detente y consulta al relator.</p>
+</div>
+<p>Google Cloud utiliza Identity and Access Management (IAM) para determinar qué acciones puede realizar cada identidad. Un usuario puede tener permiso para consultar un recurso y no para crearlo, modificarlo o eliminarlo.</p>
+<div class="callout warning">
+<strong>Si aparece “Access Denied” o un error de permisos</strong>
+          No intentes concederte permisos, cambiar IAM ni crear un proyecto alternativo. En el entorno del curso, detén esa acción y utiliza el recurso o ruta indicada por el relator.
+        </div>
+<p>La documentación de Google señala que los errores de permisos pueden aparecer, entre otras razones, cuando faltan los permisos requeridos o una política impide el acceso. Para el alumno, lo importante es reconocer que un error de acceso no se soluciona alterando la seguridad del proyecto por cuenta propia.</p>
+</section>
+<section id="recorrido">
+<h2>9. Recorrido rápido antes de cada actividad</h2>
+<ol>
+<li>Abre Google Cloud Console.</li>
+<li>Confirma el proyecto <span class="codeish">arched-osprey-506820-i9</span>.</li>
+<li>Busca el servicio que necesitas.</li>
+<li>Entra al servicio y localiza el recurso indicado.</li>
+<li>Antes de modificar algo, confirma nombre, ruta, ubicación y alcance de tus permisos.</li>
+</ol>
+</section>
+<section class="related">
+<h2>Aplicación en el resto del sitio</h2>
+<div class="related-links">
+<a href="cloud-storage-conceptos.html">Siguiente: Cloud Storage — conceptos →</a>
+<a href="bigquery.html">Más adelante: orientarse en BigQuery →</a>
+<a href="prueba-tipo.html">Prueba Tipo: preparar el espacio de trabajo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas para esta página</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/resource-manager/docs/view-update-projects" rel="noopener" target="_blank">Google Cloud Resource Manager — View and update projects</a></li>
+<li><a href="https://docs.cloud.google.com/docs/shortcuts" rel="noopener" target="_blank">Google Cloud — Keyboard shortcuts for Google Cloud</a></li>
+<li><a href="https://docs.cloud.google.com/iam/docs/permission-error-messages" rel="noopener" target="_blank">Google Cloud IAM — Permission error messages</a></li>
+<li><a href="https://cloud.google.com/products" rel="noopener" target="_blank">Google Cloud — Products and services</a></li>
+</ul>
+<p>La secuencia pedagógica también sigue el alcance visto en las guías del curso: navegar la consola, reconocer el proyecto, trabajar dentro de recursos autorizados y no modificar IAM ante errores de acceso.</p>
+</section>
+<div class="page-nav">
+<a href="fundamentos.html">← Fundamentos de datos</a>
+<a href="cloud-storage-conceptos.html">Cloud Storage — conceptos →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

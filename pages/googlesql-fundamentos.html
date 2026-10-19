@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Fundamentos de GoogleSQL en BigQuery: SELECT, FROM, WHERE, AND, OR, IN, ORDER BY, LIMIT y alias." name="description"/>
+<title>GoogleSQL — fundamentos · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#googlesql">GoogleSQL</a> › Fundamentos</div>
+<div class="article-layout">
+<aside aria-label="Contenido de GoogleSQL" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#que-es">Qué es GoogleSQL</a>
+<a href="#leer">Cómo leer una consulta</a>
+<a href="#select-from">SELECT y FROM</a>
+<a href="#where">WHERE</a>
+<a href="#logica">AND, OR e IN</a>
+<a href="#order">ORDER BY</a>
+<a href="#limit">LIMIT</a>
+<a href="#alias">Alias</a>
+<a href="#tabla-completa">Nombre completo de tabla</a>
+<a href="#prueba">Uso en la Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">GoogleSQL</span>
+<h1>GoogleSQL — fundamentos</h1>
+<p class="lead">GoogleSQL es el dialecto de SQL utilizado por BigQuery. En esta etapa aprenderemos a leer y construir consultas sencillas: elegir columnas, indicar la tabla, filtrar registros, ordenar resultados y limitar cuántas filas se muestran.</p>
+<section id="que-es">
+<h2>1. ¿Qué es GoogleSQL?</h2>
+<p>Una consulta SQL expresa una pregunta sobre los datos. En BigQuery, GoogleSQL permite seleccionar, filtrar, transformar, agrupar y relacionar información sin modificar necesariamente las tablas originales.</p>
+<div class="callout">
+<strong>Idea clave</strong>
+          Una consulta no se evalúa por lo “larga” que sea, sino por si responde correctamente una pregunta usando las tablas, columnas y condiciones adecuadas.
+        </div>
+</section>
+<section id="leer">
+<h2>2. Cómo leer una consulta</h2>
+<p>Conviene aprender a leer SQL como una frase lógica, no como una secuencia de palabras aisladas.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  segmento,
+  region
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+WHERE nivel_riesgo = 'Alto'
+ORDER BY fecha_alta DESC
+LIMIT 10;</code></pre>
+<p>Lectura natural:</p>
+<div class="callout success">
+<strong>“Muéstrame cliente_id, segmento y región desde la tabla clientes; conserva solo los clientes de riesgo Alto; ordénalos desde la fecha de alta más reciente y muestra como máximo 10 filas.”</strong>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Consulta GoogleSQL abierta en BigQuery" class="course-shot-link" href="../assets/screenshots/bq-query.png" rel="noopener" target="_blank"><img alt="Consulta GoogleSQL abierta en BigQuery" loading="lazy" src="../assets/screenshots/bq-query.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Lee una consulta por bloques: SELECT, FROM, JOIN y WHERE. El editor ayuda a reconocer cada parte en contexto.</span></figcaption></figure>
+</section>
+<section id="select-from">
+<h2>3. SELECT y FROM</h2>
+<p><span class="codeish">SELECT</span> define qué columnas o expresiones aparecerán en el resultado. <span class="codeish">FROM</span> indica desde qué tabla se obtienen los datos.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  segmento,
+  region,
+  nivel_riesgo
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`;</code></pre>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>SELECT</h3>
+<p>Determina las columnas que devuelve la consulta.</p>
+</div>
+<div class="concept-card">
+<h3>FROM</h3>
+<p>Determina la tabla o fuente desde la que se obtienen esas columnas.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>Evita depender de SELECT *</strong>
+<span class="codeish">SELECT *</span> devuelve todas las columnas visibles. Puede ser útil para una exploración rápida, pero en consultas reproducibles suele ser mejor nombrar solo lo que realmente necesitas.
+        </div>
+</section>
+<section id="where">
+<h2>4. WHERE: filtrar filas</h2>
+<p><span class="codeish">WHERE</span> conserva únicamente las filas cuya condición se evalúa como verdadera.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  segmento,
+  region,
+  nivel_riesgo
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+WHERE nivel_riesgo = 'Alto';</code></pre>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Operador</th><th>Lectura</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="codeish">=</span></td><td>igual a</td></tr>
+<tr><td><span class="codeish">!=</span></td><td>distinto de</td></tr>
+<tr><td><span class="codeish">&gt;</span></td><td>mayor que</td></tr>
+<tr><td><span class="codeish">&gt;=</span></td><td>mayor o igual que</td></tr>
+<tr><td><span class="codeish">&lt;</span></td><td>menor que</td></tr>
+<tr><td><span class="codeish">&lt;=</span></td><td>menor o igual que</td></tr>
+</tbody>
+</table>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Resultado de una consulta GoogleSQL en BigQuery" class="course-shot-link" href="../assets/screenshots/bq-results.png" rel="noopener" target="_blank"><img alt="Resultado de una consulta GoogleSQL en BigQuery" loading="lazy" src="../assets/screenshots/bq-results.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Los filtros modifican qué filas llegan al resultado. Comprueba siempre el efecto en la tabla devuelta.</span></figcaption></figure>
+</section>
+<section id="logica">
+<h2>5. AND, OR e IN</h2>
+<p>Las condiciones pueden combinarse. La elección entre <span class="codeish">AND</span> y <span class="codeish">OR</span> cambia completamente qué filas cumplen el filtro.</p>
+<h3>AND: deben cumplirse ambas condiciones</h3>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT cliente_id, segmento, region, nivel_riesgo
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+WHERE nivel_riesgo = 'Alto'
+  AND region = 'Metropolitana';</code></pre>
+<h3>OR: basta con que se cumpla una de las condiciones</h3>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT cliente_id, segmento, nivel_riesgo
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+WHERE nivel_riesgo = 'Medio'
+   OR nivel_riesgo = 'Alto';</code></pre>
+<h3>IN: varios valores posibles de una misma columna</h3>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT cliente_id, segmento, nivel_riesgo
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+WHERE nivel_riesgo IN ('Medio', 'Alto');</code></pre>
+<div class="callout">
+<strong>Lectura práctica</strong>
+<span class="codeish">IN ('Medio', 'Alto')</span> expresa de forma compacta que aceptamos cualquiera de esos valores.
+        </div>
+</section>
+<section id="order">
+<h2>6. ORDER BY: ordenar el resultado</h2>
+<p><span class="codeish">ORDER BY</span> define el criterio de ordenamiento del resultado. Si no se especifica, el orden de las filas no está garantizado.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  segmento,
+  fecha_alta
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+ORDER BY fecha_alta DESC;</code></pre>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>ASC</h3>
+<p>Orden ascendente. Es el comportamiento predeterminado si no se especifica otra cosa.</p>
+</div>
+<div class="concept-card">
+<h3>DESC</h3>
+<p>Orden descendente, por ejemplo de una fecha más reciente a una más antigua.</p>
+</div>
+</div>
+</section>
+<section id="limit">
+<h2>7. LIMIT: limitar filas devueltas</h2>
+<p><span class="codeish">LIMIT</span> controla el número máximo de filas que produce la consulta.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  segmento
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+LIMIT 10;</code></pre>
+<div class="callout warning">
+<strong>LIMIT no limita necesariamente los datos procesados</strong>
+          Google documenta que LIMIT limita las filas producidas por la consulta, pero no necesariamente la cantidad de datos leídos/procesados. Para controlar procesamiento, importa mucho seleccionar solo las columnas y filtros necesarios.
+        </div>
+</section>
+<section id="alias">
+<h2>8. Alias con AS</h2>
+<p>Un alias es un nombre temporal para una columna, expresión o tabla dentro de una consulta. Ayuda a que el resultado sea más legible y será especialmente útil cuando empecemos a trabajar con JOIN.</p>
+<h3>Alias de columna</h3>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  fecha_alta AS fecha_ingreso
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+LIMIT 10;</code></pre>
+<h3>Alias de tabla</h3>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  c.cliente_id,
+  c.segmento
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes` AS c;</code></pre>
+<div class="callout">
+<strong>AS no cambia la tabla original</strong>
+          El alias existe en el resultado o dentro de la consulta. No renombra físicamente una columna ni una tabla.
+        </div>
+</section>
+<section id="tabla-completa">
+<h2>9. Nombre completo de una tabla y backticks</h2>
+<p>En BigQuery es común utilizar el identificador completo:</p>
+<p><span class="codeish">PROYECTO.DATASET.TABLA</span></p>
+<p>Ejemplo:</p>
+<p><span class="codeish">arched-osprey-506820-i9.analitica_bancaria_demo.clientes</span></p>
+<p>En GoogleSQL, el nombre completo suele escribirse entre <strong>backticks</strong>:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  cliente_id,
+  segmento,
+  region,
+  fecha_alta,
+  nivel_riesgo,
+  canal_preferente
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.clientes`
+LIMIT 10;</code></pre>
+<div class="callout">
+<strong>Backticks ≠ comillas simples</strong>
+          Los backticks delimitan identificadores como nombres completos de tablas. Las comillas simples se utilizan para valores de texto, por ejemplo <span class="codeish">'Alto'</span>.
+        </div>
+</section>
+<section id="prueba">
+<h2>10. ¿Dónde aparece esto en la Prueba Tipo?</h2>
+<p>El agente tendrá que transformar un criterio documental en condiciones SQL. En la consulta final aparecerán varios de los conceptos de esta sección:</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>SELECT</h3>
+<p>Para devolver los campos necesarios para identificar y revisar cada operación.</p>
+</div>
+<div class="concept-card">
+<h3>FROM</h3>
+<p>Para indicar las tablas de BigQuery utilizadas.</p>
+</div>
+<div class="concept-card">
+<h3>WHERE</h3>
+<p>Para aplicar las condiciones documentales.</p>
+</div>
+<div class="concept-card">
+<h3>AND / IN</h3>
+<p>Para exigir condiciones simultáneas y permitir canales APP o WEB.</p>
+</div>
+</div>
+<div class="callout success">
+<strong>Más adelante</strong>
+          La Prueba Tipo también necesita un JOIN entre <span class="codeish">movimientos_diarios</span> y <span class="codeish">cuentas_productos</span>. Ese tema se explica en la sección de relaciones y JOIN.
+        </div>
+<div class="related-links">
+<a href="googlesql-agregaciones.html">Siguiente: GoogleSQL — agregaciones →</a>
+<a href="googlesql-relaciones.html">Más adelante: GoogleSQL — relaciones y JOIN →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas para esta página</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax" rel="noopener" target="_blank">Google Cloud — GoogleSQL query syntax</a></li>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/reference" rel="noopener" target="_blank">Google Cloud — BigQuery APIs and reference</a></li>
+</ul>
+<p>La secuencia didáctica mantiene el enfoque de la Clase 3: SELECT/FROM → WHERE → condiciones lógicas → ORDER BY → LIMIT → alias, aumentando complejidad solo cuando aparece una necesidad nueva.</p>
+</section>
+<div class="page-nav">
+<a href="bigquery.html">← BigQuery — entorno</a>
+<a href="googlesql-agregaciones.html">GoogleSQL — agregaciones →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

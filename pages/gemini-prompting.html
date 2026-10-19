@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Gemini y prompting: objetivo, fuentes, contexto, tarea, restricciones, formato y validación para instrucciones reproducibles." name="description"/>
+<title>Gemini y prompting · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#gemini">Gemini</a> › Prompting</div>
+<div class="article-layout">
+<aside aria-label="Contenido de prompting" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#gemini">Gemini</a>
+<a href="#prompt">Qué es un prompt</a>
+<a href="#estructura">Estructura práctica</a>
+<a href="#objetivo">Objetivo y contexto</a>
+<a href="#fuentes">Fuentes</a>
+<a href="#tarea">Tarea</a>
+<a href="#restricciones">Restricciones</a>
+<a href="#formato">Formato</a>
+<a href="#validacion">Validación</a>
+<a href="#debil-controlado">Débil vs controlado</a>
+<a href="#iterar">Iterar</a>
+<a href="#prueba">Uso en Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Gemini y prompting</span>
+<h1>Gemini y prompting</h1>
+<p class="lead">Un modelo generativo puede redactar, resumir, extraer, transformar y analizar información, pero la calidad del resultado depende de la tarea, el contexto y las fuentes que realmente le entregamos. En este curso utilizaremos prompts explícitos y verificables.</p>
+<section id="gemini">
+<h2>1. ¿Qué es Gemini?</h2>
+<p>Gemini es la familia de modelos generativos de Google. Dentro de Google Cloud puede aparecer integrada en distintas superficies para conversar, trabajar con código, analizar información o asistir en productos como BigQuery.</p>
+<div class="callout">
+<strong>Para el curso importa más el método que el botón</strong>
+          Las interfaces cambian con rapidez. Lo transferible es saber definir una tarea, aportar las fuentes correctas, imponer límites y comprobar si la respuesta está respaldada.
+        </div>
+</section>
+<section id="prompt">
+<h2>2. ¿Qué es un prompt?</h2>
+<p>Un prompt es la instrucción y el contexto que entregamos al modelo para obtener una respuesta. No es una “frase mágica”. Un prompt útil reduce ambigüedad y hace explícitas las decisiones que no queremos dejar implícitas.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Prompt débil</h3>
+<p>“Resume este PDF.”</p>
+</div>
+<div class="concept-card">
+<h3>Prompt controlado</h3>
+<p>Define qué fuente usar, qué extraer, qué no asumir, cómo tratar faltantes y cómo entregar el resultado.</p>
+</div>
+</div>
+</section>
+<section id="estructura">
+<h2>3. Estructura práctica de un prompt de trabajo</h2>
+<p>Google recomienda entregar instrucciones claras, contexto y detalles específicos. Para el curso utilizaremos una plantilla de siete componentes que hace visible qué debe controlar el usuario.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Componente</th><th>Pregunta que responde</th></tr>
+</thead>
+<tbody>
+<tr><td>Objetivo</td><td>¿Qué resultado necesito?</td></tr>
+<tr><td>Fuentes</td><td>¿Con qué información puede trabajar?</td></tr>
+<tr><td>Contexto</td><td>¿Para quién o para qué se usará?</td></tr>
+<tr><td>Tarea</td><td>¿Qué pasos debe realizar?</td></tr>
+<tr><td>Restricciones</td><td>¿Qué no debe hacer o asumir?</td></tr>
+<tr><td>Formato</td><td>¿Cómo quiero la salida?</td></tr>
+<tr><td>Validación</td><td>¿Cómo debe tratar faltantes, evidencia e incertidumbre?</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout success">
+<strong>No todos los prompts necesitan siete encabezados</strong>
+          La estructura sirve para pensar. Una tarea simple puede resolverse con una instrucción corta; una tarea documental, analítica o de auditoría requiere normalmente más control.
+        </div>
+</section>
+<section id="objetivo">
+<h2>4. Objetivo y contexto</h2>
+<p>El objetivo expresa qué debe conseguir el modelo. El contexto explica para qué se necesita o quién utilizará el resultado. Google recomienda describir el propósito de la tarea porque puede haber varias formas válidas de responder.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Ejemplo</span><button class="prompt-copy" data-copy="#prompt-objetivo" type="button">Copiar</button></div>
+<pre class="prompt-text" id="prompt-objetivo">Necesito reconstruir el procedimiento descrito en el documento adjunto para preparar una revisión de Riesgo Operacional.</pre>
+</div>
+<div class="callout">
+<strong>Mejor que una palabra clave</strong>
+          “Procedimiento incidentes” deja muchas decisiones abiertas. Explicar la tarea y su propósito orienta mejor la respuesta.
+        </div>
+</section>
+<section id="fuentes">
+<h2>5. Fuentes: qué información está autorizada</h2>
+<p>Si una tarea depende de documentos o datos concretos, identifica las fuentes y delimita cuáles puede utilizar el modelo. Esto ayuda a separar evidencia del caso de conocimiento general.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Ejemplo</span><button class="prompt-copy" data-copy="#prompt-fuente" type="button">Copiar</button></div>
+<pre class="prompt-text" id="prompt-fuente">Trabaja exclusivamente con el documento adjunto. Antes de analizar, identifica la fuente y cualquier fecha o versión que aparezca.</pre>
+</div>
+<div class="callout warning">
+<strong>Adjuntar no equivale a verificar</strong>
+          Comprueba que la fuente correcta fue realmente incorporada y que su contenido es legible. Un nombre de archivo por sí solo no demuestra qué información contiene.
+        </div>
+</section>
+<section id="tarea">
+<h2>6. Tarea: indicar qué debe hacer</h2>
+<p>Cuando la tarea tiene varias etapas, conviene expresarlas en orden. Google también recomienda dividir problemas complejos en solicitudes más pequeñas cuando sea útil.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Ejemplo</span><button class="prompt-copy" data-copy="#prompt-tarea" type="button">Copiar</button></div>
+<pre class="prompt-text" id="prompt-tarea">1. Identifica el objetivo y alcance del documento.
+2. Extrae etapas, responsables, controles y plazos.
+3. Señala elementos que no estén especificados.
+4. Recién después prepara un resumen ejecutivo.</pre>
+</div>
+<div class="callout">
+<strong>Orden importa</strong>
+          En el método del curso trabajaremos normalmente como FUENTES → COMPRENSIÓN → ANÁLISIS → VALIDACIÓN → ENTREGABLE, en lugar de comenzar directamente con una conclusión.
+        </div>
+</section>
+<section id="restricciones">
+<h2>7. Restricciones: qué no debe hacer</h2>
+<p>Las restricciones reducen decisiones implícitas. Son especialmente útiles cuando una respuesta plausible pero inventada sería peor que reconocer una limitación.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Ejemplo</span><button class="prompt-copy" data-copy="#prompt-limites" type="button">Copiar</button></div>
+<pre class="prompt-text" id="prompt-limites">No inventes responsables, fechas ni controles.
+No completes información ausente usando conocimiento general.
+Si un elemento no aparece en la fuente, indícalo explícitamente.</pre>
+</div>
+<div class="callout warning">
+<strong>Más razonamiento no corrige una fuente ausente</strong>
+          Si el dato necesario no existe en la fuente disponible, la salida correcta puede ser declarar qué falta.
+        </div>
+</section>
+<section id="formato">
+<h2>8. Formato de salida</h2>
+<p>El formato especifica cómo quieres consumir la respuesta. Puede ser una tabla, un resumen breve, un checklist, un informe o una combinación de formatos.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Ejemplo</span><button class="prompt-copy" data-copy="#prompt-formato" type="button">Copiar</button></div>
+<pre class="prompt-text" id="prompt-formato">Entrega:
+1. un resumen ejecutivo de máximo 6 líneas;
+2. una tabla con etapa, responsable, control y plazo;
+3. una lista final de vacíos o preguntas pendientes.</pre>
+</div>
+<div class="callout">
+<strong>El formato no reemplaza el contenido</strong>
+          Una tabla muy ordenada puede contener afirmaciones sin respaldo. Primero controlamos la evidencia; después pedimos una presentación útil.
+        </div>
+</section>
+<section id="validacion">
+<h2>9. Validación: cómo tratar evidencia e incertidumbre</h2>
+<p>La validación indica qué debe hacer el modelo cuando no puede comprobar algo. En este curso pediremos separar información explícita, cálculo derivado e interpretación, y declarar faltantes en vez de completarlos.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Ejemplo</span><button class="prompt-copy" data-copy="#prompt-validacion" type="button">Copiar</button></div>
+<pre class="prompt-text" id="prompt-validacion">Distingue información explícita de interpretación.
+Si falta información, escribe “No especificado”.
+No atribuyas causalidad ni cumplimiento si la fuente no permite demostrarlo.
+Finaliza indicando qué elementos no pudieron verificarse.</pre>
+</div>
+<div class="callout success">
+<strong>Una buena respuesta también reconoce límites</strong>
+          En tareas profesionales, declarar “no se puede verificar con esta fuente” puede ser más correcto que producir una conclusión completa.
+        </div>
+</section>
+<section id="debil-controlado">
+<h2>10. Del prompt débil al prompt controlado</h2>
+<h3>Versión débil</h3>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Prompt débil</span><button class="prompt-copy" data-copy="#prompt-debil" type="button">Copiar</button></div>
+<pre class="prompt-text" id="prompt-debil">Resume este PDF.</pre>
+</div>
+<h3>Versión controlada</h3>
+<div class="prompt-shell">
+<div class="prompt-toolbar"><span>Prompt controlado</span><button class="prompt-copy" data-copy="#prompt-controlado" type="button">Copiar</button></div>
+<pre class="prompt-text" id="prompt-controlado">Analiza el procedimiento adjunto.
+
+Primero identifica la fuente, su alcance y cualquier fecha o versión disponible.
+
+Después reconstruye:
+- objetivo;
+- etapas;
+- responsables;
+- controles;
+- plazos.
+
+No inventes información ausente. Si un elemento no aparece, escribe “No especificado”.
+
+Distingue evidencia explícita de interpretación.
+
+Finaliza con:
+1. un resumen ejecutivo;
+2. una tabla del proceso;
+3. una lista de vacíos o preguntas pendientes.</pre>
+</div>
+<p>El segundo prompt no garantiza una respuesta perfecta, pero hace más fácil comprobar si el modelo siguió la tarea, utilizó la fuente y respetó los límites.</p>
+</section>
+<section id="iterar">
+<h2>11. Prompting es iterativo</h2>
+<p>Google describe el prompt engineering como un proceso iterativo: se formula una instrucción, se observa la respuesta y se ajusta el prompt cuando el comportamiento no cumple lo esperado.</p>
+<div class="flow">
+<div class="flow-step">Definir tarea y fuentes</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Ejecutar prompt</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Revisar respuesta</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Detectar ambigüedad o incumplimiento</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Ajustar y volver a probar</div>
+</div>
+<div class="callout warning">
+<strong>No ajustes para “forzar” la respuesta esperada</strong>
+          Ajusta el prompt para hacer más explícita la tarea, el alcance o la validación. Si la fuente no respalda una conclusión, no conviertas esa conclusión en una instrucción.
+        </div>
+</section>
+<section id="prueba">
+<h2>12. ¿Dónde aparece esto en la Prueba Tipo?</h2>
+<p>El método de prompting se utiliza en tres momentos distintos:</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>PDF → texto plano</h3>
+<p>Gemini recibe una tarea estricta: convertir fielmente el documento sin resumir, interpretar ni completar contenido.</p>
+</div>
+<div class="concept-card">
+<h3>Ejecución del agente</h3>
+<p>El prompt principal define fuente, tablas, operaciones permitidas, entregables y condiciones de ejecución.</p>
+</div>
+<div class="concept-card">
+<h3>Verificación en BigQuery</h3>
+<p>Gemini puede recibir una instrucción autosuficiente para generar SQL equivalente que luego debe revisarse antes de ejecutar.</p>
+</div>
+</div>
+<div class="callout success">
+<strong>Los prompts definitivos se publicarán literalmente</strong>
+          En la sección Prueba Tipo utilizaremos los prompts que ya fueron probados en el flujo real, no versiones reescritas solo para que “suenen mejor”.
+        </div>
+<div class="related-links">
+<a href="gemini-documentos.html">Siguiente: Gemini con documentos →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas para esta página</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/gemini/docs/discover/write-prompts" rel="noopener" target="_blank">Google Cloud — Write better prompts for Gemini in Google Cloud</a></li>
+<li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/prompts/introduction-prompt-design" rel="noopener" target="_blank">Google Cloud — Introduction to prompting</a></li>
+<li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/prompts/prompt-design-strategies" rel="noopener" target="_blank">Google Cloud — Overview of prompting strategies</a></li>
+</ul>
+<p>La plantilla de objetivo, fuentes, contexto, tarea, restricciones, formato y validación mantiene el método enseñado en la Clase 4 del curso.</p>
+</section>
+<div class="page-nav">
+<a href="googlesql-relaciones.html">← GoogleSQL — relaciones</a>
+<a href="gemini-documentos.html">Gemini con documentos →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

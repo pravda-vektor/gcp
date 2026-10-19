@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Agent Studio: pruebas, Preview, eventos, tool calls, Prueba 0-1-2-3 y recuperación segura de ejecuciones interrumpidas." name="description"/>
+<title>Agent Studio — pruebas y Preview · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#agent-studio">Agent Studio</a> › Pruebas y Preview</div>
+<div class="article-layout">
+<aside aria-label="Contenido de pruebas y Preview" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#por-que">Por qué probar</a>
+<a href="#metodo">Método 0-1-2-3</a>
+<a href="#preview">Preview</a>
+<a href="#eventos">Eventos y tool calls</a>
+<a href="#no-duplicados">Call y result</a>
+<a href="#interrupciones">Interrupciones</a>
+<a href="#rescate-final">Rescate: falta respuesta</a>
+<a href="#rescate-flujo">Rescate: faltan pasos</a>
+<a href="#quota">429 / cuota</a>
+<a href="#checklist">Checklist</a>
+<a href="#prueba-tipo">Uso en Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Agent Studio</span>
+<h1>Pruebas, Preview y recuperación</h1>
+<p class="lead">Un agente no está listo porque “respondió una vez”. Debemos comprobar que entiende su método, usa las fuentes adecuadas, ejecuta herramientas cuando corresponde y sabe detenerse cuando falta evidencia.</p>
+<section id="por-que">
+<h2>1. ¿Por qué probar un agente?</h2>
+<p>Las pruebas permiten detectar problemas que no son visibles al leer solamente las Instructions: uso incorrecto de fuentes, sobreinterpretación, tool calls repetidos, permisos, salidas incompletas o comportamientos que cambian al variar el caso.</p>
+<div class="callout">
+<strong>Objetivo de una prueba</strong>
+          No buscamos que el agente repita una respuesta memorizada. Buscamos que mantenga el método cuando cambian la fuente, la pregunta o la disponibilidad de evidencia.
+        </div>
+</section>
+<section id="metodo">
+<h2>2. Método de prueba 0-1-2-3</h2>
+<p>En el curso utilizamos cuatro niveles simples para probar un agente sin construir una batería de evaluación compleja.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Prueba</th><th>Qué verifica</th><th>Pregunta de control</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 · Configuración</strong></td>
+<td>Instructions, Knowledge y grounding.</td>
+<td>¿Entiende cómo debe trabajar antes de recibir un caso?</td>
+</tr>
+<tr>
+<td><strong>1 · Caso esperado</strong></td>
+<td>Escenario normal.</td>
+<td>¿Resuelve la tarea prevista manteniendo el método?</td>
+</tr>
+<tr>
+<td><strong>2 · Variación</strong></td>
+<td>Generalización.</td>
+<td>¿Mantiene las reglas cuando cambia la fuente o alguna condición?</td>
+</tr>
+<tr>
+<td><strong>3 · Límite</strong></td>
+<td>Comportamiento con evidencia insuficiente.</td>
+<td>¿Declara lo que falta en vez de inventar?</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>Prueba 0 · Analista de Validación Integrada</span>
+<button class="prompt-copy" data-copy="#prompt-prueba0" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="prompt-prueba0">Explica cómo trabajarás antes de concluir sobre un criterio de negocio.
+
+Identifica qué tipos de fuentes puedes distinguir, cómo separarás criterio, evidencia e interpretación y qué harás cuando no puedas consultar una fuente o falte información.
+
+No inventes un caso concreto.</pre>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Pestaña Preview del agente lista para una prueba" class="course-shot-link" href="../assets/screenshots/agent-preview.png" rel="noopener" target="_blank"><img alt="Pestaña Preview del agente lista para una prueba" loading="lazy" src="../assets/screenshots/agent-preview.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Ejecuta las pruebas desde Preview y conserva Flow para la estructura del agente.</span></figcaption></figure>
+</section>
+<section id="preview">
+<h2>3. Preview: probar antes de desplegar</h2>
+<p>La pestaña <strong>Preview</strong> permite conversar con el agente guardado y observar su comportamiento. La documentación actual de Google la presenta como el lugar para probar respuestas en tiempo real y depurar ejecuciones.</p>
+<ol>
+<li>Abre el agente.</li>
+<li>Entra a <strong>Preview</strong>.</li>
+<li>Inicia una conversación nueva cuando quieras aislar una prueba.</li>
+<li>Envía el prompt de prueba.</li>
+<li>Observa la respuesta y, cuando corresponda, los eventos asociados.</li>
+<li>Si cambias Instructions o configuración, vuelve a ejecutar la prueba relevante.</li>
+</ol>
+<div class="callout warning">
+<strong>No confundas Preview con evidencia del resultado final</strong>
+          Preview es un entorno de prueba. Si una tarea produce archivos en Cloud Storage, verifica además que los objetos realmente existan en la ruta esperada.
+        </div>
+</section>
+<section id="eventos">
+<h2>4. Inspeccionar eventos y tool calls</h2>
+<p>Agent Studio permite inspeccionar eventos individuales de una ejecución. Según el evento, puedes observar autor, request/response, argumentos enviados a herramientas y metadatos.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Qué observar</th><th>Para qué sirve</th></tr>
+</thead>
+<tbody>
+<tr><td>Tool call</td><td>Ver qué herramienta decidió utilizar el agente y con qué argumentos.</td></tr>
+<tr><td>Tool result</td><td>Comprobar si la operación terminó correctamente y qué devolvió.</td></tr>
+<tr><td>Request / response</td><td>Diagnosticar qué información llegó al modelo.</td></tr>
+<tr><td>Errores</td><td>Distinguir fallo de herramienta, permisos, cuota o respuesta del modelo.</td></tr>
+<tr><td>Metadatos</td><td>Revisar información diagnóstica disponible para la ejecución.</td></tr>
+</tbody>
+</table>
+</div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Respuesta final del agente con fuentes, consulta SQL, cinco registros y archivos creados" class="course-shot-link" href="../assets/screenshots/agent-final-response.png" rel="noopener" target="_blank"><img alt="Respuesta final del agente con fuentes, consulta SQL, cinco registros y archivos creados" loading="lazy" src="../assets/screenshots/agent-final-response.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Una ejecución completa deja trazabilidad visible: fuentes usadas, consulta, cantidad de registros y rutas de archivos creados.</span></figcaption></figure>
+</section>
+<section id="no-duplicados">
+<h2>5. Tool call + tool result no significa “la herramienta se ejecutó dos veces”</h2>
+<p>En los eventos suele aparecer primero la solicitud de herramienta y después el resultado de esa misma solicitud. Son dos eventos del mismo ciclo, no necesariamente dos ejecuciones duplicadas.</p>
+<div class="flow">
+<div class="flow-step">Modelo decide usar herramienta</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Tool call · argumentos</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">La herramienta se ejecuta</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Tool result · respuesta</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">El modelo continúa</div>
+</div>
+<div class="callout">
+<strong>Para detectar repetición real</strong>
+          Busca dos tool calls separados para la misma operación, no simplemente un call seguido por su result.
+        </div>
+</section>
+<section id="interrupciones">
+<h2>6. Dos tipos de interrupción que debemos distinguir</h2>
+<div class="callout warning">
+<strong>Avisos de permisos o disponibilidad de herramientas</strong>
+<p>Preview puede mostrar advertencias sobre permisos, APIs o disponibilidad de una herramienta. Si el tool call se ejecuta y aparece un tool result válido, continúa con el flujo aunque el aviso siga visible.</p>
+<p>Si la herramienta realmente falla y no entrega resultado, no cambies la configuración del proyecto por tu cuenta: reintenta cuando corresponda y, si persiste, sigue la indicación del relator.</p>
+</div>
+<p>Durante las pruebas del curso observamos que Preview puede completar una o varias herramientas y aun así quedarse sin mostrar una respuesta textual final. Antes de reintentar, revisa los eventos para distinguir si el trabajo ya terminó o si todavía faltan operaciones.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>A · Las operaciones terminaron</h3>
+<p>Los tool results muestran éxito y solo falta la respuesta textual final.</p>
+</div>
+<div class="concept-card">
+<h3>B · El flujo quedó incompleto</h3>
+<p>Algunas operaciones ya terminaron, pero todavía faltan tool calls o escrituras solicitadas.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>No uses el mismo rescate para ambos casos</strong>
+          Si dices “no utilices herramientas nuevamente” cuando todavía faltan escrituras, impedirás que el agente complete la tarea.
+        </div>
+</section>
+<section id="rescate-final">
+<h2>7. Recuperación cuando solo falta la respuesta textual</h2>
+<p>Usa este prompt <strong>solo si ya comprobaste que todas las operaciones necesarias terminaron correctamente</strong> y Preview se detuvo antes del mensaje final.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>Prompt validado · solo falta respuesta final</span>
+<button class="prompt-copy" data-copy="#prompt-rescate-final" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="prompt-rescate-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre>
+</div>
+<div class="callout success">
+<strong>Qué evita</strong>
+          Reduce el riesgo de volver a leer archivos, consultar esquemas o ejecutar nuevamente SQL cuando el trabajo técnico ya terminó.
+        </div>
+</section>
+<section id="rescate-flujo">
+<h2>8. Recuperación cuando todavía faltan pasos</h2>
+<p>Usa este segundo prompt cuando el flujo se interrumpió después de completar algunas operaciones, pero todavía quedan acciones pendientes.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>Prompt validado · completar solo lo pendiente</span>
+<button class="prompt-copy" data-copy="#prompt-rescate-flujo" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="prompt-rescate-flujo">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre>
+</div>
+<div class="callout">
+<strong>Validación realizada en el curso</strong>
+          En una prueba real, después de lectura + consultas de esquema + una única ejecución SQL, este rescate permitió completar únicamente las tres escrituras pendientes y después entregar la respuesta final.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Preview del agente con una ejecución interrumpida y eventos previos visibles" class="course-shot-link" href="../assets/screenshots/agent-interrupted.png" rel="noopener" target="_blank"><img alt="Preview del agente con una ejecución interrumpida y eventos previos visibles" loading="lazy" src="../assets/screenshots/agent-interrupted.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Antes de recuperar una ejecución, revisa qué tool calls ya terminaron para no repetir operaciones.</span></figcaption></figure>
+</section>
+<section id="quota">
+<h2>9. 429 / Resource exhausted / capacidad temporal</h2>
+<p>Este mensaje puede aparecer aunque el prompt esté bien. Lo importante es mirar si el agente alcanzó a ejecutar herramientas antes del error.</p>
+<div class="concept-grid">
+<div class="concept-card"><h3>No hubo tool calls</h3><p>Vuelve a ejecutar la solicitud. Si el error se repite, refresca la página y prueba otra vez. Si persiste, espera unos minutos y reintenta.</p></div>
+<div class="concept-card"><h3>Ya hubo tool calls</h3><p>No empieces nuevamente desde cero. Revisa los tool results y usa el rescate que corresponda para continuar desde el punto en que se interrumpió.</p></div>
+</div>
+<div class="callout warning"><strong>No cambies el prompt solo por un Resource exhausted</strong> Un error de capacidad puede ser temporal. Primero reintenta o refresca; modifica el flujo solo si los eventos muestran un problema distinto.</div>
+</section>
+<section id="checklist">
+<h2>10. Checklist para decidir qué hacer</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Pregunta</th><th>Acción</th></tr>
+</thead>
+<tbody>
+<tr><td>¿Apareció 429 / Resource exhausted antes de ejecutar herramientas?</td><td>Reintentar. Si se repite, refrescar la página; si persiste, esperar unos minutos y volver a probar.</td></tr><tr><td>¿Apareció 429 después de que ya hubo tool calls?</td><td>Revisar los tool results y recuperar solo lo que falte; no reiniciar todo.</td></tr>
+<tr><td>¿Todas las herramientas necesarias muestran resultado exitoso?</td><td>Usar rescate “solo falta respuesta final”.</td></tr>
+<tr><td>¿Hay pasos pendientes pero algunas operaciones ya terminaron?</td><td>Usar rescate “completar solo lo pendiente”.</td></tr>
+<tr><td>¿No estás seguro de si los archivos se escribieron?</td><td>Verificar manualmente Cloud Storage antes de pedir otra escritura.</td></tr>
+<tr><td>¿Ves un tool call y un tool result consecutivos?</td><td>No asumir duplicación.</td></tr>
+<tr><td>¿Ves una segunda llamada real a <span class="codeish">execute_sql_readonly</span>?</td><td>Revisar el flujo: la Prueba Tipo exige como máximo una ejecución analítica del agente.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="prueba-tipo">
+<h2>11. Aplicación exacta en la Prueba Tipo</h2>
+<p>Durante la evaluación, la secuencia recomendada será:</p>
+<ol>
+<li>Ejecuta el prompt principal una sola vez.</li>
+<li>Observa Preview y los eventos.</li>
+<li>Si se detiene, identifica qué operaciones finalizaron.</li>
+<li>Elige el prompt de recuperación correcto.</li>
+<li>Al terminar, verifica manualmente en Cloud Storage que existan:
+            <span class="codeish">consulta.sql</span>,
+            <span class="codeish">resultado.csv</span> e
+            <span class="codeish">informe_final.md</span>.
+          </li>
+<li>Después pasa a la verificación en BigQuery.</li>
+</ol>
+<div class="callout success">
+<strong>La recuperación no invalida la evaluación</strong>
+          El objetivo es evitar repetir operaciones ya ejecutadas y completar el flujo de forma trazable. La interrupción de Preview es un problema operativo, no un motivo para inventar resultados ni empezar nuevamente sin revisar el estado.
+        </div>
+<div class="related-links">
+<a href="validacion-integrada.html">Siguiente: Validación integrada →</a>
+<a href="agent-studio-knowledge-tools.html">Repasar: Knowledge y Tools →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas y base de validación</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio/design-agents" rel="noopener" target="_blank">Google Cloud — Design agents in Agent Studio</a></li>
+</ul>
+<p>La documentación oficial vigente confirma que Preview permite probar agentes e inspeccionar eventos, incluidos request/response, tool calls y metadatos. El método 0-1-2-3 proviene del material de Clase 4. Los dos prompts de recuperación y la distinción entre los tipos de interrupción fueron validados empíricamente en el entorno real del curso.</p>
+</section>
+<div class="page-nav">
+<a href="agent-studio-knowledge-tools.html">← Knowledge y Tools</a>
+<a href="validacion-integrada.html">Validación integrada →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

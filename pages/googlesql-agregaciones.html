@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Agregaciones en GoogleSQL: COUNT, SUM, AVG, MIN, MAX, GROUP BY, HAVING, COUNT DISTINCT y COUNTIF." name="description"/>
+<title>GoogleSQL — agregaciones · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a aria-current="page" href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="materia.html">Materia</a> › <a href="materia.html#googlesql">GoogleSQL</a> › Agregaciones</div>
+<div class="article-layout">
+<aside aria-label="Contenido de agregaciones" class="sidebar">
+<h2>En esta página</h2>
+<a class="active" href="#resumir">De filas a resumen</a>
+<a href="#funciones">Funciones agregadas</a>
+<a href="#groupby">GROUP BY</a>
+<a href="#grano">Cambio de grano</a>
+<a href="#where-having">WHERE vs HAVING</a>
+<a href="#distinct">COUNT DISTINCT</a>
+<a href="#countif">COUNTIF</a>
+<a href="#nulls">NULL y agregaciones</a>
+<a href="#prueba">Uso en la Prueba Tipo</a>
+</aside>
+<article class="article">
+<span class="eyebrow">GoogleSQL</span>
+<h1>GoogleSQL — agregaciones</h1>
+<p class="lead">Las agregaciones permiten pasar de filas individuales a medidas resumidas: cuántos registros hay, cuánto suman, cuál es el promedio o cómo se comparan grupos.</p>
+<section id="resumir">
+<h2>1. De filas individuales a información resumida</h2>
+<p>Hasta ahora, una fila del resultado seguía representando normalmente un cliente, una cuenta o un movimiento. Cuando agregamos, varias filas pueden resumirse en un único resultado.</p>
+<div class="flow">
+<div class="flow-step">Muchas cuentas individuales</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">GROUP BY producto</div>
+<div class="flow-arrow">↓</div>
+<div class="flow-step">Una fila resumida por producto</div>
+</div>
+<div class="callout">
+<strong>Idea clave</strong>
+          Una agregación cambia el nivel de detalle del resultado. Antes de interpretar una cifra, pregunta siempre: <em>¿qué representa ahora una fila?</em>
+</div>
+</section>
+<section id="funciones">
+<h2>2. Funciones agregadas principales</h2>
+<p>GoogleSQL incluye funciones que resumen los valores de un grupo.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Función</th><th>Qué responde</th><th>Ejemplo conceptual</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="codeish">COUNT(*)</span></td><td>¿Cuántas filas hay?</td><td>Cantidad de cuentas.</td></tr>
+<tr><td><span class="codeish">SUM(campo)</span></td><td>¿Cuánto suman los valores?</td><td>Saldo total.</td></tr>
+<tr><td><span class="codeish">AVG(campo)</span></td><td>¿Cuál es el promedio?</td><td>Saldo promedio.</td></tr>
+<tr><td><span class="codeish">MIN(campo)</span></td><td>¿Cuál es el valor mínimo?</td><td>Saldo mínimo.</td></tr>
+<tr><td><span class="codeish">MAX(campo)</span></td><td>¿Cuál es el valor máximo?</td><td>Saldo máximo.</td></tr>
+</tbody>
+</table>
+</div>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  COUNT(*) AS cantidad_cuentas,
+  SUM(saldo_actual) AS saldo_total,
+  AVG(saldo_actual) AS saldo_promedio,
+  MIN(saldo_actual) AS saldo_minimo,
+  MAX(saldo_actual) AS saldo_maximo
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`;</code></pre>
+<div class="callout success">
+<strong>Sin GROUP BY</strong>
+          Esta consulta resume toda la tabla en una sola fila.
+        </div>
+</section>
+<section id="groupby">
+<h2>3. GROUP BY: resumir por categoría</h2>
+<p><span class="codeish">GROUP BY</span> crea grupos usando uno o más campos. Las funciones agregadas se calculan por separado para cada grupo.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  producto,
+  COUNT(*) AS cantidad_cuentas,
+  SUM(saldo_actual) AS saldo_total,
+  AVG(saldo_actual) AS saldo_promedio
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+GROUP BY producto
+ORDER BY saldo_total DESC;</code></pre>
+<p>Lectura natural:</p>
+<div class="callout success">
+<strong>“Agrupa las cuentas por producto y, para cada producto, calcula cuántas cuentas hay, cuánto saldo suman y cuál es el saldo promedio.”</strong>
+</div>
+</section>
+<section id="grano">
+<h2>4. GROUP BY cambia el grano</h2>
+<p>Este punto es más importante que memorizar la sintaxis. En la tabla original <span class="codeish">cuentas_productos</span>, una fila representa una cuenta/producto asociado a un cliente. Después de agrupar por <span class="codeish">producto</span>, una fila representa un producto resumido.</p>
+<div class="concept-grid">
+<div class="concept-card">
+<h3>Antes</h3>
+<p>1 fila = 1 cuenta/producto.</p>
+</div>
+<div class="concept-card">
+<h3>Después</h3>
+<p>1 fila = 1 valor distinto de <span class="codeish">producto</span>.</p>
+</div>
+</div>
+<div class="callout warning">
+<strong>Error frecuente</strong>
+          No interpretes un resultado agregado como si todavía contuviera el detalle individual original. El resumen pierde detalle deliberadamente.
+        </div>
+</section>
+<section id="where-having">
+<h2>5. WHERE y HAVING no hacen lo mismo</h2>
+<p>Ambos filtran, pero actúan en momentos diferentes de la consulta.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Cláusula</th><th>Qué filtra</th><th>Momento conceptual</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="codeish">WHERE</span></td><td>Filas individuales.</td><td>Antes de agrupar.</td></tr>
+<tr><td><span class="codeish">HAVING</span></td><td>Grupos ya agregados.</td><td>Después de agrupar.</td></tr>
+</tbody>
+</table>
+</div>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  producto,
+  COUNT(*) AS cantidad_cuentas,
+  AVG(saldo_actual) AS saldo_promedio
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+WHERE estado = 'Activa'
+GROUP BY producto
+HAVING COUNT(*) &gt;= 20
+ORDER BY cantidad_cuentas DESC;</code></pre>
+<p>La lectura correcta es:</p>
+<ol>
+<li>Primero conserva solo las cuentas activas.</li>
+<li>Después las agrupa por producto.</li>
+<li>Calcula las métricas por grupo.</li>
+<li>Finalmente conserva solo los grupos con al menos 20 cuentas.</li>
+</ol>
+</section>
+<section id="distinct">
+<h2>6. COUNT(DISTINCT ...): contar entidades únicas</h2>
+<p><span class="codeish">COUNT(*)</span> cuenta filas. Eso no siempre equivale a contar entidades únicas.</p>
+<p>Si un cliente puede aparecer varias veces, podemos contar identificadores únicos:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  COUNT(*) AS filas,
+  COUNT(DISTINCT cliente_id) AS clientes_unicos
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.exposicion_crediticia`;</code></pre>
+<div class="callout">
+<strong>Pregunta antes de contar</strong>
+          ¿Quiero contar filas, cuentas, clientes, movimientos o algo distinto? Elegir la función correcta depende del grano.
+        </div>
+</section>
+<section id="countif">
+<h2>7. COUNTIF: contar filas que cumplen una condición</h2>
+<p><span class="codeish">COUNTIF</span> cuenta cuántas filas evalúan una condición booleana como verdadera.</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>SELECT
+  canal,
+  COUNT(*) AS movimientos,
+  COUNTIF(es_internacional = 1) AS movimientos_internacionales
+FROM `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+GROUP BY canal
+ORDER BY movimientos DESC;</code></pre>
+<div class="callout success">
+<strong>Ventaja</strong>
+          Puedes calcular el total y un subconjunto condicionado dentro de la misma agrupación.
+        </div>
+</section>
+<section id="nulls">
+<h2>8. NULL y agregaciones</h2>
+<p>Los valores <span class="codeish">NULL</span> requieren atención porque no todas las funciones los tratan igual.</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Expresión</th><th>Comportamiento básico</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="codeish">COUNT(*)</span></td><td>Cuenta todas las filas del grupo.</td></tr>
+<tr><td><span class="codeish">COUNT(columna)</span></td><td>Cuenta las filas donde esa expresión no es NULL.</td></tr>
+<tr><td><span class="codeish">SUM / AVG / MIN / MAX</span></td><td>Normalmente ignoran NULL al agregar.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout warning">
+<strong>No reemplaces NULL por cero automáticamente</strong>
+          Cero y “valor ausente” no significan necesariamente lo mismo. Decide cómo tratar NULL según el significado del campo y la pregunta analítica.
+        </div>
+</section>
+<section id="prueba">
+<h2>9. ¿Dónde aparece esto en la Prueba Tipo?</h2>
+<p>La consulta principal de la evaluación no necesita resumir los cinco registros finales por grupo: debe conservar el detalle de cada operación que cumple el criterio. Por eso, las agregaciones no son el núcleo del SQL principal.</p>
+<div class="callout success">
+<strong>Pero siguen siendo útiles para verificar</strong>
+          Una consulta separada de comprobación podría usar <span class="codeish">COUNT(*)</span> para contar cuántas operaciones cumple el filtro. Esa verificación manual no reemplaza el resultado detallado que debe entregar el agente.
+        </div>
+<p>Esta distinción es importante: <strong>detalle para evidenciar cada caso</strong> y <strong>agregación para resumir o comprobar</strong> son necesidades distintas.</p>
+<div class="related-links">
+<a href="googlesql-relaciones.html">Más adelante: GoogleSQL — relaciones y JOIN →</a>
+<a href="prueba-tipo.html">Ir a la Prueba Tipo →</a>
+</div>
+</section>
+<section class="source-note">
+<strong>Fuentes técnicas oficiales consultadas para esta página</strong>
+<ul>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions" rel="noopener" target="_blank">Google Cloud — Aggregate functions</a></li>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/aggregate-function-calls" rel="noopener" target="_blank">Google Cloud — Aggregate function calls</a></li>
+<li><a href="https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax" rel="noopener" target="_blank">Google Cloud — GoogleSQL query syntax</a></li>
+</ul>
+<p>La secuencia didáctica sigue el material de Clase 3: COUNT/SUM/AVG/MIN/MAX → GROUP BY → cambio de grano → WHERE frente a HAVING → COUNT DISTINCT y COUNTIF.</p>
+</section>
+<div class="page-nav">
+<a href="googlesql-fundamentos.html">← GoogleSQL — fundamentos</a>
+<a href="googlesql-relaciones.html">GoogleSQL — relaciones →</a>
+</div>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

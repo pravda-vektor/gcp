@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Prueba Tipo FT-00080: recuperación segura de ejecuciones, revisión de entregables y verificación independiente en BigQuery y Gemini." name="description"/>
+<title>Prueba Tipo — recuperación y verificación · FT-00080</title>
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('ft00080-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
+})();
+</script><link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header">
+<div class="header-inner">
+<a class="brand" href="../index.html">
+<strong>FT-00080 · Sitio de apoyo</strong>
+<small>Datos, Google Cloud e IA generativa</small>
+</a>
+<nav aria-label="Navegación principal" class="desktop-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a aria-current="page" href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+<button aria-label="Activar modo nocturno" aria-pressed="false" class="theme-toggle" data-theme-toggle="" type="button"><span aria-hidden="true" class="theme-toggle-icon">☾</span><span class="theme-toggle-label">Modo nocturno</span></button><button aria-controls="mobile-nav" aria-expanded="false" aria-label="Abrir menú" class="menu-button" data-menu-toggle="" type="button">☰</button>
+</div>
+<nav aria-label="Navegación móvil" class="mobile-panel" data-mobile-panel="" id="mobile-nav">
+<a href="../index.html">Inicio</a>
+<a href="materia.html">Materia</a>
+<a href="prueba-tipo.html">Prueba Tipo</a>
+<a href="desafios-extra.html">Desafíos Extra</a>
+<a href="casos-clase.html">Casos de clase</a><a href="recursos.html">Recursos</a>
+</nav>
+</header>
+<main class="page-wrap" id="contenido">
+<div class="breadcrumbs"><a href="../index.html">Inicio</a> › <a href="prueba-tipo.html">Prueba Tipo</a> › Recuperación y verificación</div>
+<div class="article-layout">
+<aside aria-label="Recuperación y verificación" class="sidebar">
+<h2>Pasos 07–10</h2>
+<a class="active" href="#paso-07">07. Recuperar ejecución</a>
+<a href="#diagnostico">Diagnóstico rápido</a>
+<a href="#rescate-final">Solo falta respuesta</a>
+<a href="#rescate-pendiente">Faltan operaciones</a>
+<a href="#paso-08">08. Revisar archivos</a>
+<a href="#paso-09">09. Verificar en BigQuery</a>
+<a href="#paso-10">10. Gemini en BigQuery</a>
+<a href="#comparar">Comparación final</a>
+</aside>
+<article class="article">
+<span class="eyebrow">Prueba Tipo</span>
+<h1>Recuperación y verificación</h1>
+<p class="lead">Esta etapa cubre qué hacer si Preview se interrumpe, cómo comprobar los tres archivos generados y cómo verificar de forma independiente que el SQL realmente selecciona las operaciones correctas.</p>
+<section id="paso-07">
+<span class="eyebrow">Paso 07</span>
+<h2>Recuperar una ejecución interrumpida</h2><div class="callout success"><strong>Mismos rescates del paso 06</strong> Los dos bloques que aparecen aquí son exactamente los mismos prompts mostrados debajo del prompt principal de ejecución. Este paso existe para explicar cuándo usar cada uno y cómo revisar los eventos antes de pegarlos.</div>
+<p>Si el agente terminó todas las operaciones y entregó una respuesta final normal, <strong>no necesitas usar ningún prompt de recuperación</strong>. Continúa directamente al paso 08.</p><p>A veces Preview alcanza a leer archivos, consultar BigQuery o escribir resultados, pero se queda en las cajas de herramientas y no entrega una respuesta humana. Eso no significa que debas empezar de nuevo: primero revisa qué operaciones ya tienen resultado.</p>
+<div class="callout warning">
+<strong>No vuelvas a ejecutar el prompt principal a ciegas</strong>
+          Primero revisa qué tool calls ya finalizaron. El objetivo es conservar el trabajo correcto y completar únicamente lo que falte.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Ejecución del agente con evidencia de operaciones ya realizadas" class="course-shot-link" href="../assets/screenshots/agent-interrupted.png" rel="noopener" target="_blank"><img alt="Ejecución del agente con evidencia de operaciones ya realizadas" loading="lazy" src="../assets/screenshots/agent-interrupted.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Usa los eventos visibles para decidir si corresponde recuperación final o completar operaciones pendientes.</span></figcaption></figure>
+</section>
+<section id="diagnostico">
+<h2>Diagnóstico rápido</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Situación</th><th>Qué hacer</th></tr>
+</thead>
+<tbody><tr><td>Las herramientas necesarias terminaron correctamente, pero no apareció la respuesta final.</td><td>Usa el rescate “solo falta respuesta final”.</td></tr><tr><td>Algunas operaciones terminaron, pero todavía faltan escrituras u otros pasos.</td><td>Usa el rescate “completar solo lo pendiente”.</td></tr><tr><td>Apareció 429 / Resource exhausted antes de cualquier tool call.</td><td>Vuelve a intentar. Si se repite, refresca la página y ejecuta nuevamente. Si persiste, espera unos minutos y reintenta.</td></tr><tr><td>Apareció 429 / Resource exhausted después de uno o más tool calls.</td><td>No empieces de cero. Revisa cuáles operaciones tienen tool result y recupera solamente lo que falte.</td></tr><tr><td>No sabes si un archivo fue escrito.</td><td>Comprueba primero Cloud Storage antes de pedir otra escritura.</td></tr></tbody>
+</table>
+</div><div class="callout warning"><strong>Si el error de recursos persiste</strong> Refresca la página y vuelve a intentar. Si sigue apareciendo, espera unos minutos antes de probar otra vez. Un error de capacidad puede ser temporal y no requiere cambiar el prompt.</div>
+<div class="callout">
+<strong>Recuerda</strong>
+          Un <span class="codeish">tool call</span> seguido por su <span class="codeish">tool result</span> es un ciclo normal. No lo cuentes como dos ejecuciones.
+        </div>
+</section>
+<section id="rescate-final">
+<h2>Cuando todas las operaciones terminaron y solo falta la respuesta</h2>
+<p>Usa exactamente este prompt si ya comprobaste que las lecturas, la consulta y las escrituras necesarias finalizaron correctamente.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>🛟 PROMPT DE RECUPERACIÓN · solo respuesta final</span>
+<button class="prompt-copy" data-copy="#recovery-final" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="recovery-final">Las operaciones solicitadas anteriormente ya fueron ejecutadas.
+No utilices ninguna herramienta nuevamente.
+Utiliza exclusivamente los resultados ya obtenidos y entrega ahora la respuesta textual final pendiente de acuerdo con mi solicitud anterior.
+No afirmes resultados o acciones que no estén respaldados por las ejecuciones ya realizadas.</pre>
+</div>
+<div class="callout success">
+<strong>Qué debe ocurrir</strong>
+          El agente debe responder utilizando los resultados ya obtenidos, sin volver a leer Storage, revisar esquemas, ejecutar SQL ni escribir archivos.
+        </div>
+</section>
+<section id="rescate-pendiente">
+<h2>Cuando todavía faltan operaciones</h2>
+<p>Usa este segundo prompt si algunas operaciones ya finalizaron, pero todavía quedan pasos pendientes —por ejemplo, una o más escrituras en Cloud Storage.</p>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>🛟 PROMPT DE RECUPERACIÓN · completar solo lo pendiente</span>
+<button class="prompt-copy" data-copy="#recovery-pending" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="recovery-pending">Continúa la tarea anterior exactamente desde el punto en que se interrumpió.
+No repitas ninguna operación que ya haya finalizado correctamente.
+Utiliza los resultados disponibles en esta conversación y completa únicamente las operaciones pendientes de mi solicitud anterior.
+No vuelvas a leer una fuente, consultar un esquema ni ejecutar una consulta SQL si esa operación ya fue completada correctamente.
+Debe existir como máximo una única ejecución analítica mediante execute_sql_readonly.
+Completa las escrituras pendientes en Cloud Storage y, cuando hayan terminado, entrega la respuesta textual solicitada originalmente.
+No afirmes que una operación fue completada si no existe evidencia de su ejecución exitosa.</pre>
+</div>
+<div class="callout">
+<strong>Este rescate ya fue validado</strong>
+          En el flujo de prueba permitió continuar después de lectura + esquemas + una única consulta y completar solamente las escrituras que faltaban.
+        </div>
+<h3>Comprobación del paso 07</h3>
+<ul>
+<li>No repetiste <span class="codeish">execute_sql_readonly</span> si ya había finalizado.</li>
+<li>No volviste a leer <span class="codeish">criterio_revision.txt</span> si ya estaba leído.</li>
+<li>Solo se completaron las operaciones pendientes.</li>
+<li>La ejecución terminó con una respuesta textual visible.</li>
+</ul>
+</section>
+<section id="paso-08">
+<span class="eyebrow">Paso 08</span>
+<h2>Revisar los archivos generados en Cloud Storage</h2>
+<p>No te limites a confiar en el mensaje del agente. Verifica directamente los objetos en tu carpeta.</p>
+<h3>Archivos esperados</h3>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Archivo</th><th>Ruta esperada</th><th>Qué revisar</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="codeish">consulta.sql</span></td>
+<td><span class="codeish">alumno-XX/resultados/</span></td>
+<td>JOIN por <span class="codeish">cuenta_id</span>, cuatro condiciones, sin filtros extra.</td>
+</tr>
+<tr>
+<td><span class="codeish">resultado.csv</span></td>
+<td><span class="codeish">alumno-XX/resultados/</span></td>
+<td>13 encabezados y 5 registros en los datos de práctica.</td>
+</tr>
+<tr>
+<td><span class="codeish">informe_final.md</span></td>
+<td><span class="codeish">alumno-XX/informe/</span></td>
+<td>Fuentes, criterio, resultados, interpretación, conclusión y limitaciones.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Procedimiento</h3>
+<ol>
+<li>Abre Cloud Storage.</li>
+<li>Entra a tu carpeta <span class="codeish">alumno-XX/</span>.</li>
+<li>Abre <span class="codeish">resultados/</span> y confirma que existen <span class="codeish">consulta.sql</span> y <span class="codeish">resultado.csv</span>.</li>
+<li>Abre <span class="codeish">informe/</span> y confirma que existe <span class="codeish">informe_final.md</span>.</li>
+<li>Inspecciona el contenido de cada archivo.</li>
+</ol>
+<div class="callout warning">
+<strong>Existir no basta</strong>
+          Un archivo vacío, truncado o con contenido distinto de lo solicitado no constituye una entrega correcta.
+        </div>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Carpeta resultados del alumno en Cloud Storage" class="course-shot-link" href="../assets/screenshots/output-storage-folder.png" rel="noopener" target="_blank"><img alt="Carpeta resultados del alumno en Cloud Storage" loading="lazy" src="../assets/screenshots/output-storage-folder.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span><span> Comprueba primero que existen las carpetas resultados/ e informe/; después abre cada una para verificar consulta.sql, resultado.csv e informe_final.md.</span></figcaption></figure>
+<h3>Qué debería contener <span class="codeish">resultado.csv</span></h3>
+<p>Los encabezados deben corresponder a estas 13 columnas:</p>
+<pre class="visual-placeholder" style="display:block; text-align:left; min-height:auto; overflow:auto;"><code>movimiento_id,cuenta_id,fecha_movimiento,hora,tipo_movimiento,canal,monto,moneda,es_internacional,categoria_contraparte,cliente_id,producto,estado</code></pre>
+</section>
+<section id="paso-09">
+<span class="eyebrow">Paso 09</span>
+<h2>Verificar la consulta directamente en BigQuery</h2>
+<h3>Objetivo</h3>
+<p>Comprobar que el SQL guardado realmente produce el resultado esperado cuando se ejecuta directamente en BigQuery.</p>
+<h3>Procedimiento</h3>
+<ol>
+<li>Abre <span class="codeish">consulta.sql</span> en Cloud Storage.</li>
+<li>Copia el SQL completo.</li>
+<li>Abre BigQuery Studio.</li>
+<li>Abre una pestaña nueva del editor SQL.</li>
+<li>Pega la consulta sin modificarla.</li>
+<li>Revísala antes de ejecutar.</li>
+<li>Ejecuta la consulta.</li>
+<li>Comprueba que se obtienen las mismas operaciones que aparecen en <span class="codeish">resultado.csv</span>.</li>
+</ol>
+<figure class="course-shot compact-xs"><a aria-label="Abrir captura completa: Acceso a una nueva consulta SQL en BigQuery" class="course-shot-link" href="../assets/screenshots/bq-new-query.png" rel="noopener" target="_blank"><img alt="Acceso a una nueva consulta SQL en BigQuery" loading="lazy" src="../assets/screenshots/bq-new-query.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Abre una consulta nueva para verificar manualmente el SQL guardado.</span></figcaption></figure>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Consulta de la Prueba Tipo pegada en BigQuery" class="course-shot-link" href="../assets/screenshots/bq-query.png" rel="noopener" target="_blank"><img alt="Consulta de la Prueba Tipo pegada en BigQuery" loading="lazy" src="../assets/screenshots/bq-query.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>Ejecuta exactamente la consulta guardada, sin modificar sus cuatro condiciones.</span></figcaption></figure>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Resultado de BigQuery con cinco filas" class="course-shot-link" href="../assets/screenshots/bq-results.png" rel="noopener" target="_blank"><img alt="Resultado de BigQuery con cinco filas" loading="lazy" src="../assets/screenshots/bq-results.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>La verificación manual esperada devuelve cinco operaciones.</span></figcaption></figure>
+<div class="callout success">
+<strong>Resultado de referencia</strong>
+          En los datos de práctica validados deben aparecer <strong>5 operaciones</strong>.
+        </div>
+<div class="callout">
+<strong>Esta ejecución no viola la regla de una sola consulta del agente</strong>
+          La restricción de una única llamada a <span class="codeish">execute_sql_readonly</span> se aplica al agente. Esta es una verificación manual posterior realizada directamente por el alumno en BigQuery.
+        </div>
+<h3>Si no aparecen 5 filas</h3>
+<p>Revisa, en este orden:</p>
+<ol>
+<li>que el JOIN sea por <span class="codeish">cuenta_id</span>;</li>
+<li>que <span class="codeish">canal</span> sea APP o WEB;</li>
+<li>que <span class="codeish">es_internacional = 1</span>;</li>
+<li>que <span class="codeish">monto &gt; 2000000</span> y no <span class="codeish">&gt;=</span>;</li>
+<li>que <span class="codeish">producto = 'Tarjeta de Crédito'</span>;</li>
+<li>que no existan filtros extra.</li>
+</ol>
+</section>
+<section id="paso-10">
+<span class="eyebrow">Paso 10</span>
+<h2>Generar una segunda consulta con Gemini en BigQuery</h2>
+<h3>Objetivo</h3>
+<p>Construir una segunda consulta desde una instrucción autosuficiente y comparar su lógica y resultado con el SQL producido por el agente.</p>
+<figure class="course-shot compact-sm"><a aria-label="Abrir captura completa: Gemini en BigQuery generando una consulta independiente" class="course-shot-link" href="../assets/screenshots/bq-gemini-generated.png" rel="noopener" target="_blank"><img alt="Gemini en BigQuery generando una consulta independiente" loading="lazy" src="../assets/screenshots/bq-gemini-generated.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span> <span>La segunda verificación se genera de forma independiente a partir del criterio.</span></figcaption></figure>
+<h3>Prompt de verificación</h3>
+<div class="prompt-shell">
+<div class="prompt-toolbar">
+<span>Prompt de verificación · Gemini en BigQuery</span>
+<button class="prompt-copy" data-copy="#prompt-gemini-bq" type="button">Copiar</button>
+</div>
+<pre class="prompt-text" id="prompt-gemini-bq">Genera una consulta GoogleSQL de solo lectura en BigQuery.
+
+Utiliza exclusivamente estas dos tablas:
+- `arched-osprey-506820-i9.analitica_bancaria_demo.movimientos_diarios`
+- `arched-osprey-506820-i9.analitica_bancaria_demo.cuentas_productos`
+
+Relaciona ambas tablas mediante `cuenta_id`.
+
+La consulta debe seleccionar exclusivamente las operaciones que cumplan simultáneamente estas cuatro condiciones:
+1. `canal` es APP o WEB.
+2. `es_internacional` = 1.
+3. `monto` &gt; 2000000.
+4. `producto` = 'Tarjeta de Crédito'.
+
+Devuelve exactamente estas columnas, en este orden:
+- movimiento_id
+- cuenta_id
+- fecha_movimiento
+- hora
+- tipo_movimiento
+- canal
+- monto
+- moneda
+- es_internacional
+- categoria_contraparte
+- cliente_id
+- producto
+- estado
+
+No agregues filtros adicionales.
+No agregues agregaciones.
+No agregues GROUP BY.
+No agregues ORDER BY salvo que sea estrictamente necesario para la lógica, lo que en este caso no debería serlo.
+
+Devuelve solamente la consulta SQL.</pre>
+</div>
+<ol>
+<li>Genera la consulta.</li>
+<li>Revisa manualmente que la lógica sea correcta.</li>
+<li>Ejecuta el SQL generado.</li>
+<li>Comprueba que devuelve 5 operaciones.</li>
+<li>Compara esas operaciones con <span class="codeish">resultado.csv</span> y con la consulta del agente.</li>
+</ol>
+<figure class="course-shot"><a aria-label="Abrir captura completa: Archivo resultado.csv con encabezado y cinco operaciones" class="course-shot-link" href="../assets/screenshots/output-csv.png" rel="noopener" target="_blank"><img alt="Archivo resultado.csv con encabezado y cinco operaciones" loading="lazy" src="../assets/screenshots/output-csv.png"/></a><figcaption><span class="shot-label">Captura del entorno del curso</span><span> Al comparar verificaciones, revisa también que el CSV final conserve las 13 columnas y las mismas cinco operaciones.</span></figcaption></figure>
+</section>
+<section id="comparar">
+<h2>Comparación final del paso 10</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>Nivel</th><th>Qué debe coincidir</th></tr>
+</thead>
+<tbody>
+<tr><td>Lógica</td><td>Mismas dos tablas, JOIN por <span class="codeish">cuenta_id</span> y mismas cuatro condiciones.</td></tr>
+<tr><td>Esquema</td><td>Las mismas 13 columnas de salida.</td></tr>
+<tr><td>Resultado</td><td>El mismo conjunto de 5 operaciones.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout warning">
+<strong>El SQL no tiene que ser idéntico</strong>
+          Gemini puede usar alias distintos o escribir <span class="codeish">INNER JOIN</span> explícitamente. Lo importante es la equivalencia lógica y el mismo conjunto de registros.
+        </div>
+<div class="callout success">
+<strong>Al terminar esta etapa</strong>
+          Ya tienes la evidencia documental preparada, los tres entregables del agente y dos verificaciones directas en BigQuery. Solo queda revisar y cerrar la entrega.
+        </div>
+<div class="related-links">
+<a href="agent-studio-pruebas.html">Repasar recuperación en Preview →</a>
+<a href="gemini-bigquery.html">Repasar Gemini en BigQuery →</a>
+<a href="prueba-tipo-entrega.html">Siguiente: entrega final →</a>
+</div>
+<div class="page-nav">
+<a href="prueba-tipo-ejecucion.html">← Prueba Tipo — ejecución</a>
+<a href="prueba-tipo-entrega.html">Prueba Tipo — entrega final →</a>
+</div>
+</section>
+</article>
+</div>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+    Material de apoyo del curso FT-00080. Los ejemplos del curso utilizan datos sintéticos.
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>
